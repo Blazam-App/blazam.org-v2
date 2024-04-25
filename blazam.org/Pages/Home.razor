@@ -29,9 +29,9 @@ Style=" background-image:url('/img/home_top.jpg'); background-size:cover; backgr
 </div>
 </MudContainer>
 
-<MudStack Style="width=100%;background-color:#D8DAE4;" Class="py-7 shadow-lg">
+<MudStack Style="width=100%;background-color:#D8DAE4;" Class="py-7 px-7 shadow-lg">
     <InfoCard Horizantal=true
-              Class="ms-7"
+              Class=""
               Header="@AppLocalization["Who is it for?"]"
               Icon="@Icons.Material.Filled.Share">
         <MudContainer Class="ps-4">
@@ -61,9 +61,9 @@ Style=" background-image:url('/img/home_top.jpg'); background-size:cover; backgr
     </InfoCard>
     <MudSpacer />
 
-    <InfoCard MaxWidth="450px" Icon="@Icons.Material.Filled.Share">
+    <InfoCard MaxWidth="450px" Icon="@Icons.Material.Filled.Share" Class="align-self-center">
 
-        <MudText Style="text-align: center;" Typo=Typo.h4 ElementId="h1">@AppLocalization["What is Blazam?"]</MudText>
+        <MudText Style="text-align: center;"  Typo=Typo.h4 ElementId="h1">@AppLocalization["What is Blazam?"]</MudText>
         <MudContainer Class="ps-4">
             <UnorderedListItem>
                 Blazam is a flexible Active Directory management portal.
@@ -96,7 +96,7 @@ Style=" background-image:url('/img/home_top.jpg'); background-size:cover; backgr
     <MudSpacer />
 
     <InfoCard MaxWidth="250px"
-              Class="me-7"
+              Class="align-self-center"
               Icon="@Icons.Material.Filled.Share">
 
 
@@ -106,7 +106,7 @@ Style=" background-image:url('/img/home_top.jpg'); background-size:cover; backgr
 
 </MudStack>
 
-<MudContainer Style=" background-image:url('/img/home_mid.jpg'); width::100%; height:500px;" Class="parallax" />
+<MudContainer Style=" background-image:url('/img/home_mid.jpg'); width::100%; height:300px;" Class="parallax" />
 <MudStack>
     <MudText Typo=Typo.h4 ElementId="h1">@AppLocalization["Languages"]</MudText>
     <MudContainer Class="ps-4">

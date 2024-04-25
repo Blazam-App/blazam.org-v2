@@ -1,39 +1,50 @@
 ﻿@page "/"
 
 <PageTitle>Blazam</PageTitle>
-<MudContainer Class="justify-content-center align-content-center align-self-center mx-auto mt-0 pb-0 parallax"
-Style=" background-image:url('/img/home_top.jpg'); background-size:cover; background-position:center center; min-height:600px;">
-    <MudStack Style="height:100%;">
-        <MudText Style="color:white; -webkit-text-stroke:thin; -webkit-text-stroke-color:black; text-align: center; font-weight:bold;"
-                 Color=Color.Surface
-                 Typo=Typo.h1>Blazam</MudText>
 
-        <MudStack Style="width:100%;" Class="mt-7" Row=true>
-            <InfoCard Class="ms-7"
+<MudContainer Class="justify-content-center align-content-center align-self-center mx-auto mt-0 pb-0 parallax"
+              Style=" background-image:url('/img/home_top.png'); background-size:cover; background-position:center center; min-height:600px;">
+    <MudGrid Class="pb-3">
+        <MudItem xs="12">
+            <MudText Style="color:white; -webkit-text-stroke:thin; -webkit-text-stroke-color:black; text-align: center; font-weight:bold;"
+                     Color=Color.Surface
+                     Typo=Typo.h1 Class="d-flex align-center justify-center mud-width-full py-8">Blazam</MudText>
+        </MudItem>
+       
+        <MudItem xs="12" sm="4">
+            <InfoCard Class="d-flex align-center justify-center mud-width-full py-8"
                       Icon="@Icons.Material.Filled.AllInclusive"
                       Text="A powerful web based Active Directory management tool providing control over users, groups, OU's, computers, and printes." />
-            <MudSpacer />
+            <MudButton StartIcon="@Icons.Material.Filled.Book" Class="mt-3 d-flex align-center justify-center mud-width-full py-8" Href="https://docs.blazam.org" Variant="Variant.Filled" Color="Color.Tertiary">Access Documentation</MudButton>
 
-            <InfoCard Icon="@Icons.Material.Filled.AltRoute"
+        </MudItem>
+        <MudItem xs="12" sm="4">
+            <MudButton StartIcon="@Icons.Material.Filled.Download" Class="d-flex align-center justify-center mud-width-full py-8" Href="/download" Variant="Variant.Filled" Color="Color.Tertiary">Download the app</MudButton>
+            <div class="me-0 mb-0 mt-0" style="text-align: center;">
+                <Badges />
+            </div>
+            <InfoCard Class="mt-3 d-flex align-center justify-center mud-width-full py-8"
+                      Icon="@Icons.Material.Filled.AltRoute"
                       Text="Flexible enough to accommodate custom AD attributes and your organization's user creation procedures." />
 
-            <MudSpacer />
-
-            <InfoCard Class="me-7"
+        </MudItem>
+        <MudItem xs="12" sm="4">
+            <InfoCard Class="d-flex align-center justify-center mud-width-full py-8"
                       Icon="@Icons.Material.Filled.Share"
                       Text="Enable your users by delegating administrative privileges in a controlled and audited manner, with a modern and intuitive interface." />
-        </MudStack>
-    </MudStack>
-    <div class="me-0 mb-0 mt-6" style="text-align: center;">
-        <Badges />
-</div>
+            <MudButton StartIcon="@Icons.Custom.Brands.GitHub" Class="mt-3 d-flex align-center justify-center mud-width-full py-8" Href="https://github.com/Blazam-App/BLAZAM" Variant="Variant.Filled" Color="Color.Tertiary">Explore Source Code</MudButton>
+
+        </MudItem>
+    </MudGrid>
+   
+    
 </MudContainer>
 
 <MudStack Style="width=100%;background-color:#D8DAE4;" Class="py-7 px-7 shadow-lg">
     <InfoCard Horizantal=true
               Class=""
               Header="@AppLocalization["Who is it for?"]"
-              Icon="@Icons.Material.Filled.Share">
+              Icon="@Icons.Material.Filled.Try">
         <MudContainer Class="ps-4">
 
             <UnorderedListItem>
@@ -61,9 +72,8 @@ Style=" background-image:url('/img/home_top.jpg'); background-size:cover; backgr
     </InfoCard>
     <MudSpacer />
 
-    <InfoCard MaxWidth="450px" Icon="@Icons.Material.Filled.Share" Class="align-self-center">
+    <InfoCard Horizantal=true Icon="@Icons.Material.Filled.Whatshot" Class="align-self-center" Header="@AppLocalization["What is Blazam?"]">
 
-        <MudText Style="text-align: center;"  Typo=Typo.h4 ElementId="h1">@AppLocalization["What is Blazam?"]</MudText>
         <MudContainer Class="ps-4">
             <UnorderedListItem>
                 Blazam is a flexible Active Directory management portal.
@@ -95,61 +105,69 @@ Style=" background-image:url('/img/home_top.jpg'); background-size:cover; backgr
     </InfoCard>
     <MudSpacer />
 
-    <InfoCard MaxWidth="250px"
+    <InfoCard
+              Header="@AppLocalization["Ready to deploy around the world..."]"
+              Horizantal=true
               Class="align-self-center"
-              Icon="@Icons.Material.Filled.Share">
+              Icon="@Icons.Material.Filled.Translate">
 
 
-        <MudText Style="text-align: center;" Typo=Typo.h4 ElementId="h2">@AppLocalization["How to get it?"]</MudText>
-        <MudText>@AppLocalization["HowToGetItDescription"]</MudText>
-    </InfoCard>
+        <MudContainer Class="ps-4">
+            <MudText Typo="Typo.h6" Class="mb-3">Blazam is available in the following translated languages for your convenience.</MudText>
 
-</MudStack>
+            <MudStack Row=true>
+                <MudStack>
+                    <UnorderedListItem>
+                        Chinese(Simplified) - 中国人
+                    </UnorderedListItem>
+                    <UnorderedListItem>
+                        English
+                    </UnorderedListItem>
+                    <UnorderedListItem>
+                        French - Français
+                    </UnorderedListItem>
+                    <UnorderedListItem>
+                        German - Deutsch
+                    </UnorderedListItem>
 
-<MudContainer Style=" background-image:url('/img/home_mid.jpg'); width::100%; height:300px;" Class="parallax" />
-<MudStack>
-    <MudText Typo=Typo.h4 ElementId="h1">@AppLocalization["Languages"]</MudText>
-    <MudContainer Class="ps-4">
+                    <UnorderedListItem>
+                        Hindi - हिंदी
+                    </UnorderedListItem>
 
+                    <UnorderedListItem>
+                        Italian - Italiano
+                    </UnorderedListItem>
+                </MudStack>
+                <MudStack>
+                    <UnorderedListItem>
+                        Japanese - 日本語
+                    </UnorderedListItem>
+                    <UnorderedListItem>
+                        Korean - 한국인
+                    </UnorderedListItem>
+                    <UnorderedListItem>
+                        Polish - Polski
+                    </UnorderedListItem>
+                    <UnorderedListItem>
+                        Russian - Русский
+                    </UnorderedListItem>
+                    <UnorderedListItem>
+                        Spanish - Español
+                    </UnorderedListItem>
 
-        <UnorderedListItem>
-            Chinese(Simplified) - 中国人
-        </UnorderedListItem>
-        <UnorderedListItem>
-            English
-        </UnorderedListItem>
-        <UnorderedListItem>
-            French - Français
-        </UnorderedListItem>
-        <UnorderedListItem>
-            German - Deutsch
-        </UnorderedListItem>
+                </MudStack>
+            </MudStack>
+          
+           
 
-        <UnorderedListItem>
-            Hindi - हिंदी
-        </UnorderedListItem>
+        </MudContainer>
+        </InfoCard>
 
-        <UnorderedListItem>
-            Italian - Italiano
-        </UnorderedListItem>
-        <UnorderedListItem>
-            Japanese - 日本語
-        </UnorderedListItem>
-        <UnorderedListItem>
-            Korean - 한국인
-        </UnorderedListItem>
-        <UnorderedListItem>
-            Polish - Polski
-        </UnorderedListItem>
-        <UnorderedListItem>
-            Russian - Русский
-        </UnorderedListItem>
-        <UnorderedListItem>
-            Spanish - Español
-        </UnorderedListItem>
+    </MudStack>
 
+    <MudContainer Style=" background-image:url('/img/home_mid.jpg'); width::100%; height:300px;" Class="parallax" />
+   
 
-    </MudContainer>
-    <DisplayAd />
-</MudStack>
+<MudStack Style="width=100%;background-color:#D8DAE4;" Class="py-7 px-7 shadow-lg">
+    </MudStack>
 

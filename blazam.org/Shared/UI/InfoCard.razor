@@ -12,18 +12,19 @@
 }
 <MudCard Class="@Class" Style=@(effectiveMaxWidth) Elevation="15">
     <MudStack Row=Horizantal Style="width:100%;" Class="pa-4 pt-7">
-        <MudStack>
-            <MudIcon Icon="@Icon" Size=Size.Large Class="align-self-center" Color="Color.Tertiary" />
+        <MudStack Class="align-self-center">
+            <MudIcon Icon="@Icon" Size=Size.Large Style="font-size:50px;" Class="align-self-center" Color="Color.Tertiary" />
 
             @if (Header != null)
             {
-                <MudText Style="text-align: center;" Typo=Typo.h5 ElementId="h0">@Header</MudText>
+                <MudText Style="text-align: center;" Typo=Typo.h4 ElementId="h0">@Header</MudText>
 
             }
         </MudStack>
+        <MudSpacer/>
         @if (Text != null)
         {
-            <MudText Style="text-align:center;">@Text</MudText>
+            <MudText Typo=Typo.h6 Style="text-align:center;">@Text</MudText>
         }
         @if(ChildContent!=null)
         {

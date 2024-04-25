@@ -1,0 +1,54 @@
+﻿@{
+    string? effectiveMaxWidth=null;
+    if (MaxWidth != null)
+    {
+        effectiveMaxWidth = " max-width:" + @MaxWidth + ";";
+
+    }
+    else
+    {
+        effectiveMaxWidth = " width=100%;";
+    }
+}
+<MudCard Class="@Class" Style=@(effectiveMaxWidth) Elevation="15">
+    <MudStack Row=Horizantal Style="width:100%;" Class="pa-4 pt-7">
+        <MudStack>
+            <MudIcon Icon="@Icon" Size=Size.Large Class="align-self-center" Color="Color.Tertiary" />
+
+            @if (Header != null)
+            {
+                <MudText Style="text-align: center;" Typo=Typo.h4 ElementId="h0">@Header</MudText>
+
+            }
+        </MudStack>
+        @if (Text != null)
+        {
+            <MudText Style="text-align:center;">@Text</MudText>
+        }
+        @if(ChildContent!=null)
+        {
+            @ChildContent
+        }
+    </MudStack>
+</MudCard>
+
+@code {
+    [Parameter]
+    public string? Header{ get; set; }
+    [Parameter]
+    public bool Horizantal { get; set; }=false;
+    [Parameter]
+    public string MaxWidth { get; set; }
+
+    [Parameter]
+
+    public string Class { get; set; }
+
+    [Parameter]
+    public string? Text { get; set; }
+
+    [Parameter]
+    public string Icon { get; set; }
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+}

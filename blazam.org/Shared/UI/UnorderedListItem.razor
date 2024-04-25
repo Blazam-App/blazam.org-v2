@@ -1,0 +1,9 @@
+﻿<MudStack Row=true>
+    <MudText>&#x2022;</MudText>
+    <MudText>@ChildContent</MudText>
+</MudStack>
+
+@code {
+    [Parameter]
+    public RenderFragment ChildContent{ get; set; }
+}

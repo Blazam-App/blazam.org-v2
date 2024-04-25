@@ -1,0 +1,155 @@
+﻿@page "/"
+
+<PageTitle>Blazam</PageTitle>
+<MudContainer Class="justify-content-center align-content-center align-self-center mx-auto mt-0 pb-0 parallax"
+Style=" background-image:url('/img/home_top.jpg'); background-size:cover; background-position:center center; min-height:600px;">
+    <MudStack Style="height:100%;">
+        <MudText Style="color:white; -webkit-text-stroke:thin; -webkit-text-stroke-color:black; text-align: center; font-weight:bold;"
+                 Color=Color.Surface
+                 Typo=Typo.h1>Blazam</MudText>
+
+        <MudStack Style="width:100%;" Class="mt-7" Row=true>
+            <InfoCard Class="ms-7"
+                      Icon="@Icons.Material.Filled.AllInclusive"
+                      Text="A powerful web based Active Directory management tool providing control over users, groups, OU's, computers, and printes." />
+            <MudSpacer />
+
+            <InfoCard Icon="@Icons.Material.Filled.AltRoute"
+                      Text="Flexible enough to accommodate custom AD attributes and your organization's user creation procedures." />
+
+            <MudSpacer />
+
+            <InfoCard Class="me-7"
+                      Icon="@Icons.Material.Filled.Share"
+                      Text="Enable your users by delegating administrative privileges in a controlled and audited manner, with a modern and intuitive interface." />
+        </MudStack>
+    </MudStack>
+    <div class="me-0 mb-0 mt-6" style="text-align: center;">
+        <Badges />
+</div>
+</MudContainer>
+
+<MudStack Style="width=100%;background-color:#D8DAE4;" Class="py-7 shadow-lg">
+    <InfoCard Horizantal=true
+              Class="ms-7"
+              Header="@AppLocalization["Who is it for?"]"
+              Icon="@Icons.Material.Filled.Share">
+        <MudContainer Class="ps-4">
+
+            <UnorderedListItem>
+                Do you manage an Active Directory environment?
+
+            </UnorderedListItem>
+            <UnorderedListItem>
+                Do you want easier delegation of basic account functions?
+
+            </UnorderedListItem>
+            <UnorderedListItem>
+                Do you want to easily unlock, or edit a user from your phone?
+
+            </UnorderedListItem>
+            <UnorderedListItem>
+                Setting up ACL's in active directory is complicated, and at the end of the day, you're still stuck with a desktop interface.
+
+            </UnorderedListItem>
+            <UnorderedListItem>
+                This app will help you enable your users.
+
+            </UnorderedListItem>
+
+        </MudContainer>
+    </InfoCard>
+    <MudSpacer />
+
+    <InfoCard MaxWidth="450px" Icon="@Icons.Material.Filled.Share">
+
+        <MudText Style="text-align: center;" Typo=Typo.h4 ElementId="h1">@AppLocalization["What is Blazam?"]</MudText>
+        <MudContainer Class="ps-4">
+            <UnorderedListItem>
+                Blazam is a flexible Active Directory management portal.
+
+            </UnorderedListItem>
+            <UnorderedListItem>
+                The key feature is it's permissions system which allows you to empower your users to manage the groups, users, ou's, and computers you allow them to.
+
+            </UnorderedListItem>
+
+            <UnorderedListItem>
+                Manage user group assignents, reset passwords, unlock, disable, and enable accounts.
+            </UnorderedListItem>
+
+            <UnorderedListItem>
+                Configurable user creation templates to share with your users to ensure the proper infomation is provided.
+            </UnorderedListItem>
+
+            <UnorderedListItem>
+                Manage user thumbnail photo.
+            </UnorderedListItem>
+            <UnorderedListItem>
+                Access Active Directory recycle bin from any web browser.
+            </UnorderedListItem>
+
+        </MudContainer>
+
+
+    </InfoCard>
+    <MudSpacer />
+
+    <InfoCard MaxWidth="250px"
+              Class="me-7"
+              Icon="@Icons.Material.Filled.Share">
+
+
+        <MudText Style="text-align: center;" Typo=Typo.h4 ElementId="h2">@AppLocalization["How to get it?"]</MudText>
+        <MudText>@AppLocalization["HowToGetItDescription"]</MudText>
+    </InfoCard>
+
+</MudStack>
+
+<MudContainer Style=" background-image:url('/img/home_mid.jpg'); width::100%; height:500px;" Class="parallax" />
+<MudStack>
+    <MudText Typo=Typo.h4 ElementId="h1">@AppLocalization["Languages"]</MudText>
+    <MudContainer Class="ps-4">
+
+
+        <UnorderedListItem>
+            Chinese(Simplified) - 中国人
+        </UnorderedListItem>
+        <UnorderedListItem>
+            English
+        </UnorderedListItem>
+        <UnorderedListItem>
+            French - Français
+        </UnorderedListItem>
+        <UnorderedListItem>
+            German - Deutsch
+        </UnorderedListItem>
+
+        <UnorderedListItem>
+            Hindi - हिंदी
+        </UnorderedListItem>
+
+        <UnorderedListItem>
+            Italian - Italiano
+        </UnorderedListItem>
+        <UnorderedListItem>
+            Japanese - 日本語
+        </UnorderedListItem>
+        <UnorderedListItem>
+            Korean - 한국인
+        </UnorderedListItem>
+        <UnorderedListItem>
+            Polish - Polski
+        </UnorderedListItem>
+        <UnorderedListItem>
+            Russian - Русский
+        </UnorderedListItem>
+        <UnorderedListItem>
+            Spanish - Español
+        </UnorderedListItem>
+
+
+    </MudContainer>
+    <DisplayAd />
+</MudStack>
+

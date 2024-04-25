@@ -1,0 +1,33 @@
+﻿@inject NavigationManager Nav
+
+
+<MudAppBar Color=Color.Primary Elevation="1">
+    @if (mainLayout?.DrawerOpen != true)
+    {
+        <MudLink Href="@Nav.Uri">
+            <MudImage Class="app-icon" Src="/img/default_logo.png" />
+
+        </MudLink>
+    }
+    @if (mainLayout != null)
+    {
+
+        <MudIconButton Icon="@Icons.Material.Filled.Menu"
+                   Color="Color.Inherit"
+                   Edge="Edge.Start"
+                   OnClick="@((e) => {mainLayout.DrawerOpen=!mainLayout.DrawerOpen; })" />
+    }
+
+   
+    <MudSpacer />
+  
+</MudAppBar>
+
+
+@code {
+   
+    [CascadingParameter]
+    public MainLayout mainLayout { get; set; }
+   
+
+}

@@ -1,0 +1,46 @@
+﻿@inherits LayoutComponentBase
+
+<PageTitle>BLAZAM</PageTitle>
+<CascadingValue Value="this">
+
+    <MudLayout Style="min-height:98vh;max-width:100vw; background-color:#464646;">
+        <MainAppBar />
+
+      
+
+
+
+        <MudMainContent Class="mud-height-full">
+
+
+
+
+
+            <MudContainer MaxWidth="MaxWidth.Large" Class=" mud-height-full pa-0" Style="background-color:whitesmoke" >
+                @Body
+            </MudContainer>
+            <MudElement>
+
+                @* <AppFooter /> *@
+
+            </MudElement>
+        </MudMainContent>
+
+        @*<NotificationBroadcastListener />*@
+
+
+
+    </MudLayout>
+
+</CascadingValue>
+@code {
+    bool drawerOpen = true;
+    public bool DrawerOpen
+    {
+        get => drawerOpen; set
+        {
+            drawerOpen = value;
+            InvokeAsync(StateHasChanged);
+        }
+    }
+}

@@ -1,0 +1,216 @@
+﻿@page "/features"
+<PageTitle>Features - Blazam</PageTitle>
+
+<MudText Typo=Typo.h1>Features</MudText>
+
+<MudList Clickable=true>
+    <MudListSubheader>
+    </MudListSubheader>
+    <MudListItem Text="User/Group/Computer Management">
+       <NestedList>
+           <MudListItem>
+               Enable/Disable
+           </MudListItem>
+           <MudListItem>
+               Unlock
+           </MudListItem>
+           <MudListItem>
+               Assign/Unassign from groups
+           </MudListItem>
+           <MudListItem>
+               Move to another OU
+           </MudListItem>
+           <MudListItem>
+               Rename
+           </MudListItem>
+           <MudListItem>
+               Create/Delete
+           </MudListItem>
+            <MudListItem>
+                Modify any Active Directory attribute
+            </MudListItem>
+       </NestedList>
+ 
+    </MudListItem>
+    <MudListItem Text="Computer Monitoring">
+        <NestedList>
+            <MudListItem>
+                Real-time reading of CPU and memory usage
+            </MudListItem>
+            <MudListItem>
+                Session List with remote logoff/disconnect/messaging
+            </MudListItem>
+            <MudListItem>
+                Service State
+            </MudListItem>
+            <MudListItem>
+                Drive Detail
+            </MudListItem>
+            
+        </NestedList>
+
+    </MudListItem>
+    <MudListItem Text="Powerful Permissions">
+        <NestedList>
+            <MudListItem>
+                Reusable Access Levels that grant certain access
+            </MudListItem>
+            <MudListItem>
+                Apply permissions to groups or individual users
+            </MudListItem>
+            <MudListItem>
+                User impersonation
+            </MudListItem>
+            <MudListItem>
+                Per-Attribute/Per-Action permission granularity
+            </MudListItem>
+        </NestedList>
+
+    </MudListItem> 
+    <MudListItem Text="User Creation Templates">
+        <NestedList>
+            <MudListItem>
+                Create templates to preconfigure and ensure required fields are filled
+            </MudListItem>
+            <MudListItem>
+                Templates can inherit the properties of other templates
+            </MudListItem>
+
+        </NestedList>
+
+    </MudListItem>
+    <MudListItem Text="Deep Auditing">
+        <NestedList>
+            <MudListItem>
+                A change history is available for every search result
+            </MudListItem>
+            <MudListItem>
+                Detailed logging available to admins
+            </MudListItem>
+        </NestedList>
+
+    </MudListItem>
+    <MudListItem Text="Automatic Updates">
+        <NestedList>
+            <MudListItem>
+                After configuration, automatic scheduled updats are available
+            </MudListItem>
+        </NestedList>
+
+    </MudListItem>
+    <MudListItem Text="Reycle Bin">
+        <NestedList>
+            <MudListItem>
+                Restore deleted Active Dirctory Objects from the recycle bin
+            </MudListItem>
+        </NestedList>
+
+    </MudListItem>
+    <MudListItem>
+        <InFeedAd/>
+    </MudListItem>
+</MudList>
+
+
+
+
+<MudText Typo=Typo.h3>Video Previews</MudText>
+
+
+
+
+<MudGrid>
+    <MudItem  xs="12" sm="3">
+        Quickly search and edit users
+    </MudItem>
+    <MudItem xs="12" sm="9">
+
+        <VideoTile Src="/vid/search-and-edit.webm" />
+    </MudItem>
+
+
+
+
+
+
+
+  
+    <MudItem xs="12" sm="3">
+        Copy group assignments from other users or groups.
+    </MudItem>
+    <MudItem xs="12" sm="9">
+
+        <VideoTile Src="/vid/copy-group-assignements.webm" />
+    </MudItem>
+
+
+    <MudItem xs="12" sm="3">
+        <InArticleAd />
+    </MudItem>
+    <MudItem xs="12" sm="9">
+
+        <DisplayAd/>
+    </MudItem>
+    
+
+
+    <MudItem xs="12" sm="3">
+        Organize your directory from anywhere.
+    </MudItem>
+    <MudItem xs="12" sm="9">
+
+        <VideoTile Src="/vid/move-user.webm" />
+    </MudItem>
+
+
+
+    <MudItem xs="12" sm="3">
+        Same page user chat easily avoids multiple users working on the same task.
+    </MudItem>
+    <MudItem xs="12" sm="9">
+
+        <VideoTile Src="/vid/page-chat.webm" />
+    </MudItem>
+
+    <MudItem xs="12" sm="3">
+        <InArticleAd />
+    </MudItem>
+    <MudItem xs="12" sm="9">
+
+        <DisplayAd />
+    </MudItem>
+
+    <MudItem xs="12" sm="3">
+        Create reusable access levels to assign to your users.
+    </MudItem>
+    <MudItem xs="12" sm="9">
+
+        <VideoTile Src="/vid/create-access-level.webm" />
+    </MudItem>
+
+
+
+
+    <MudItem xs="12" sm="3">
+        Thorough audit logging of all user actions.
+    </MudItem>
+    <MudItem xs="12" sm="9">
+
+        <VideoTile Src="/vid/audit.webm" />
+    </MudItem>
+
+
+    <MudItem xs="12" sm="3">
+        <InArticleAd />
+    </MudItem>
+    <MudItem xs="12" sm="9">
+
+        <DisplayAd />
+    </MudItem>
+
+
+
+</MudGrid>
+
+@code {
+}

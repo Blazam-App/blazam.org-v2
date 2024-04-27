@@ -10,7 +10,7 @@
         effectiveMaxWidth = " width=100%;";
     }
 }
-<MudCard Class="@Class" Style=@(effectiveMaxWidth) Elevation="15">
+<MudCard Class="@Class" Style=@(effectiveMaxWidth) Elevation="@Elevation">
     <MudGrid Class="pa-4 pt-7">
         <MudItem xs="12" md="@(Horizantal==true?3:12)" Class="d-flex">
             <MudStack Class="align-self-center mx-auto" >
@@ -67,6 +67,8 @@
     public bool Horizantal { get; set; } = false;
     [Parameter]
     public string MaxWidth { get; set; }
+    [Parameter]
+    public int Elevation{ get; set; } = 15;
 
     [Parameter]
 

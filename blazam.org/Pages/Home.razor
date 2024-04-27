@@ -6,9 +6,44 @@
               Style=" background-image:url('/img/home_top.png'); background-size:cover; background-position:center center; min-height:800px;">
     <MudGrid Class="pb-3">
         <MudItem sm="12" Class="mx-auto">
-            <MudText Style="color:white; -webkit-text-stroke:thin; -webkit-text-stroke-color:black; text-align: center; font-weight:bold;"
-                     Color=Color.Surface
-                     Typo=Typo.h1 Class="d-flex align-center justify-center mud-width-full py-8">Blazam</MudText>
+            <MudCarousel AutoCycle=true AutoCycleTime=TimeSpan.FromSeconds(10) ShowArrows=true Style="height:300px;" TData="string">
+                <MudCarouselItem Style="background-image:url('/img/Artboard1.png'); background-size:cover;background-position:center;"
+                                 Class="d-grid px-7">
+                    <MudText Style="color:white; -webkit-text-stroke:thin; -webkit-text-stroke-color:black; font-weight:bold;"
+                             Color=Color.Surface
+                             Align="Align.Center"
+                             Class="align-self-center"
+                             Typo=Typo.h2>You don't have non-IT staff using ADUC do you?</MudText>
+        
+                </MudCarouselItem>
+
+                <MudCarouselItem Style="background-image:url('/img/Artboard2.png'); background-size:cover;background-position:center;"
+                                 Class="d-grid px-7">
+                    <MudText Style="color:white; -webkit-text-stroke:thin; -webkit-text-stroke-color:black; font-weight:bold;"
+                             Color=Color.Surface
+                             Align="Align.Center"
+                             Class="align-self-center"
+                             Typo=Typo.h2>Delegate directory control in a much more efficient way</MudText>
+                </MudCarouselItem>
+
+                <MudCarouselItem Style="background-image:url('/img/Artboard3.png'); background-size:cover;background-position:center;" 
+                Class="d-grid px-7">
+                    <MudText Style="color:white; -webkit-text-stroke:thin; -webkit-text-stroke-color:black; font-weight:bold;"
+                             Color=Color.Surface
+                             Align="Align.Center"
+                             Class="align-self-center"
+                             Typo=Typo.h2>Enable your users to perform actions IT would normally handle</MudText>
+                </MudCarouselItem>
+
+                <MudCarouselItem Style="background-image:url('/img/Artboard4.png'); background-size:cover;background-position:center;"
+                                 Class="d-grid px-7">
+                    <MudText Style="color:white; -webkit-text-stroke:thin; -webkit-text-stroke-color:black; font-weight:bold;"
+                             Color=Color.Surface
+                             Align="Align.Center"
+                             Class="align-self-center"
+                             Typo=Typo.h2>Free of charge with no paid add-ons or subscriptions</MudText>
+                </MudCarouselItem>
+            </MudCarousel>
         </MudItem>
 
         <MudItem sm="12" md="4">
@@ -31,9 +66,7 @@
                        Href="/demo"
                        Variant="Variant.Filled"
                        Color="Color.Primary">Try it for yourself</MudButton>
-            <div class="me-0 mb-0 mt-0" style="text-align: center;">
-                <Badges />
-            </div>
+
             <InfoCard Class="mt-3 d-flex align-center justify-center mud-width-full py-8"
                       Icon="@Icons.Material.Filled.AltRoute"
                       Text="Flexible enough to accommodate your custom AD attributes and your organization's user creation procedures." />

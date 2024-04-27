@@ -126,7 +126,9 @@
         if (latestSetup != null)
         {
             <MudLink Href="@latestSetup.DownloadUri" Target=Target.Blank>
-                <MudButton Variant="Variant.Filled" Color="Color.Primary">Download Web Installer</MudButton>
+                <MudButton OnClick=@(async()=>{
+                   await _jsRuntime.InvokeVoidAsync("webInstallerDownloaded", null);
+                   }) Variant="Variant.Filled" Color="Color.Primary">Download Web Installer</MudButton>
 
             </MudLink>
         }
@@ -148,8 +150,10 @@
             <Help>Version: @latestDownload.Version</Help>
             <br />
 
-            <MudLink Href="@latestDownload.DownloadUri" Target="Target.Blank">
-                <MudButton Variant="Variant.Filled" Color="Color.Primary">Download Zip</MudButton>
+            <MudLink  Href="@latestDownload.DownloadUri" Target="Target.Blank">
+                <MudButton OnClick=@(async()=>{
+                   await _jsRuntime.InvokeVoidAsync("zipDownloaded", null);
+                   }) Variant="Variant.Filled" Color="Color.Primary">Download Zip</MudButton>
 
             </MudLink>
             <br />
@@ -178,12 +182,14 @@
     public MainLayout Layout { get; set; }
     ManualDownload? latestDownload;
     ManualDownload? latestSetup;
-
+    [Inject]
+    private IJSRuntime _jsRuntime{ get; set; }
 
     string downloadUri = "";
     string Error = "";
     async Task DownloadWeb()
     {
+        await _jsRuntime.InvokeVoidAsync("webInstallerDownloaded", null);
 
         Nav.NavigateTo(latestSetup.DownloadUri, true);
 
@@ -193,6 +199,7 @@
         await base.OnInitializedAsync();
         latestDownload = await Update.GetLatestUpdateUri();
         latestSetup = await Update.GetLatestSetupUri();
+        await _jsRuntime.InvokeVoidAsync("productViewed", null);
         await InvokeAsync(StateHasChanged);
     }
 }

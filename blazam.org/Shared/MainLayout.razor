@@ -3,12 +3,15 @@
 <PageTitle>BLAZAM</PageTitle>
 <CascadingValue Value="this">
 
-    <MudLayout Style="min-height:98vh;max-width:100vw; background-color:#464646;">
+    <MudLayout Style="min-height:98vh;max-width:100vw;">
         <MainAppBar />
 
-      
 
 
+        <MudDrawer Width="185px" @bind-Open=@DrawerOpen Elevation="3" Class="mud-theme-dark">
+            <NavMenu />
+
+        </MudDrawer>
 
         <MudMainContent Class="mud-height-full">
 
@@ -18,10 +21,12 @@
 
             <MudContainer MaxWidth="MaxWidth.Large" Class=" mud-height-full pa-0" Style="background-color:whitesmoke" >
                 @Body
+
+                <AppFooter />
+
             </MudContainer>
             <MudElement>
 
-                @* <AppFooter /> *@
 
             </MudElement>
         </MudMainContent>
@@ -34,7 +39,7 @@
 
 </CascadingValue>
 @code {
-    bool drawerOpen = true;
+    bool drawerOpen = false;
     public bool DrawerOpen
     {
         get => drawerOpen; set

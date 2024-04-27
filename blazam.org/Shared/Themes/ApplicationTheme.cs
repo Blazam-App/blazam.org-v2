@@ -7,7 +7,7 @@ namespace BLAZAM.Themes
 
     public class ApplicationTheme
     {
-        public static List<ApplicationTheme> Themes = new List<ApplicationTheme> { new BlueTheme()};
+        public static List<ApplicationTheme> Themes = new List<ApplicationTheme> { new AppTheme()};
         protected Palette pallete { get; set; }
         protected PaletteDark darkPallete { get; set; }
         protected string _name;

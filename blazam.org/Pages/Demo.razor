@@ -1,29 +1,31 @@
-﻿<PageTitle>Live Demo - Blazam</PageTitle>
+﻿@page "/demo"
+<PageTitle>Live Demo - Blazam</PageTitle>
+<MudContainer Class="pt-5">
+    <MudText Typo=Typo.h4>Live Demo</MudText>
 
-<MudText Typo=Typo.h4>Live Demo</MudText>
+    <MudText>
+        We've prepared a demo of the app connected to a sample Active Directory Domain. It's  fully
+        functional but there are some considerations...
+    </MudText>
 
-<MudText>
-    We've prepared a demo of the app connected to a sample Active Directory Domain. It's  fully
-    functional but there are some considerations...
-</MudText>
-
-<MudContainer Class="ps-4">
-    <UnorderedListItem>
-        There are no computers in the sample domain, this would be expensive to replicate.
-    </UnorderedListItem>
-    <UnorderedListItem>
-        For security reasons, setting changes are disabled and some information will be censored.
-    </UnorderedListItem>
-    <UnorderedListItem>
-        Remember that this is still beta, there will be bugs.
-    </UnorderedListItem>
-    <UnorderedListItem>
-        Also, the web server and Active Directory/SQL servers are not on the same
-        network, so it will be slower than in a proper environement. Plus it's a free web host.
-    </UnorderedListItem>
+    <MudContainer Class="ps-4">
+        <UnorderedListItem>
+            There are no computers in the sample domain, this would be expensive to replicate.
+        </UnorderedListItem>
+        <UnorderedListItem>
+            For security reasons, setting changes are disabled and some information will be censored.
+        </UnorderedListItem>
+        <UnorderedListItem>
+            Remember that this is still beta, there will be bugs.
+        </UnorderedListItem>
+        <UnorderedListItem>
+            Also, the web server and Active Directory/SQL servers are not on the same
+            network, so it will be slower than in a proper environement. Plus it's a free web host.
+        </UnorderedListItem>
+    </MudContainer>
+    <MudButton Variant=Variant.Filled Color=Color.Primary Href="https://blazam.azurewebsites.net">
+        Go to demo
+    </MudButton>
+    @*<iframe style="width:100%;height:85%" src="https://blazam.azurewebsites.net" />*@
+    <DisplayAd />
 </MudContainer>
-<MudButton Variant=Variant.Filled Color=Color.Primary Href="https://blazam.azurewebsites.net">
-Go to demo
-</MudButton>
-@*<iframe style="width:100%;height:85%" src="https://blazam.azurewebsites.net" />*@
-<DisplayAd/>

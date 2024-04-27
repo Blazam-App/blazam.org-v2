@@ -1,33 +1,63 @@
 ﻿@inject NavigationManager Nav
 
 
-<MudAppBar Color=Color.Primary Elevation="1">
+<MudAppBar Fixed=true Elevation="4">
     @if (mainLayout?.DrawerOpen != true)
     {
-        <MudLink Href="@Nav.Uri">
-            <MudImage Class="app-icon" Src="/img/default_logo.png" />
 
-        </MudLink>
     }
     @if (mainLayout != null)
     {
+       
+      
+        <MudNavLink Match="NavLinkMatch.Prefix" Style="max-width:max-content;" Class="pa-0" Href="/">
+            <MudStack Row=true Class="ma-0 pa-0">
 
-        <MudIconButton Icon="@Icons.Material.Filled.Menu"
-                   Color="Color.Inherit"
-                   Edge="Edge.Start"
-                   OnClick="@((e) => {mainLayout.DrawerOpen=!mainLayout.DrawerOpen; })" />
+                <MudImage Class="app-icon" Src="/img/default_logo.png" Style="height:45px;" />
+                <MudText Class="align-self-center" >Blazam</MudText>
+            </MudStack>
+
+        </MudNavLink>
+      
+        <MudHidden Breakpoint="Breakpoint.MdAndUp" Invert=true>
+            <MudNavLink Href="/features" Match="NavLinkMatch.Prefix" Style="max-width:max-content;" Icon="@Icons.Material.Filled.List">
+                @AppLocalization["Features"]
+            </MudNavLink>
+
+            <MudNavLink Href="/demo" Match="NavLinkMatch.Prefix" Style="max-width:max-content;" Icon="@Icons.Material.Filled.CarRental">
+                Demo
+            </MudNavLink>
+
+            <MudNavLink Href="/download" Match="NavLinkMatch.Prefix" Style="max-width:max-content;" Icon="@Icons.Material.Filled.Download">
+                Download
+            </MudNavLink>
+            <MudNavLink Target="_blank" Href="https://docs.blazam.org/" Style="max-width:max-content;" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Book">
+                @AppLocalization["Documentation"]
+            </MudNavLink>
+            <MudNavLink Href="/support" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Support">
+                Support
+            </MudNavLink>
+        </MudHidden>
+        <MudSpacer />
+        <MudHidden Breakpoint="Breakpoint.SmAndDown" Invert=true>
+            <MudIconButton Icon="@Icons.Material.Filled.Menu"
+                           Color="Color.Inherit"
+                           Edge="Edge.Start"
+                           OnClick="@((e) => {mainLayout.DrawerOpen=!mainLayout.DrawerOpen; })" />
+        </MudHidden>
+    <MudImage Src="https://img.shields.io/github/stars/Blazam-App/BLAZAM"/>
+
     }
 
-   
-    <MudSpacer />
-  
+
+
 </MudAppBar>
 
 
 @code {
-   
+
     [CascadingParameter]
     public MainLayout mainLayout { get; set; }
-   
+
 
 }

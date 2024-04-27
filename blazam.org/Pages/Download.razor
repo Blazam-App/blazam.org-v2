@@ -2,175 +2,177 @@
 @using Octokit;
 
 <PageTitle>Download - Blazam</PageTitle>
-<MudText Typo=Typo.h1>Download</MudText>
-<Badges />
+<MudContainer Class="pt-5">
+    <MudText Typo=Typo.h1>Download</MudText>
+    <Badges />
 
-<MudText Class="mt-5" Typo=Typo.h4>System Requirements</MudText>
-<MudContainer Class="ps-4">
+    <MudText Class="mt-5" Typo=Typo.h4>System Requirements</MudText>
+    <MudContainer Class="ps-4">
 
-    <MudSimpleTable Style="overflow-x: auto;">
-        <thead>
-            <tr>
-
-
-                <th>System Requirements</th>
-                <th>Minimum</th>
-                <th>Recommended</th>
-
-            </tr>
-        </thead>
-        <tbody>
-
-            <tr>
-                <td style="font-weight:bold;">Operating System</td>
-                <td>Microsoft Windows 10</td>
-                <td>Microsoft Server 2019</td>
-            </tr>
-            <tr>
-                <td style="font-weight:bold;">Directory</td>
-                <td>Active Directory 2008R2 Schema</td>
-                <td>Active Directory 2012 Schema</td>
-            </tr>
-            <tr>
-                <td style="font-weight:bold;">Web Server</td>
-                <td>Self-served service</td>
-                <td>IIS</td>
-            </tr>
-            <tr>
-                <td style="font-weight:bold;">CPU</td>
-                <td>1.5Ghz Single Core</td>
-                <td>2Ghz Dual Core</td>
-            </tr>
-
-            <tr>
-                <td style="font-weight:bold;">RAM (Application Only)</td>
-                <td>150MB</td>
-                <td>500MB</td>
-            </tr>
-            <tr>
-                <td style="font-weight:bold;">Disk Space</td>
-                <td>500MB</td>
-                <td>1.5GB</td>
-            </tr>
-
-        </tbody>
-    </MudSimpleTable>
-</MudContainer>
-
-<MudText Class="mt-5" Typo=Typo.h4>Database Options</MudText>
-<MudContainer Class="ps-4">
-
-    <MudSimpleTable Style="overflow-x: auto;">
-        <thead>
-            <tr>
+        <MudSimpleTable Style="overflow-x: auto;">
+            <thead>
+                <tr>
 
 
-                <th>Database Type</th>
-                <th>Setup Required</th>
-                <th>Max recommended concurrent users</th>
+                    <th>System Requirements</th>
+                    <th>Minimum</th>
+                    <th>Recommended</th>
 
-            </tr>
-        </thead>
-        <tbody>
+                </tr>
+            </thead>
+            <tbody>
 
-            <tr>
-                <td>Local SQLite File</td>
-                <td>No</td>
-                <td>2</td>
-            </tr>
-            <tr>
-                <td>MSSQL Express</td>
-                <td>Yes</td>
-                <td>10</td>
-            </tr>
-            <tr>
-                <td>MariaDB</td>
-                <td>Yes</td>
-                <td>20</td>
-            </tr>
-            <tr>
-                <td>MSSQL</td>
-                <td>Yes</td>
-                <td>2000</td>
-            </tr>
-            <tr>
-                <td>MySQL</td>
-                <td>Yes</td>
-                <td>20000</td>
-            </tr>
+                <tr>
+                    <td style="font-weight:bold;">Operating System</td>
+                    <td>Microsoft Windows 10</td>
+                    <td>Microsoft Server 2019</td>
+                </tr>
+                <tr>
+                    <td style="font-weight:bold;">Directory</td>
+                    <td>Active Directory 2008R2 Schema</td>
+                    <td>Active Directory 2012 Schema</td>
+                </tr>
+                <tr>
+                    <td style="font-weight:bold;">Web Server</td>
+                    <td>Self-served service</td>
+                    <td>IIS</td>
+                </tr>
+                <tr>
+                    <td style="font-weight:bold;">CPU</td>
+                    <td>1.5Ghz Single Core</td>
+                    <td>2Ghz Dual Core</td>
+                </tr>
 
-        </tbody>
-    </MudSimpleTable>
+                <tr>
+                    <td style="font-weight:bold;">RAM (Application Only)</td>
+                    <td>150MB</td>
+                    <td>500MB</td>
+                </tr>
+                <tr>
+                    <td style="font-weight:bold;">Disk Space</td>
+                    <td>500MB</td>
+                    <td>1.5GB</td>
+                </tr>
 
-</MudContainer>
+            </tbody>
+        </MudSimpleTable>
+    </MudContainer>
 
+    <MudText Class="mt-5" Typo=Typo.h4>Database Options</MudText>
+    <MudContainer Class="ps-4">
 
-@if (Error == "")
-{
-
-
-    <MudText Class="mt-5" Typo=Typo.h4>Web Installer (Recommended)</MudText>
-
-    <MudText>
-        Installing via the Web installer is the recommended method as it performs all
-        required pre-installation checks automatically, and configures the application to launch
-        based on the chosen installation type.
-    </MudText>
-    <MudText>
-        The Web installer allows installing the application under IIS, or as a stand-alone service installed under
-        Program Files.
-    </MudText>
+        <MudSimpleTable Style="overflow-x: auto;">
+            <thead>
+                <tr>
 
 
-    if (latestSetup != null)
+                    <th>Database Type</th>
+                    <th>Setup Required</th>
+                    <th>Max recommended concurrent users</th>
+
+                </tr>
+            </thead>
+            <tbody>
+
+                <tr>
+                    <td>Local SQLite File</td>
+                    <td>No</td>
+                    <td>2</td>
+                </tr>
+                <tr>
+                    <td>MSSQL Express</td>
+                    <td>Yes</td>
+                    <td>10</td>
+                </tr>
+                <tr>
+                    <td>MariaDB</td>
+                    <td>Yes</td>
+                    <td>20</td>
+                </tr>
+                <tr>
+                    <td>MSSQL</td>
+                    <td>Yes</td>
+                    <td>2000</td>
+                </tr>
+                <tr>
+                    <td>MySQL</td>
+                    <td>Yes</td>
+                    <td>20000</td>
+                </tr>
+
+            </tbody>
+        </MudSimpleTable>
+
+    </MudContainer>
+
+
+    @if (Error == "")
     {
-        <MudLink Href="@latestSetup.DownloadUri" Target=Target.Blank>
-            <MudButton Variant="Variant.Filled" Color="Color.Primary">Download Web Installer</MudButton>
 
-        </MudLink>
+
+        <MudText Class="mt-5" Typo=Typo.h4>Web Installer (Recommended)</MudText>
+
+        <MudText>
+            Installing via the Web installer is the recommended method as it performs all
+            required pre-installation checks automatically, and configures the application to launch
+            based on the chosen installation type.
+        </MudText>
+        <MudText>
+            The Web installer allows installing the application under IIS, or as a stand-alone service installed under
+            Program Files.
+        </MudText>
+
+
+        if (latestSetup != null)
+        {
+            <MudLink Href="@latestSetup.DownloadUri" Target=Target.Blank>
+                <MudButton Variant="Variant.Filled" Color="Color.Primary">Download Web Installer</MudButton>
+
+            </MudLink>
+        }
+        else
+        {
+            <MudText>Getting latest setup...</MudText>
+        }
+
+
+
+        <MudText Class="mt-5" Typo=Typo.h4>Manual Installation</MudText>
+        <MudText>
+            If you need to install in a way that the Web Installer does not allow, or you're feeling particularly adventerous, use the manual
+            installation method. This method requires you to manually set up database connections and your web hosting solution.
+        </MudText>
+
+        if (latestDownload != null)
+        {
+            <Help>Version: @latestDownload.Version</Help>
+            <br />
+
+            <MudLink Href="@latestDownload.DownloadUri" Target="Target.Blank">
+                <MudButton Variant="Variant.Filled" Color="Color.Primary">Download Zip</MudButton>
+
+            </MudLink>
+            <br />
+            <br />
+            <br />
+            <MudLink Href="https://docs.blazam.org/install/manual/" Target=Target.Blank>
+                <MudButton Color=Color.Primary>Install Instructions</MudButton>
+            </MudLink>
+        }
+        else
+        {
+            <MudText>Getting latest version...</MudText>
+        }
     }
     else
     {
-        <MudText>Getting latest setup...</MudText>
+        <MudAlert Background="Background.Danger" Visible>
+            Error collecting latest version from GitHub.
+        </MudAlert>
     }
 
-
-
-    <MudText Class="mt-5" Typo=Typo.h4>Manual Installation</MudText>
-    <MudText>
-        If you need to install in a way that the Web Installer does not allow, or you're feeling particularly adventerous, use the manual
-        installation method. This method requires you to manually set up database connections and your web hosting solution.
-    </MudText>
-
-    if (latestDownload != null)
-    {
-        <Help>Version: @latestDownload.Version</Help>
-        <br />
-
-        <MudLink Href="@latestDownload.DownloadUri" Target="Target.Blank">
-            <MudButton Variant="Variant.Filled" Color="Color.Primary">Download Zip</MudButton>
-
-        </MudLink>
-        <br />
-        <br />
-        <br />
-        <MudLink Href="https://docs.blazam.org/install/manual/" Target=Target.Blank>
-            <MudButton Color=Color.Primary>Install Instructions</MudButton>
-        </MudLink>
-    }
-    else
-    {
-        <MudText>Getting latest version...</MudText>
-    }
-}
-else
-{
-    <MudAlert Background="Background.Danger" Visible>
-        Error collecting latest version from GitHub.
-    </MudAlert>
-}
-
-<DisplayAd/>
+    <DisplayAd />
+</MudContainer>
 @code {
     [CascadingParameter]
     public MainLayout Layout { get; set; }

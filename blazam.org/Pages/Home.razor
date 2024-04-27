@@ -3,46 +3,63 @@
 <PageTitle>Blazam</PageTitle>
 
 <MudContainer Class="justify-content-center align-content-center align-self-center mx-auto mt-0 pb-0 parallax"
-              Style=" background-image:url('/img/home_top.png'); background-size:cover; background-position:center center; min-height:600px;">
+              Style=" background-image:url('/img/home_top.png'); background-size:cover; background-position:center center; min-height:800px;">
     <MudGrid Class="pb-3">
-        <MudItem xs="12">
+        <MudItem sm="12" Class="mx-auto">
             <MudText Style="color:white; -webkit-text-stroke:thin; -webkit-text-stroke-color:black; text-align: center; font-weight:bold;"
                      Color=Color.Surface
                      Typo=Typo.h1 Class="d-flex align-center justify-center mud-width-full py-8">Blazam</MudText>
         </MudItem>
-       
-        <MudItem xs="12" sm="4">
+
+        <MudItem sm="12" md="4">
             <InfoCard Class="d-flex align-center justify-center mud-width-full py-8"
                       Icon="@Icons.Material.Filled.AllInclusive"
-                      Text="A powerful web based Active Directory management tool providing control over users, groups, OU's, computers, and printes." />
-            <MudButton StartIcon="@Icons.Material.Filled.Book" Class="mt-3 d-flex align-center justify-center mud-width-full py-8" Href="https://docs.blazam.org" Variant="Variant.Filled" Color="Color.Tertiary">Access Documentation</MudButton>
+                      Text="A powerful web based Active Directory management tool providing control and delegation over users, groups, OU's, computers, and printes." />
+            <MudButton StartIcon="@Icons.Material.Filled.Book"
+                       Class="mt-3 d-flex align-center justify-center mud-width-full py-8"
+                       Size="Size.Large"
+                       Target="_blank"
+                       Href="https://docs.blazam.org"
+                       Variant="Variant.Filled"
+                       Color="Color.Tertiary">View Documentation</MudButton>
 
         </MudItem>
-        <MudItem xs="12" sm="4">
-            <MudButton StartIcon="@Icons.Material.Filled.Download" Class="d-flex align-center justify-center mud-width-full py-8" Href="/download" Variant="Variant.Filled" Color="Color.Tertiary">Download the app</MudButton>
+        <MudItem sm="12" md="4">
+            <MudButton StartIcon="@Icons.Material.Filled.CarRental"
+                       Class="d-flex align-center justify-center mud-width-full py-8"
+                       Size="Size.Large"
+                       Href="/demo"
+                       Variant="Variant.Filled"
+                       Color="Color.Primary">Try it for yourself</MudButton>
             <div class="me-0 mb-0 mt-0" style="text-align: center;">
                 <Badges />
             </div>
             <InfoCard Class="mt-3 d-flex align-center justify-center mud-width-full py-8"
                       Icon="@Icons.Material.Filled.AltRoute"
-                      Text="Flexible enough to accommodate custom AD attributes and your organization's user creation procedures." />
+                      Text="Flexible enough to accommodate your custom AD attributes and your organization's user creation procedures." />
 
         </MudItem>
-        <MudItem xs="12" sm="4">
+        <MudItem sm="12" md="4">
             <InfoCard Class="d-flex align-center justify-center mud-width-full py-8"
                       Icon="@Icons.Material.Filled.Share"
-                      Text="Enable your users by delegating administrative privileges in a controlled and audited manner, with a modern and intuitive interface." />
-            <MudButton StartIcon="@Icons.Custom.Brands.GitHub" Class="mt-3 d-flex align-center justify-center mud-width-full py-8" Href="https://github.com/Blazam-App/BLAZAM" Variant="Variant.Filled" Color="Color.Tertiary">Explore Source Code</MudButton>
+                      Text="Enable your users by delegating administrative privileges in a controlled and audited manner, with a simple yet powerful pemissions system inside of a modern and intuitive interface." />
+            <MudButton StartIcon="@Icons.Custom.Brands.GitHub"
+                       Class="mt-3 d-flex align-center justify-center mud-width-full py-8"
+                       Size="Size.Large"
+                       Target="_blank"
+                       Href="https://github.com/Blazam-App/BLAZAM"
+                       Variant="Variant.Filled"
+                       Color="Color.Tertiary">Explore Source Code</MudButton>
 
         </MudItem>
     </MudGrid>
-   
-    
+
+
 </MudContainer>
 
-<MudStack Style="width=100%;background-color:#D8DAE4;" Class="py-7 px-7 shadow-lg">
+<MudStack Style=" background-image:url('/img/bg_accent_1.jpg');width:100%" Class="py-7 px-7 shadow-lg ">
     <InfoCard Horizantal=true
-              Class=""
+              Class="mt-6"
               Header="@AppLocalization["Who is it for?"]"
               Icon="@Icons.Material.Filled.Try">
         <MudContainer Class="ps-4">
@@ -56,11 +73,11 @@
 
             </UnorderedListItem>
             <UnorderedListItem>
-                Do you want to easily unlock, or edit a user from your phone?
+                Do you want to easily unlock, or edit a user/group from your phone?
 
             </UnorderedListItem>
             <UnorderedListItem>
-                Setting up ACL's in active directory is complicated, and at the end of the day, you're still stuck with a desktop interface.
+                Setting up ACL's in Active Directory is cumbersome, and at the end of the day, you're still stuck with a desktop interface.
 
             </UnorderedListItem>
             <UnorderedListItem>
@@ -76,7 +93,7 @@
 
         <MudContainer Class="ps-4">
             <UnorderedListItem>
-                Blazam is a flexible Active Directory management portal.
+                Blazam is a flexible Active Directory management web app.
 
             </UnorderedListItem>
             <UnorderedListItem>
@@ -85,35 +102,36 @@
             </UnorderedListItem>
 
             <UnorderedListItem>
-                Manage user group assignents, reset passwords, unlock, disable, and enable accounts.
+                Manage user group assignments, reset passwords, unlock, disable, and enable accounts.
             </UnorderedListItem>
 
             <UnorderedListItem>
-                Configurable user creation templates to share with your users to ensure the proper infomation is provided.
+                Configurable user creation templates to share with your users to ensure the proper information is provided.
             </UnorderedListItem>
 
             <UnorderedListItem>
-                Manage user thumbnail photo.
+                Manage user thumbnail photos, even take them from your phone.
             </UnorderedListItem>
             <UnorderedListItem>
                 Access Active Directory recycle bin from any web browser.
             </UnorderedListItem>
-
+            <UnorderedListItem>
+                Read more on the <MudLink Typo=Typo.h6 Href="/features">features page</MudLink>...
+            </UnorderedListItem>
         </MudContainer>
 
 
     </InfoCard>
     <MudSpacer />
 
-    <InfoCard
-              Header="@AppLocalization["Ready to deploy around the world..."]"
+    <InfoCard Header="@AppLocalization["Ready to deploy around the world..."]"
               Horizantal=true
-              Class="align-self-center"
+              Class="align-self-center mb-6"
               Icon="@Icons.Material.Filled.Translate">
 
 
         <MudContainer Class="ps-4">
-            <MudText Typo="Typo.h6" Class="mb-3">Blazam is available in the following translated languages for your convenience.</MudText>
+            <MudText Typo="Typo.h6">Blazam is available in the following translated languages for your convenience.</MudText>
 
             <MudStack Row=true>
                 <MudStack>
@@ -157,17 +175,66 @@
 
                 </MudStack>
             </MudStack>
-          
-           
+
+
 
         </MudContainer>
+    </InfoCard>
+
+</MudStack>
+
+<MudContainer Style=" background-image:url('/img/home_mid.png'); width::100%; min-height:300px;" Class="parallax">
+
+    <MudGrid Style=" background-image:url('/img/bg_accent_1.jpg'):width:100%" Class="py-7 px-7 shadow-lg">
+        <MudItem xs="12" sm="4" md="3" Class="d-flex">
+            <InfoCard Header="@AppLocalization["Easy to install"]"
+                      Horizantal=false
+                      Class="align-self-center"
+                      Icon="@Icons.Material.Filled.InstallDesktop"
+                      Text="Using a custom web-installer">
+
+            </InfoCard>
+        </MudItem>
+
+        <MudSpacer />
+        <MudItem xs="12" sm="4" md="3" Class="d-flex">
+            <InfoCard Header="@AppLocalization["Easy to update"]"
+                      Horizantal=false
+                      Class="align-self-center"
+                      Icon="@Icons.Material.Filled.Update"
+                      Text="Automatic self-updating available">
+
+            </InfoCard>
+        </MudItem>
+
+        <MudSpacer />
+        <MudItem xs="12" sm="4" md="3" Class="d-flex">
+            <InfoCard Header="@AppLocalization["Easy to use"]"
+                      Horizantal=false
+                      Class="align-self-center"
+                      Icon="@Icons.Material.Filled.Web"
+                      Text="Use on any device from anywhere in the world">
+
+            </InfoCard>
+        </MudItem>
+
+    </MudGrid>
+</MudContainer>
+<MudGrid Style=" background-image:url('/img/bg_accent_1.jpg'):width:100%" Class="py-7 px-7 shadow-lg">
+
+
+    <MudItem xs="12" Class="mt-5">
+        <InfoCard Header="@AppLocalization["Free and Open Source"]"
+                  Horizantal=true
+                  Class="align-self-center"
+                  Icon="@Icons.Custom.Brands.GitHub"
+                  Text="Blazam is offered completely free of charge. The code is also 100% open source for complete transparency.
+              The code-base is hosted in GitHub and receives timely security updates.">
+
         </InfoCard>
+    </MudItem>
 
-    </MudStack>
+</MudGrid>
 
-    <MudContainer Style=" background-image:url('/img/home_mid.jpg'); width::100%; height:300px;" Class="parallax" />
-   
 
-<MudStack Style="width=100%;background-color:#D8DAE4;" Class="py-7 px-7 shadow-lg">
-    </MudStack>
 

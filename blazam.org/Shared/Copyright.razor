@@ -1,11 +1,9 @@
 ﻿@inherits MudElement
 
-<div style="cursor:pointer; width:max-content">
-    <MudTooltip Text="Written by Chris Jacobsen">
-        BLAZAM&#8482; @DateTime.Now.Year
+<MudTooltip Arrow=true  Text="Written by Chris Jacobsen"  RootClass="@Class">
+        <MudText Class="@Class">BLAZAM&#8482; @DateTime.Now.Year</MudText>
     </MudTooltip>
 
-</div>
 
 @code {
 

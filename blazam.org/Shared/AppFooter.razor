@@ -1,12 +1,19 @@
+    <MudStack Style="width:100%;" Class="mt-5" Row=true>
 
-<div Padding="Padding.Is3.OnX">
-    
-    <Row Style="height:1.5em">
-        <Column TextAlignment="TextAlignment.Start">
-            <Copyright Margin="Margin.Is0" />
-        </Column>
-    </Row>
-</div>
+        <MudSpacer />
+        <MudLink Href="/privacy">Privacy</MudLink>-
+        <MudLink Href="/tos">Terms of Service</MudLink>-
+        <MudLink Href="/about">About</MudLink>
+        <MudSpacer />
+
+    </MudStack>
+
+<MudStack Style="width:100%;">
+
+<Copyright Class="ma-2 pa-2 align-self-center" />
+</MudStack>
+
+
 
 @code {
     protected override void OnInitialized()

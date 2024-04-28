@@ -1,20 +1,31 @@
+using ApplicationNews;
 using blazam.org.Data;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Localization;
 using MudBlazor.Services;
+using SixLabors.ImageSharp;
 using System.Globalization;
 
 namespace blazam.org
 {
     public class Program
     {
+        public static IConfiguration? Configuration { get; private set; }
+
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            Configuration = builder.Configuration;
+
+            NewsDbContext.ConnectionString = Configuration.GetConnectionString("DbConnectionString");
             // Add services to the container.
             builder.Services.AddRazorPages();
+
+            builder.Services.AddHttpContextAccessor();
+
             builder.Services.AddServerSideBlazor();
             builder.Services.AddSingleton<WeatherForecastService>();
             builder.Services.AddMudServices(options =>
@@ -39,6 +50,21 @@ namespace blazam.org
                 options.SupportedUICultures = supportedCultures;
             });
 
+            builder.Services.AddScoped<AppAuthenticationStateProvider>();
+            //Set up authentication and api token authentication
+            builder.Services.Configure<CookiePolicyOptions>(options =>
+            {
+
+                options.CheckConsentNeeded = context => true;
+                options.MinimumSameSitePolicy = SameSiteMode.None;
+            });
+            builder.Services.AddAuthentication(
+                CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(AppAuthenticationStateProvider.ApplyAuthenticationCookieOptions());
+
+            //var factory = new NewsDatabaseContextFactory(options.Options);
+            //builder.Services.AddSingleton<NewsDatabaseContextFactory>(factory);
+            builder.Services.AddDbContextFactory<NewsDbContext>();
 
             var app = builder.Build();
 
@@ -56,8 +82,14 @@ namespace blazam.org
 
             app.UseRouting();
 
-            app.MapBlazorHub();
-            app.MapFallbackToPage("/_Host");
+            app.UseAuthentication();
+            app.UseAuthorization();
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+                endpoints.MapBlazorHub();
+                endpoints.MapFallbackToPage("/_Host");
+            });
 
             app.Run();
         }

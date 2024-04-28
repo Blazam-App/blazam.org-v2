@@ -27,7 +27,22 @@
             <MudNavLink Href="/support" Match="NavLinkMatch.Prefix" Style="max-width:max-content;" Icon="@Icons.Material.Filled.Support">
                 Support
             </MudNavLink>
+            <AuthorizeView>
+                <Authorized>
+                    <MudNavLink Href="/news" Match="NavLinkMatch.Prefix" Style="max-width:max-content;" Icon="@Icons.Material.Filled.Newspaper">
+                        Manage News
+                    </MudNavLink>
+                    <MudNavLink Href="/logout" Match="NavLinkMatch.Prefix" Style="max-width:max-content;" Icon="@Icons.Material.Filled.Login">
+                        Logout
+                    </MudNavLink>
+                </Authorized>
+                <NotAuthorized>
+                    <MudNavLink Href="/login" Match="NavLinkMatch.Prefix" Style="max-width:max-content;" Icon="@Icons.Material.Filled.Login">
+                        Login
+                    </MudNavLink>
+                </NotAuthorized>
 
+            </AuthorizeView>
 
 
 

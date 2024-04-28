@@ -1,0 +1,153 @@
+@page "/login"
+@inject ISnackbar SnackBarService
+@inject NavigationManager Nav
+@inject IDbContextFactory<NewsDbContext> Factory
+@inject IJSRuntime JSRuntime
+@if (attemptingSignIn)
+{
+    <MudProgressLinear Color="Color.Info" Indeterminate=true />
+}
+
+
+
+<MudContainer Class="py-5">
+       Blazam News
+
+
+   
+    <form onsubmit="@(()=>{AttemptSignIn();})" class="login-form" method="post" action="/signin" id="login-form">
+        <MudContainer Style="max-width:300px;" Class="py-4">
+            
+                <MudTextField @ref=_usernameTextField Disabled=@attemptingSignIn Class="justify-center" AutoFocus Label="Username" name="Username" @bind-Value=LoginRequest.Username />
+
+                <MudTextField @ref=_passwordTextField Disabled=@attemptingSignIn Class="justify-center" Label="Password" name="Password" InputType="InputType.Password" @bind-Value=LoginRequest.Password />
+                <MudTextField Class="d-none" name="ReturnUrl" Value="@redirectUrl" />
+                <MudButton OnClick=@(()=>{attemptingSignIn=true;}) Class="my-5" ButtonType=ButtonType.Submit Color="Color.Primary">Log In</MudButton>
+
+          
+
+        </MudContainer>
+
+        <MudOverlay Visible="attemptingSignIn" DarkBackground="true" Absolute="true">
+            @*<MudProgressCircular Color="Color.Secondary" Indeterminate="true" />*@
+        </MudOverlay>
+    </form>
+    <MudElement Class="d-flex mud-width-full justify-end">  
+       
+    </MudElement>
+</MudContainer>
+
+<style>
+    .brand-icon {
+        position: fixed;
+        left: 5px;
+        top: 5px;
+    }
+
+        .brand-icon img {
+            max-width: 65px;
+            max-height: 65px;
+        }
+
+    .login-form input {
+        max-width: 300px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+</style>
+
+@code {
+    MudTextField<string>? _usernameTextField;
+    MudTextField<string>? _passwordTextField;
+
+    bool attemptingSignIn = false;
+    string redirectUrl;
+
+    bool DemoCustomLogin = false;
+    LoginRequest LoginRequest = new();
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        var Context = await Factory.CreateDbContextAsync();
+
+        if (Context.Database.ProviderName != "Microsoft.EntityFrameworkCore.InMemory")
+        {
+            if ((await Context.Database.GetPendingMigrationsAsync()).Count() > 0)
+            {
+                await Context.Database.MigrateAsync();
+            }
+        }
+    }
+
+   
+    async void AttemptSignIn()
+    {
+        attemptingSignIn = true;
+        await InvokeAsync(StateHasChanged);
+        string? authenticationResult;
+        if (ValidateInput(out authenticationResult))
+            try
+            {
+                authenticationResult = await JSRuntime.InvokeAsync<string>("attemptSignIn", null);
+            }
+            catch (Exception ex)
+            {
+
+                SnackBarService.Add(ex.Message,Severity.Error);
+            }
+
+        attemptingSignIn = false;
+
+        if (!authenticationResult.IsNullOrEmpty())
+        {
+            int resultCode = int.Parse(authenticationResult);
+
+            switch ((LoginResultStatus)resultCode)
+            {
+
+                case LoginResultStatus.NoUsername:
+                    SnackBarService.Add("Username is missing");
+                    break;
+                 case LoginResultStatus.NoPassword:
+                     SnackBarService.Add("Password is missing");
+                     break;
+                case LoginResultStatus.NoData:
+                    SnackBarService.Add("Login request is missing",Severity.Warning);
+
+                    break;
+                case LoginResultStatus.BadCredentials:
+                    SnackBarService.Add("Username or password not correct", Severity.Warning);
+                    break;
+                
+                case LoginResultStatus.DeniedLogin:
+                    SnackBarService.Add("You are not authorized to login", Severity.Warning);
+
+                    break;
+                case LoginResultStatus.UnknownFailure:
+                    SnackBarService.Add("Unknown error while attempting to log in", Severity.Warning);
+
+                    break;
+                case LoginResultStatus.OK:
+                    attemptingSignIn = true;
+                    Nav.NavigateTo("/", true);
+                    break;
+            }
+
+        }
+
+        await InvokeAsync(StateHasChanged);
+    }
+    bool ValidateInput(out string? validationResult)
+    {
+        validationResult = null;
+        if (LoginRequest.Valid) return true;
+
+
+        // if (LoginRequest.Password.IsNullOrEmpty())
+        //     validationResult = ((int)LoginResultStatus.NoPassword).ToString();
+        if (LoginRequest.Username.IsNullOrEmpty())
+            validationResult = ((int)LoginResultStatus.NoUsername).ToString();
+        return false;
+    }
+
+}

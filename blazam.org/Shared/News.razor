@@ -1,0 +1,67 @@
+﻿@page "/news"
+@inherits AppComponentBase
+
+@attribute [Authorize]
+@if (Context != null)
+{
+    foreach(var item in NewsItems)
+    {
+        <NewsItemCard Item=item ItemChanged="RefreshItems"/>
+    }
+
+    <MudFab OnClick=@(()=>{ShowNewItemDialog();}) StartIcon="@Icons.Material.Filled.Add" />
+    @if (DeletedCount > 0)
+    {
+        <MudFab OnClick=@(()=>{ShowRestoreItemsDialog();}) StartIcon="@Icons.Material.Filled.RestoreFromTrash" />
+    }
+}
+
+@code {
+    private int DeletedCount;
+    private List<NewsItem> NewsItems = new();
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+
+        if (Context.Database.ProviderName != "Microsoft.EntityFrameworkCore.InMemory")
+        {
+            if ((await Context.Database.GetPendingMigrationsAsync()).Count() > 0)
+            {
+                await Context.Database.MigrateAsync();
+            }
+        }
+
+
+        await RefreshItems();
+    }
+
+    private async Task RefreshItems()
+    {
+        NewsItems = await Factory.CreateDbContext().NewsItems.Where(x => x.DeletedAt == null).ToListAsync();
+        DeletedCount = await Factory.CreateDbContext().NewsItems.CountAsync(x => x.DeletedAt != null);
+
+        await InvokeAsync(StateHasChanged);
+    }
+    private async void ShowNewItemDialog()
+    {
+        var options = new DialogOptions { CloseButton = true, DisableBackdropClick = true };
+        var dialog = await DialogService.ShowAsync<CreateItemDialog>("Create New News Item",options);
+        if(dialog.Dialog is CreateItemDialog ciDialog)
+        {
+            ciDialog.OnItemCreated += RefreshItems;
+        }
+    } 
+    private async void ShowRestoreItemsDialog()
+    {
+        var options = new DialogOptions { CloseButton = true, DisableBackdropClick = true };
+        var dialog = await DialogService.ShowAsync<ShowRestoreItemsDialog>("Restore News Item", options);
+        if (dialog.Dialog is ShowRestoreItemsDialog ciDialog)
+        {
+            ciDialog.OnItemRestored += RefreshItems;
+        }
+    }
+
+ 
+
+}
+

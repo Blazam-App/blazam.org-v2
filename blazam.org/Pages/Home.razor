@@ -9,26 +9,25 @@
             <MudCarousel AutoCycle=true AutoCycleTime=TimeSpan.FromSeconds(10) ShowArrows=true Style="height:300px;" TData="string">
                 <MudCarouselItem Style="background-image:url('/img/Artboard1.png'); background-size:cover;background-position:center;"
                                  Class="d-grid px-7">
-                    <MudText Style="color:white; -webkit-text-stroke:thin; -webkit-text-stroke-color:black; font-weight:bold;"
+                    <MudText Style="color:white; font-size:3vw; -webkit-text-stroke:thin; -webkit-text-stroke-color:black; font-weight:bold;"
                              Color=Color.Surface
                              Align="Align.Center"
-                             Class="align-self-center"
-                             Typo=Typo.h2>You don't have non-IT staff using ADUC do you?</MudText>
-        
+                             Class="align-self-center">You don't have non-IT staff using ADUC do you?</MudText>
+
                 </MudCarouselItem>
 
                 <MudCarouselItem Style="background-image:url('/img/Artboard2.png'); background-size:cover;background-position:center;"
                                  Class="d-grid px-7">
-                    <MudText Style="color:white; -webkit-text-stroke:thin; -webkit-text-stroke-color:black; font-weight:bold;"
+                    <MudText Style="color:white; font-size:3vw; -webkit-text-stroke:thin; -webkit-text-stroke-color:black; font-weight:bold;"
                              Color=Color.Surface
                              Align="Align.Center"
                              Class="align-self-center"
                              Typo=Typo.h2>Delegate directory control in a much more efficient way</MudText>
                 </MudCarouselItem>
 
-                <MudCarouselItem Style="background-image:url('/img/Artboard3.png'); background-size:cover;background-position:center;" 
-                Class="d-grid px-7">
-                    <MudText Style="color:white; -webkit-text-stroke:thin; -webkit-text-stroke-color:black; font-weight:bold;"
+                <MudCarouselItem Style="background-image:url('/img/Artboard3.png'); background-size:cover;background-position:center;"
+                                 Class="d-grid px-7">
+                    <MudText Style="color:white; font-size:3vw; -webkit-text-stroke:thin; -webkit-text-stroke-color:black; font-weight:bold;"
                              Color=Color.Surface
                              Align="Align.Center"
                              Class="align-self-center"
@@ -37,7 +36,7 @@
 
                 <MudCarouselItem Style="background-image:url('/img/Artboard4.png'); background-size:cover;background-position:center;"
                                  Class="d-grid px-7">
-                    <MudText Style="color:white; -webkit-text-stroke:thin; -webkit-text-stroke-color:black; font-weight:bold;"
+                    <MudText Style="color:white; font-size:3vw; -webkit-text-stroke:thin; -webkit-text-stroke-color:black; font-weight:bold;"
                              Color=Color.Surface
                              Align="Align.Center"
                              Class="align-self-center"
@@ -260,10 +259,19 @@
         <InfoCard Header="@AppLocalization["Free and Open Source"]"
                   Horizantal=true
                   Class="align-self-center"
-                  Icon="@Icons.Custom.Brands.GitHub"
-                  Text="Blazam is offered completely free of charge. The code is also 100% open source for complete transparency.
-              The code-base is hosted in GitHub and receives timely security updates.">
+                  Icon="@Icons.Custom.Brands.GitHub">
+            <MudStack Class="mt-5" AlignItems="AlignItems.Center">
+                <MudText Typo="Typo.h6">
+                    Blazam is offered completely free of charge. The code is also 100% open source for complete transparency.
+                    The code-base is hosted in GitHub and receives timely security updates.
+                </MudText>
+                <MudText>I won't stop anyone from making a donation to the coffee fund however...</MudText>
 
+                <div id="donate-button-container">
+                    <div id="donate-button"></div>
+
+                </div>
+            </MudStack>
         </InfoCard>
     </MudItem>
 

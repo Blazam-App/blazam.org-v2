@@ -1,0 +1,80 @@
+﻿@inherits AppComponentBase
+<MudDialog>
+    <DialogContent>
+        <MudStack Style="max-width:500px;">
+            <MudTextField Required=true Label="Title" @bind-Value=newItem.Title />
+            <MudDateRangePicker MinDate=@(DateTime.Now-TimeSpan.FromDays(1)) Clearable=true Label="Scheduled Run Time" DateRangeChanged="DateRangeSelected" DateRange="ScheduleExpirationRange" />
+            <MudTextField Label="Link" @bind-Value=newItem.Link />
+            <MudTextField Immediate=true AutoGrow=true Label="Body" @bind-Value=newItem.Body />
+            <MudCard>
+                <MudCardHeader>
+                    Body Preview
+                </MudCardHeader>
+                <MudCardContent>
+                    @((MarkupString)newItem.Body)
+                </MudCardContent>
+            </MudCard>
+            
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudFab OnClick=@(()=>{SaveNewItem();}) StartIcon="@Icons.Material.Filled.Add" />
+        <MudFab OnClick=@(()=>{SaveNewItem(true);}) StartIcon="@Icons.Material.Filled.Publish" />
+
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [Parameter]
+    public AppEvent OnItemCreated { get; set; }
+
+    [CascadingParameter]
+    public MudDialogInstance MudDialog { get; set; }
+
+    private NewsItem newItem = new();
+    private DateTime MinimumExpirationDate
+    {
+        get
+
+        {
+            if (newItem.ScheduledAt == null) return DateTime.Now;
+            if (newItem.ScheduledAt > DateTime.Now) return newItem.ScheduledAt.Value;
+            return DateTime.Now;
+
+        }
+    }
+
+    private DateRange ScheduleExpirationRange => new DateRange(newItem.ScheduledAt, newItem.ExpiresAt);
+    private void DateRangeSelected(DateRange range)
+    {
+        newItem.ScheduledAt = range.Start;
+        newItem.ExpiresAt = range.End;
+    }
+    private async Task SaveNewItem(bool publish = false)
+    {
+        try
+        {
+            if (newItem.Title != null)
+            {
+                newItem.CreatedAt = DateTime.Now;
+                newItem.UpdatedAt = newItem.CreatedAt;
+                newItem.Published = publish;
+                Context.NewsItems.Add(newItem);
+                if (await Context.SaveChangesAsync() > 0)
+                {
+                    newItem = new();
+                    OnItemCreated?.Invoke();
+                    MudDialog.Close();
+                }
+                else
+                {
+                    SnackbarService.Add("Could not save changes", Severity.Warning);
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            SnackbarService.Add(ex.Message, Severity.Error);
+        }
+    }
+}

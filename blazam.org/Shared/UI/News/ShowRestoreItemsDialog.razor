@@ -1,0 +1,78 @@
+﻿@inherits AppComponentBase
+<MudDialog>
+    <DialogContent>
+        <MudStack Style="max-width:800px;">
+            <MudDataGrid Items="DeletedItems">
+                <Columns>
+                    <PropertyColumn Property="x=>x.Title" />
+                    <PropertyColumn Property="x=>x.CreatedAt" />
+                    <PropertyColumn Property="x=>x.DeletedAt" />
+                    <TemplateColumn>
+                        <CellTemplate>
+                            <MudButton Color="Color.Warning"
+                                       Variant="Variant.Filled"
+                                       StartIcon="@Icons.Material.Filled.Restore"
+                                       OnClick="@(()=>{RestoreItem(context.Item);})">Restore</MudButton>
+                        </CellTemplate>
+                    </TemplateColumn>
+                </Columns>
+
+            </MudDataGrid>
+            @foreach (var item in DeletedItems)
+            {
+                <MudStack Row=true>
+                    <MudText>Title: @item.Title</MudText>
+                    <MudText>Created: @item.CreatedAt.ToShortDateString()</MudText>
+                    <MudText>Deleted: @item.DeletedAt.Value.ToShortDateString()</MudText>
+                </MudStack>
+            }
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+
+    </DialogActions>
+</MudDialog>
+
+@code {
+    [Parameter]
+    public AppEvent OnItemRestored { get; set; }
+
+    [CascadingParameter]
+    public MudDialogInstance MudDialog { get; set; }
+
+    private List<NewsItem> DeletedItems = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        DeletedItems = await Context.NewsItems.Where(i => i.DeletedAt != null).ToListAsync();
+    }
+
+    private async Task RestoreItem(NewsItem item, bool publish = false)
+    {
+        try
+        {
+            if (item != null)
+            {
+                item.DeletedAt = null;
+
+                if (await Context.SaveChangesAsync() > 0)
+                {
+
+                    OnItemRestored?.Invoke();
+                    SnackbarService.Add("Item Restord", Severity.Success);
+
+                    MudDialog.Close();
+                }
+                else
+                {
+                    SnackbarService.Add("Could not save changes", Severity.Warning);
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            SnackbarService.Add(ex.Message, Severity.Error);
+        }
+    }
+}

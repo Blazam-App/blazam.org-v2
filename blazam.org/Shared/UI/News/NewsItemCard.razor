@@ -1,0 +1,154 @@
+@inherits AppComponentBase
+<MudCard>
+    @if (Item != null)
+    {
+
+
+        <MudCardHeader>
+            <MudStack Spacing=0 Row=true Class="mud-width-full">
+                <MudText Typo="Typo.h5">@Item.Title</MudText>
+                <MudSpacer />
+
+                <MudStack Spacing=0>
+                    <MudSwitch UnCheckedColor=Color.Error Color=Color.Success Label="Published" @bind-Checked=Item.Published />
+                    <MudSwitch Color=Color.Warning Label="Debug" @bind-Checked=Item.DevOnly />
+                </MudStack>
+            </MudStack>
+        </MudCardHeader>
+        <MudCardContent>
+            <MudStack Spacing=0>
+                <MudStack Row=true>
+                    <MudStack Spacing=0>
+                        @if (Item.Icon != null)
+                        {
+                            <Base64Image Data="@Item.Icon.ResizeRawImage(150)" />
+                            <MudButton OnClick="@(()=>{RemoveIcon();})">Remove Icon</MudButton>
+                        }
+                        <MudFileUpload Context="fileContext" T="IBrowserFile" FilesChanged="((file)=>{LoadIcon(file);})">
+                            <ButtonTemplate>
+                                <MudButton HtmlTag="label"
+                                           Variant="Variant.Filled"
+                                           Color="Color.Primary"
+                                           StartIcon="@Icons.Material.Filled.CloudUpload"
+                                           for=@fileContext.Id>
+                                    Upload Icon
+                                </MudButton>
+                            </ButtonTemplate>
+                        </MudFileUpload>
+                    </MudStack>
+                   
+                    <MudTextField Label="Title" Immediate=true Required=true T="string" @bind-Text=@Item.Title />
+
+                </MudStack>
+                <MudTextField Label="Link" T="string" @bind-Text=@Item.Link />
+
+                <MudTextField AutoGrow=true Label="Body" Immediate=true @bind-Value=@Item.Body />
+                <MudCard>
+                    <MudCardHeader>
+                        Preview
+                    </MudCardHeader>
+                    <MudCardContent>
+                        @((MarkupString)Item.Body)
+                    </MudCardContent>
+                </MudCard>
+                <MudDatePicker Label="Start Date" @bind-Date=@Item.ScheduledAt />
+                <MudDatePicker Label="End Date" MinDate="@Item.ScheduledAt" @bind-Date=@Item.ExpiresAt />
+
+            </MudStack>
+
+        </MudCardContent>
+        <MudCardActions>
+            <MudStack Class="mud-width-full">
+                <MudStack Class="mud-width-full" Row=true>
+                    <MudSpacer />
+                    <MudButton Color=Color.Error
+                               Variant=Variant.Filled
+                               StartIcon="@Icons.Material.Outlined.Delete"
+                               OnClick="@(()=>{DeleteItem();})">
+                        Delete
+                    </MudButton>
+
+                    <MudButton Color=Color.Success
+                               Variant=Variant.Filled
+                               StartIcon="@Icons.Material.Outlined.Delete"
+                               OnClick="@(()=>{SaveItem();})">
+                        Save
+                    </MudButton>
+                </MudStack>
+                <MudStack Row=true Class="mud-width-full">
+                    <MudText Typo="Typo.caption">Created: @Item.CreatedAt.ToShortDateString() @Item.CreatedAt.ToShortTimeString()</MudText>
+                    <MudSpacer />
+                    <MudText Typo="Typo.caption">Updated: @Item.UpdatedAt.ToShortDateString() @Item.UpdatedAt.ToShortTimeString()</MudText>
+                </MudStack>
+            </MudStack>
+
+
+        </MudCardActions>
+
+    }
+
+</MudCard>
+@code {
+    [Parameter]
+    public EventCallback ItemChanged { get; set; }
+    [Parameter]
+    public NewsItem? Item { get; set; }
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        Item = await Context.NewsItems.FirstOrDefaultAsync(i => i.Id == Item.Id);
+    }
+    private async void RemoveIcon()
+    {
+        Item.Icon = null;
+        //await Context.SaveChangesAsync();
+        await InvokeAsync(StateHasChanged);
+    }
+
+    private async void LoadIcon(IBrowserFile e)
+    {
+        byte[] fileBytes;
+        using (var stream = e.OpenReadStream(5000000))
+        {
+            using (var memoryStream = new MemoryStream())
+            {
+                await stream.CopyToAsync(memoryStream);
+                fileBytes = memoryStream.ToArray();
+            }
+        }
+        var bytes = await e.ToByteArrayAsync(5000000);
+        Item.Icon = bytes;
+
+        //await Context.SaveChangesAsync();
+        await InvokeAsync(StateHasChanged);
+
+
+    }
+    private async Task DeleteItem()
+    {
+        Item.Published = false;
+        Item.DeletedAt = DateTime.Now;
+        SaveItem();
+    }
+    private async Task SaveItem()
+    {
+    
+            //await RefreshItems();
+            var matching = Context.NewsItems.FirstOrDefault(x => x.Id == Item.Id);
+            if (matching != null)
+            {
+                matching.CopyFrom(Item);
+                matching.UpdatedAt = DateTime.Now;
+
+                if (await Context.SaveChangesAsync() > 0)
+                {
+
+                    ItemChanged.InvokeAsync();
+                    SnackbarService.Add("Changes have been saved", Severity.Success);
+                }
+            }
+        
+
+
+    }
+}

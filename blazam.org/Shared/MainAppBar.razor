@@ -28,6 +28,7 @@
                 <MudStack AlignItems="AlignItems.End" Row=true>
                     <Badges/>
                     <MudImage Src="https://img.shields.io/github/stars/Blazam-App/BLAZAM" />
+                    
                 </MudStack>
                 <MudStack AlignItems="AlignItems.End" Row=true>
                     <MudButton Color=Color.Primary Size=Size.Large Href="/features" Match="NavLinkMatch.Prefix" Style="max-width:max-content;" Icon="@Icons.Material.Filled.List">
@@ -47,11 +48,24 @@
                     <MudButton Color=Color.Primary Size=Size.Large Href="/support" Match="NavLinkMatch.Prefix" Style="max-width:max-content;" Icon="@Icons.Material.Filled.Support">
                         Support
                     </MudButton>
-
-                    <div id="donate-button-container">
-                        <div id="donate-button"></div>
-                       
-                    </div>
+                    
+                    <AuthorizeView>
+                        <Authorized>
+                            <MudButton Color=Color.Tertiary Size=Size.Large Href="/news" Match="NavLinkMatch.Prefix" Style="max-width:max-content;" Icon="@Icons.Material.Filled.Newspaper">
+                                Manage News
+                            </MudButton>
+                            <MudButton Color=Color.Primary Size=Size.Large Href="/logout" Match="NavLinkMatch.Prefix" Style="max-width:max-content;" Icon="@Icons.Material.Filled.Login">
+                                Logout
+                            </MudButton>
+                        </Authorized>
+                        <NotAuthorized>
+                            <MudButton Color=Color.Primary Size=Size.Large Href="/login" Match="NavLinkMatch.Prefix" Style="max-width:max-content;" Icon="@Icons.Material.Filled.Login">
+                                Login
+                            </MudButton>
+                        </NotAuthorized>
+                        
+                    </AuthorizeView>
+                    
 
                 </MudStack>
             </MudStack>

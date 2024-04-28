@@ -47,6 +47,12 @@
                     <MudButton Color=Color.Primary Size=Size.Large Href="/support" Match="NavLinkMatch.Prefix" Style="max-width:max-content;" Icon="@Icons.Material.Filled.Support">
                         Support
                     </MudButton>
+
+                    <div id="donate-button-container">
+                        <div id="donate-button"></div>
+                       
+                    </div>
+
                 </MudStack>
             </MudStack>
 
@@ -69,6 +75,14 @@
 
     [CascadingParameter]
     public MainLayout mainLayout { get; set; }
+    [Inject]
+    private IJSRuntime jsRuntime { get; set; }
 
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await base.OnAfterRenderAsync(firstRender);
+        if (firstRender)
+            _ = Task.Delay(500).ContinueWith((state) => { jsRuntime.InvokeVoidAsyncIgnoreErrors("showDonateButton", null); });
+    }
 
 }

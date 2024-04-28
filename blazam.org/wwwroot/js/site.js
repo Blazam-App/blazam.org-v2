@@ -1,5 +1,5 @@
 ﻿window.productViewed = async () => {
-    gtag('event', 'view_product', {
+    gtag('event', 'view_item', {
         'event_category': 'engagement',  // You can customize this category
         'event_label': 'download_page'        // Replace with your product identifier
     });
@@ -33,4 +33,15 @@ window.zipDownloaded = async () => {
             }
         ]
     });
+}
+window.showDonateButton = async () => {
+    PayPal.Donation.Button({
+        env: 'production',
+        hosted_button_id: 'HNDBMY9BX7SJ2',
+        image: {
+            src: 'https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif',
+            alt: 'Donate with PayPal button',
+            title: 'PayPal - The safer, easier way to pay online!',
+        }
+    }).render('#donate-button');
 }

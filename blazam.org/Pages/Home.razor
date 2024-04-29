@@ -234,7 +234,7 @@
                       Horizantal=false
                       Class="align-self-center"
                       Icon="@Icons.Material.Filled.Update"
-                      Text="Automatic self-updating available">
+                      Text="Automatic self-updating*">
 
             </InfoCard>
         </MudItem>
@@ -245,11 +245,16 @@
                       Horizantal=false
                       Class="align-self-center"
                       Icon="@Icons.Material.Filled.Web"
-                      Text="Use on any device from anywhere in the world">
+                      Text="Use on any device from anywhere in the world**">
 
             </InfoCard>
         </MudItem>
+        <MudItem xs="12" Class="d-flex">
 
+            <MudText Class="me-5" Typo="Typo.caption" Style="color:white;">* Some manual configuration is necessary</MudText>
+            <MudText Typo="Typo.caption" Style="color:white;">** Don't just expose this app to the internet, use a VPN or other tunneling technology</MudText>
+
+        </MudItem>
     </MudGrid>
 </MudContainer>
 <MudGrid Style=" background-image:url('/img/bg_accent_1.jpg'):width:100%" Class="py-7 px-7 shadow-lg">
@@ -267,15 +272,11 @@
                 </MudText>
                 <MudText>I won't stop anyone from making a donation to the coffee fund however...</MudText>
 
-                <div id="donate-button-container">
-                    <div id="donate-button"></div>
-
-                </div>
+                <DonateButton />
             </MudStack>
         </InfoCard>
     </MudItem>
 
 </MudGrid>
-
 
 

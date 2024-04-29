@@ -1,14 +1,14 @@
 ﻿@page "/demo"
 <PageTitle>Live Demo - Blazam</PageTitle>
-<MudContainer Class="pt-5">
-    <MudText Typo=Typo.h4>Live Demo</MudText>
+<MudContainer MaxWidth=MaxWidth.Medium Class="pt-7">
+    <MudText Align=Align.Center Class="mb-7" Typo=Typo.h4>Live Demo</MudText>
 
-    <MudText>
+    <MudText Class="mb-5" Typo="Typo.h6">
         We've prepared a demo of the app connected to a sample Active Directory Domain. It's  fully
         functional but there are some considerations...
     </MudText>
 
-    <MudContainer Class="ps-4">
+    <MudContainer Class="ps-4 mb-5">
         <UnorderedListItem>
             There are no computers in the sample domain, this would be expensive to replicate.
         </UnorderedListItem>
@@ -23,9 +23,12 @@
             network, so it will be slower than in a proper environement. Plus it's a free web host.
         </UnorderedListItem>
     </MudContainer>
-    <MudButton Variant=Variant.Filled Color=Color.Primary Href="https://blazam.azurewebsites.net">
+    <MudButton Class="mx-auto d-table mb-3" Variant=Variant.Filled Color=Color.Primary Href="https://blazam.azurewebsites.net">
         Go to demo
     </MudButton>
+    <MudText Align="Align.Center">
+        The demo always runs the latest nightly build.
+    </MudText>
     @*<iframe style="width:100%;height:85%" src="https://blazam.azurewebsites.net" />*@
     <DisplayAd />
 </MudContainer>

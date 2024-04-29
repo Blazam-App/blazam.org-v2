@@ -1,0 +1,14 @@
+<div id="donate-button-container">
+    <div id="donate-button"></div>
+
+</div>
+@code {
+    [Inject]
+    private IJSRuntime jsRuntime { get; set; }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await base.OnAfterRenderAsync(firstRender);
+        await jsRuntime.InvokeVoidAsyncIgnoreErrors("showDonateButton", null);
+    }
+}

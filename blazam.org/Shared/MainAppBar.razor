@@ -27,7 +27,7 @@
             <MudStack AlignItems="AlignItems.End" Spacing="3">
                 <MudStack AlignItems="AlignItems.End" Row=true>
                     <Badges/>
-                    <MudImage Src="https://img.shields.io/github/stars/Blazam-App/BLAZAM" />
+                   @*  <MudImage Src="https://img.shields.io/github/stars/Blazam-App/BLAZAM" /> *@
                     
                 </MudStack>
                 <MudStack AlignItems="AlignItems.End" Row=true>
@@ -89,14 +89,6 @@
 
     [CascadingParameter]
     public MainLayout mainLayout { get; set; }
-    [Inject]
-    private IJSRuntime jsRuntime { get; set; }
-
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        await base.OnAfterRenderAsync(firstRender);
-        if (firstRender)
-            _ = Task.Delay(500).ContinueWith((state) => { jsRuntime.InvokeVoidAsyncIgnoreErrors("showDonateButton", null); });
-    }
+   
 
 }

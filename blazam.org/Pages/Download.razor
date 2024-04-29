@@ -2,11 +2,10 @@
 @using Octokit;
 
 <PageTitle>Download - Blazam</PageTitle>
-<MudContainer Class="pt-5">
-    <MudText Typo=Typo.h1>Download</MudText>
-    <Badges />
+<MudContainer MaxWidth=MaxWidth.Medium Class="pt-7">
+    <MudText Align="Align.Center" Class="mb-7" Typo=Typo.h4>Download</MudText>
 
-    <MudText Class="mt-5" Typo=Typo.h4>System Requirements</MudText>
+    <MudText Class="mt-5" Typo=Typo.h5>System Requirements</MudText>
     <MudContainer Class="ps-4">
 
         <MudSimpleTable Style="overflow-x: auto;">
@@ -14,7 +13,7 @@
                 <tr>
 
 
-                    <th>System Requirements</th>
+                    <th>Requirement</th>
                     <th>Minimum</th>
                     <th>Recommended</th>
 
@@ -45,21 +44,21 @@
 
                 <tr>
                     <td style="font-weight:bold;">RAM (Application Only)</td>
-                    <td>150MB</td>
-                    <td>500MB</td>
+                    <td>250MB</td>
+                    <td>1GB</td>
                 </tr>
                 <tr>
                     <td style="font-weight:bold;">Disk Space</td>
-                    <td>500MB</td>
-                    <td>1.5GB</td>
+                    <td>600MB</td>
+                    <td>2GB</td>
                 </tr>
 
             </tbody>
         </MudSimpleTable>
     </MudContainer>
 
-    <MudText Class="mt-5" Typo=Typo.h4>Database Options</MudText>
-    <MudContainer Class="ps-4">
+    <MudText Class="mt-5" Typo=Typo.h5>Database Options</MudText>
+    <MudContainer Class="ps-4 mb-10">
 
         <MudSimpleTable Style="overflow-x: auto;">
             <thead>
@@ -77,7 +76,11 @@
                 <tr>
                     <td>Local SQLite File</td>
                     <td>No</td>
-                    <td>2</td>
+                    <td>
+                        <MudTooltip ShowOnClick=true Text="Sqlite is designed for a single user, DO NOT USE for more than testing. Audit failures can occur.">
+                            <MudBadge Color="Color.Error" Dot=true>1</MudBadge>
+                        </MudTooltip>
+                    </td>
                 </tr>
                 <tr>
                     <td>MSSQL Express</td>
@@ -108,65 +111,75 @@
 
     @if (Error == "")
     {
+        <InfoCard Elevation=0 Class="mb-7" Horizantal=false Icon="@Icons.Material.Outlined.InstallDesktop">
+            <MudText Align=Align.Center Class="mt-5 mb-3" Typo=Typo.h5>Web Installer (Recommended)</MudText>
+
+            <MudText Align=Align.Center Class="mb-5">
+                Installing via the Web installer is the recommended method as it performs all
+                required pre-installation checks automatically, and configures the application to launch
+                based on the chosen installation type.
+            </MudText>
+            <MudText Align=Align.Center Class="mb-5">
+                The Web installer allows installing the application under IIS, or as a stand-alone service installed under
+                Program Files.
+            </MudText>
 
 
-        <MudText Class="mt-5" Typo=Typo.h4>Web Installer (Recommended)</MudText>
+            @if (latestSetup != null)
+            {
+                <MudLink Class="mx-auto d-table" Href="@latestSetup.DownloadUri" Target=Target.Blank>
+                    <MudButton OnClick=@(async()=>{
+                       await _jsRuntime.InvokeVoidAsync("webInstallerDownloaded", null);
+                       }) Variant="Variant.Filled" Color="Color.Primary">Download Web Installer</MudButton>
 
-        <MudText>
-            Installing via the Web installer is the recommended method as it performs all
-            required pre-installation checks automatically, and configures the application to launch
-            based on the chosen installation type.
-        </MudText>
-        <MudText>
-            The Web installer allows installing the application under IIS, or as a stand-alone service installed under
-            Program Files.
-        </MudText>
-
-
-        if (latestSetup != null)
-        {
-            <MudLink Href="@latestSetup.DownloadUri" Target=Target.Blank>
-                <MudButton OnClick=@(async()=>{
-                   await _jsRuntime.InvokeVoidAsync("webInstallerDownloaded", null);
-                   }) Variant="Variant.Filled" Color="Color.Primary">Download Web Installer</MudButton>
-
-            </MudLink>
-        }
-        else
-        {
-            <MudText>Getting latest setup...</MudText>
-        }
+                </MudLink>
+            }
+            else
+            {
+                <MudText>Getting latest setup...</MudText>
+            }
 
 
+        </InfoCard>
 
-        <MudText Class="mt-5" Typo=Typo.h4>Manual Installation</MudText>
-        <MudText>
-            If you need to install in a way that the Web Installer does not allow, or you're feeling particularly adventerous, use the manual
-            installation method. This method requires you to manually set up database connections and your web hosting solution.
-        </MudText>
+        <InfoCard Elevation=0 Horizantal=false Icon="@Icons.Material.Outlined.IntegrationInstructions">
+            <MudText Align=Align.Center Class="mt-5 mb-3" Typo=Typo.h5>Manual Installation</MudText>
 
-        if (latestDownload != null)
-        {
-            <Help>Version: @latestDownload.Version</Help>
-            <br />
+            <MudText Align=Align.Center Class="mb-5">
+                If you need to install in a way that the Web Installer does not allow, or you're feeling particularly adventerous, use the manual
+                installation method.
 
-            <MudLink  Href="@latestDownload.DownloadUri" Target="Target.Blank">
-                <MudButton OnClick=@(async()=>{
-                   await _jsRuntime.InvokeVoidAsync("zipDownloaded", null);
-                   }) Variant="Variant.Filled" Color="Color.Primary">Download Zip</MudButton>
+            </MudText>
+            <MudText Align=Align.Center Class="mb-5">
+                This method requires you to manually set up database connections and your web hosting solution.
 
-            </MudLink>
-            <br />
-            <br />
-            <br />
-            <MudLink Href="https://docs.blazam.org/install/manual/" Target=Target.Blank>
-                <MudButton Color=Color.Primary>Install Instructions</MudButton>
-            </MudLink>
-        }
-        else
-        {
-            <MudText>Getting latest version...</MudText>
-        }
+            </MudText>
+
+
+            @if (latestDownload != null)
+            {
+                <MudLink Class="mx-auto d-table mb-1" Href="https://docs.blazam.org/install/manual/" Target=Target.Blank>
+                    <MudButton Color=Color.Primary>Please start with the instructions</MudButton>
+
+                </MudLink>
+                <MudText Align=Align.Center Class="">then</MudText>
+                <MudLink Class="mx-auto d-table mt-4" Href="@latestDownload.DownloadUri" Target=Target.Blank>
+                    <MudButton OnClick=@(async()=>{
+                       await _jsRuntime.InvokeVoidAsync("zipDownloaded", null);
+                       }) Variant="Variant.Filled" Color="Color.Primary">Download @("v" + latestDownload?.Version)</MudButton>
+
+                </MudLink>
+
+            }
+            else
+            {
+                <MudText>Getting latest version...</MudText>
+            }
+
+
+        </InfoCard>
+
+
     }
     else
     {
@@ -183,7 +196,7 @@
     ManualDownload? latestDownload;
     ManualDownload? latestSetup;
     [Inject]
-    private IJSRuntime _jsRuntime{ get; set; }
+    private IJSRuntime _jsRuntime { get; set; }
 
     string downloadUri = "";
     string Error = "";

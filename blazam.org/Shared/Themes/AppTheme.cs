@@ -17,7 +17,7 @@ namespace BLAZAM.Themes
             {
                 TextPrimary = "#050505",
                 TextSecondary = Color.SlateGray.ToHex(),
-                ActionDefault = "#9aafc3",
+                ActionDefault = "#9aafc3",                 
                 HoverOpacity = 0,
                 Surface = Color.WhiteSmoke.ToHex(),
                 DarkContrastText = Color.WhiteSmoke.ToHex(),

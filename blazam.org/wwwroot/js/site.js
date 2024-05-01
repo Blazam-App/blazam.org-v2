@@ -34,6 +34,19 @@ window.zipDownloaded = async () => {
         ]
     });
 }
+window.googleAdsConversion = async(url) =>{
+ var callback = function () {
+    if (typeof(url) != 'undefined') {
+      window.location = url;
+    }
+  };
+  gtag('event', 'conversion', {
+      'send_to': 'AW-16531657046/75emCNfb1asZENai9Mo9',
+      'event_callback': callback
+  });
+  return false;
+}
+
 window.showDonateButton = async () => {
     PayPal.Donation.Button({
         env: 'production',

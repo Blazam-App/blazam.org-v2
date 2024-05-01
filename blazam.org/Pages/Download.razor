@@ -115,24 +115,35 @@
             <MudText Align=Align.Center Class="mt-5 mb-3" Typo=Typo.h5>Web Installer (Recommended)</MudText>
 
             <MudText Align=Align.Center Class="mb-5">
-                Installing via the Web installer is the recommended method as it performs all
+                Installing via the Web Installer is the recommended method as it performs all
                 required pre-installation checks automatically, and configures the application to launch
                 based on the chosen installation type.
             </MudText>
             <MudText Align=Align.Center Class="mb-5">
-                The Web installer allows installing the application under IIS, or as a stand-alone service installed under
+                The Web Installer allows installing the application under IIS, or as a stand-alone service installed under
                 Program Files.
             </MudText>
 
+            <MudAlert Class="mb-5" Variant=Variant.Outlined Severity="Severity.Warning">
+                <MudText Align=Align.Center>The web installer is not signed. Code-signing certificates are very expensive (~$400USD/yr) and the free nature of this
+                    app prevents us from purchasing one.<br /><br />
+                You will therefore see a Windows Defender warning when running the installer. To allow it to continue,
+                    click "More Info" and then "Run Anyway".<br /><br />
+                Best practices would say to check the MD5 of the file downloaded and ensure it matches the value
+                shown below, then scan with AV/run in sandbox, before installing.
+                </MudText>
+            </MudAlert>
 
             @if (latestSetup != null)
             {
                 <MudLink Class="mx-auto d-table" Href="@latestSetup.DownloadUri" Target=Target.Blank>
                     <MudButton OnClick=@(async()=>{
-                       await _jsRuntime.InvokeVoidAsync("webInstallerDownloaded", null);
+                       await _jsRuntime.InvokeVoidAsync("webInstallerDownloaded", new object[]{Nav.Uri});
+                       await _jsRuntime.InvokeVoidAsync("googleAdsConversion", null);
                        }) Variant="Variant.Filled" Color="Color.Primary">Download Web Installer</MudButton>
 
                 </MudLink>
+                <MudText Align=Align.Center Class="mt-5 mud-width-full d-block" Typo="Typo.caption">MD5: 9ac3c73acb8c3f943a5a33b09ae4fb9f</MudText>
             }
             else
             {
@@ -165,6 +176,7 @@
                 <MudText Align=Align.Center Class="">then</MudText>
                 <MudLink Class="mx-auto d-table mt-4" Href="@latestDownload.DownloadUri" Target=Target.Blank>
                     <MudButton OnClick=@(async()=>{
+                       await _jsRuntime.InvokeVoidAsync("googleAdsConversion", new object[]{Nav.Uri});
                        await _jsRuntime.InvokeVoidAsync("zipDownloaded", null);
                        }) Variant="Variant.Filled" Color="Color.Primary">Download @("v" + latestDownload?.Version)</MudButton>
 

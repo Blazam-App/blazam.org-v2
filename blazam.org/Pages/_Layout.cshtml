@@ -95,6 +95,9 @@
         gtag('js', new Date());
 
         gtag('config', 'AW-16531657046');
+
+
+
     </script>
 
 
@@ -130,6 +133,20 @@
         gtag('js', new Date());
 
         gtag('config', 'G-2DBNXP1ZYM');
+
+
+
+
+
+        var callback = function () {
+            if (typeof (url) != 'undefined') {
+                window.location = url;
+            }
+        };
+        gtag('event', 'conversion', {
+            'send_to': 'AW-16531657046/tbWBCJiyr6sZENai9Mo9',
+            'event_callback': callback
+        });
     </script>
 
 

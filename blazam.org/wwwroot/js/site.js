@@ -34,17 +34,11 @@ window.zipDownloaded = async () => {
         ]
     });
 }
-window.googleAdsConversion = async(url) =>{
- var callback = function () {
-    if (typeof(url) != 'undefined') {
-      window.location = url;
-    }
-  };
+window.googleAdsConversion = async() =>{
+
   gtag('event', 'conversion', {
-      'send_to': 'AW-16531657046/75emCNfb1asZENai9Mo9',
-      'event_callback': callback
+      'send_to': 'AW-16531657046/75emCNfb1asZENai9Mo9'
   });
-  return false;
 }
 
 window.showDonateButton = async () => {

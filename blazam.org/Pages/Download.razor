@@ -138,7 +138,7 @@
             {
                 <MudLink Class="mx-auto d-table" Href="@latestSetup.DownloadUri" Target=Target.Blank>
                     <MudButton OnClick=@(async()=>{
-                       await _jsRuntime.InvokeVoidAsync("webInstallerDownloaded", new object[]{Nav.Uri});
+                       await _jsRuntime.InvokeVoidAsync("webInstallerDownloaded", null);
                        await _jsRuntime.InvokeVoidAsync("googleAdsConversion", null);
                        }) Variant="Variant.Filled" Color="Color.Primary">Download Web Installer</MudButton>
 
@@ -176,7 +176,7 @@
                 <MudText Align=Align.Center Class="">then</MudText>
                 <MudLink Class="mx-auto d-table mt-4" Href="@latestDownload.DownloadUri" Target=Target.Blank>
                     <MudButton OnClick=@(async()=>{
-                       await _jsRuntime.InvokeVoidAsync("googleAdsConversion", new object[]{Nav.Uri});
+                       await _jsRuntime.InvokeVoidAsync("googleAdsConversion", null);
                        await _jsRuntime.InvokeVoidAsync("zipDownloaded", null);
                        }) Variant="Variant.Filled" Color="Color.Primary">Download @("v" + latestDownload?.Version)</MudButton>
 

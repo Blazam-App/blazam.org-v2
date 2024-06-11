@@ -17,18 +17,41 @@
 
 
 
+            <MudStack Row=true>
+                <MudHidden Breakpoint="Breakpoint.LgAndUp" Invert=true>
+
+                    <MudStack AlignItems=AlignItems.End Style="margin-top:56px; width:200px;">
+                       
+
+                    </MudStack>
+                </MudHidden>
+                <MudContainer MaxWidth="MaxWidth.Large" Class=" mud-height-full pa-0" Style="margin-top:56px;background-color:whitesmoke">
+                    @Body
 
 
-            <MudContainer MaxWidth="MaxWidth.Large" Class=" mud-height-full pa-0" Style="margin-top:56px;background-color:whitesmoke" >
-                @Body
 
-                <AppFooter />
+                    <AppFooter />
 
-            </MudContainer>
-            <MudElement>
+                </MudContainer>
+                <MudHidden Breakpoint="Breakpoint.LgAndUp" Invert=true>
+
+                    <MudStack AlignItems=AlignItems.Start Style="margin-top:56px; width:200px;">
+                        <DisplayAd />
+                        <DisplayAd />
+                        <DisplayAd />
+
+                    </MudStack>
+                </MudHidden>
+
+            </MudStack>
+
+            <MudStack Class="d-inline">
+                <DisplayAd />
+                <DisplayAd />
+                <DisplayAd />
 
 
-            </MudElement>
+            </MudStack>
         </MudMainContent>
 
         @*<NotificationBroadcastListener />*@

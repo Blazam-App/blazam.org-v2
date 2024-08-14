@@ -42,11 +42,6 @@
                              Class="align-self-center"
                              Typo=Typo.h2>Free of charge with no paid add-ons or subscriptions</MudText>
                 </MudCarouselItem>
-                <MudCarouselItem Style=""
-                                 Class="d-grid px-7">
-                    <DisplayAd />
-
-                </MudCarouselItem>
             </MudCarousel>
         </MudItem>
 
@@ -54,6 +49,7 @@
             <InfoCard Class="d-flex align-center justify-center mud-width-full py-8"
                       Icon="@Icons.Material.Filled.AllInclusive"
                       Text="A powerful web based Active Directory management tool providing control and delegation over users, groups, OU's, computers, and printes." />
+
             <MudButton StartIcon="@Icons.Material.Filled.Book"
                        Class="mt-3 d-flex align-center justify-center mud-width-full py-8"
                        Size="Size.Large"
@@ -95,7 +91,7 @@
 </MudContainer>
 
 <MudStack Style=" background-image:url('/img/bg_accent_1.jpg');width:100%" Class="py-7 px-7 shadow-lg ">
-    <InfoCard Horizantal=true
+    <InfoCard Horizontal=true
               Class="mt-6"
               Header="@AppLocalization["Who is it for?"]"
               Icon="@Icons.Material.Filled.Try">
@@ -126,7 +122,7 @@
     </InfoCard>
     <MudSpacer />
 
-    <InfoCard Horizantal=true Icon="@Icons.Material.Filled.Whatshot" Class="align-self-center" Header="@AppLocalization["What is Blazam?"]">
+    <InfoCard Horizontal=true Icon="@Icons.Material.Filled.Whatshot" Class="align-self-center" Header="@AppLocalization["What is Blazam?"]">
 
         <MudContainer Class="ps-4">
             <UnorderedListItem>
@@ -162,7 +158,7 @@
     <MudSpacer />
 
     <InfoCard Header="@AppLocalization["Ready to deploy around the world..."]"
-              Horizantal=true
+              Horizontal=true
               Class="align-self-center mb-6"
               Icon="@Icons.Material.Filled.Translate">
 
@@ -225,7 +221,7 @@
     <MudGrid Style=" background-image:url('/img/bg_accent_1.jpg'):width:100%" Class="py-7 px-7 shadow-lg">
         <MudItem xs="12" sm="4" md="3" Class="d-flex">
             <InfoCard Header="@AppLocalization["Easy to install"]"
-                      Horizantal=false
+                      Horizontal=false
                       Class="align-self-center"
                       Icon="@Icons.Material.Filled.InstallDesktop"
                       Text="Using a custom web-installer">
@@ -236,7 +232,7 @@
         <MudSpacer />
         <MudItem xs="12" sm="4" md="3" Class="d-flex">
             <InfoCard Header="@AppLocalization["Easy to update"]"
-                      Horizantal=false
+                      Horizontal=false
                       Class="align-self-center"
                       Icon="@Icons.Material.Filled.Update"
                       Text="Automatic self-updating*">
@@ -247,7 +243,7 @@
         <MudSpacer />
         <MudItem xs="12" sm="4" md="3" Class="d-flex">
             <InfoCard Header="@AppLocalization["Easy to use"]"
-                      Horizantal=false
+                      Horizontal=false
                       Class="align-self-center"
                       Icon="@Icons.Material.Filled.Web"
                       Text="Use on any device from anywhere in the world**">
@@ -267,7 +263,7 @@
 
     <MudItem xs="12" Class="mt-5">
         <InfoCard Header="@AppLocalization["Free and Open Source"]"
-                  Horizantal=true
+                  Horizontal=true
                   Class="align-self-center"
                   Icon="@Icons.Custom.Brands.GitHub">
             <MudStack Class="mt-5" AlignItems="AlignItems.Center">

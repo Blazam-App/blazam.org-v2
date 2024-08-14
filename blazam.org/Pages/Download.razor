@@ -53,6 +53,11 @@
                     <td>2GB</td>
                 </tr>
 
+                <tr>
+                    <td style="font-weight:bold;">.NET Core</td>
+                    <td>.NET Core 8</td>
+                    <td>.NET Core 8+</td>
+                </tr>
             </tbody>
         </MudSimpleTable>
     </MudContainer>
@@ -111,7 +116,7 @@
 
     @if (Error == "")
     {
-        <InfoCard Elevation=0 Class="mb-7" Horizantal=false Icon="@Icons.Material.Outlined.InstallDesktop">
+        <InfoCard Elevation=0 Class="mb-7" Horizontal=false Icon="@Icons.Material.Outlined.InstallDesktop">
             <MudText Align=Align.Center Class="mt-5 mb-3" Typo=Typo.h5>Web Installer (Recommended)</MudText>
 
             <MudText Align=Align.Center Class="mb-5">
@@ -153,7 +158,7 @@
 
         </InfoCard>
 
-        <InfoCard Elevation=0 Horizantal=false Icon="@Icons.Material.Outlined.IntegrationInstructions">
+        <InfoCard Elevation=0 Horizontal=false Icon="@Icons.Material.Outlined.IntegrationInstructions">
             <MudText Align=Align.Center Class="mt-5 mb-3" Typo=Typo.h5>Manual Installation</MudText>
 
             <MudText Align=Align.Center Class="mb-5">

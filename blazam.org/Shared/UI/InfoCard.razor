@@ -12,7 +12,7 @@
 }
 <MudCard Class="@Class" Style=@(effectiveMaxWidth) Elevation="@Elevation">
     <MudGrid Class="pa-4 pt-7">
-        <MudItem xs="12" md="@(Horizantal==true?3:12)" Class="d-flex">
+        <MudItem xs="12" md="@(Horizontal==true?3:12)" Class="d-flex">
             <MudStack Class="align-self-center mx-auto" >
                 <MudIcon Icon="@Icon" Size=Size.Large Style="font-size:50px;" Class="align-self-center" Color="Color.Tertiary" />
 
@@ -24,7 +24,7 @@
             </MudStack>
         </MudItem>
 
-        <MudItem xs="12" md="@(Horizantal==true?9:12)" Class="d-flex">
+        <MudItem xs="12" md="@(Horizontal==true?9:12)" Class="d-flex">
             @if (Text != null)
             {
                 <MudText Typo=Typo.h6 Class="align-self-center mx-auto pb-4" Style="text-align:center;">@Text</MudText>
@@ -38,33 +38,14 @@
             }
         </MudItem>
     </MudGrid>
-    @* <MudStack Row=Horizantal Style="width:100%;" Class="pa-4 pt-7">
-        <MudStack Class="align-self-center">
-            <MudIcon Icon="@Icon" Size=Size.Large Style="font-size:50px;" Class="align-self-center" Color="Color.Tertiary" />
-
-            @if (Header != null)
-            {
-                <MudText Style="text-align: center;" Typo=Typo.h4 ElementId="h0">@Header</MudText>
-
-            }
-        </MudStack>
-        <MudSpacer />
-        @if (Text != null)
-        {
-            <MudText Typo=Typo.h6 Style="text-align:center;">@Text</MudText>
-        }
-        @if (ChildContent != null)
-        {
-            @ChildContent
-        }
-    </MudStack> *@
+   
 </MudCard>
 
 @code {
     [Parameter]
     public string? Header { get; set; }
     [Parameter]
-    public bool Horizantal { get; set; } = false;
+    public bool Horizontal { get; set; } = false;
     [Parameter]
     public string MaxWidth { get; set; }
     [Parameter]

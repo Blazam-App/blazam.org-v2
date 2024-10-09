@@ -22,13 +22,17 @@
 
         </MudNavLink>
         <MudSpacer />
+        
+        <audio controls>
+        <source src="podcast.wav"/>
+            Your browser does not support the audio element.
+        </audio>
+        <MudSpacer />
 
         <MudHidden Breakpoint="Breakpoint.MdAndUp" Invert=true>
             <MudStack AlignItems="AlignItems.End" Spacing="3">
                 <MudStack AlignItems="AlignItems.End" Row=true>
-                    <Badges/>
-                   @*  <MudImage Src="https://img.shields.io/github/stars/Blazam-App/BLAZAM" /> *@
-                    
+                    <Badges/>                    
                 </MudStack>
                 <MudStack AlignItems="AlignItems.End" Row=true>
                     <MudButton Color=Color.Primary Size=Size.Large Href="/features" Match="NavLinkMatch.Prefix" Style="max-width:max-content;" Icon="@Icons.Material.Filled.List">

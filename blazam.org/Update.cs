@@ -10,7 +10,7 @@ namespace blazam.org
      
                 var client = new GitHubClient(new ProductHeaderValue("BLAZAM-APP"));
                 var releases = await client.Repository.Release.GetAll("Blazam-App", "Blazam");
-                var branchReleases = releases.Where(r => r.TagName.Contains("Stable", StringComparison.OrdinalIgnoreCase));
+                var branchReleases = releases.Where(r => r.TagName.Contains("Release", StringComparison.OrdinalIgnoreCase));
                 var latestRelese = branchReleases.FirstOrDefault()?.Assets.FirstOrDefault();
                 var filename = Path.GetFileNameWithoutExtension(latestRelese.Name);
                 var latestVersion = filename.Substring(filename.IndexOf("-v") + 2);

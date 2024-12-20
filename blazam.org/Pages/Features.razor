@@ -4,9 +4,30 @@
     <MudText Typo=Typo.h2 Class="pb-7" Style="text-align:center">Features</MudText>
     <MudStack Style=" background-image:url('/img/home_mid.jpg');width:100%;padding-top:100px;padding-bottom:100px;" Class="px-7 mx-0 shadow-lg parallax">
 
-        <InfoCard Header="User, Group, Computer, and Printer Management"
+
+
+        <InfoCard Header="Personalized User Dashboard"
                   Horizontal=true
                   Class="mx-auto"
+                  MaxWidth="800px"
+                  Icon="@Icons.Material.Filled.DashboardCustomize">
+            <UnorderedListItem>
+                Customizable dashboard with moveable widgets
+            </UnorderedListItem>
+            <UnorderedListItem>
+                Respects applied user permissions
+            </UnorderedListItem>
+            <UnorderedListItem>
+                Provides quick, yet deep insight into critical areas of your Active Directory environment
+            </UnorderedListItem>
+        </InfoCard>
+
+
+
+
+           <InfoCard Header="User, Group, Computer, and Printer Management"
+                  Horizontal=true
+                  Class="mx-auto mt-7"
                   MaxWidth="800px"
                   Icon="@Icons.Material.Filled.ManageAccounts">
             <UnorderedListItem>
@@ -84,10 +105,36 @@
                 Create templates to preconfigure and ensure required fields are filled
             </UnorderedListItem>
             <UnorderedListItem>
+                Pre-define group memberships and organizational unit placement
+            </UnorderedListItem>
+            <UnorderedListItem>
                 Templates can inherit the properties of other templates
+            </UnorderedListItem>
+            <UnorderedListItem>
+                Optionally send a welcome email with credentials to the new user
             </UnorderedListItem>
 
         </InfoCard>
+
+
+
+        <InfoCard Header="Change Notifications"
+                  Horizontal=true
+                  Class="mx-auto mt-7"
+                  MaxWidth="900px"
+                  Icon="@Icons.Material.Filled.Notifications">
+             <UnorderedListItem>
+                Notification system using an OU subscription model with per-action granularity
+            </UnorderedListItem>
+            <UnorderedListItem>
+                Receive notifications in-app, via e-mail, or both for each subscription
+            </UnorderedListItem>
+            <UnorderedListItem>
+                Subscription inheritance, including propagation, with block subscriptions an option at any level
+            </UnorderedListItem>
+        </InfoCard>
+
+
 
 
         <InfoCard Header="Deep Auditing"
@@ -174,6 +221,23 @@
                 In-depth code reviews
             </UnorderedListItem>
 
+        </InfoCard>
+        
+        
+        
+        
+        <InfoCard Header="External Integrations"
+                  Horizontal=true
+                  Class="mx-auto mt-7"
+                  MaxWidth="900px"
+                  Icon="@Icons.Material.Filled.Api">
+            <MudText Align="Align.Center" Typo="Typo.h6">New to Blazam is the ability to integrate with external systems.</MudText>
+            <UnorderedListItem>
+                REST API
+            </UnorderedListItem> 
+            <UnorderedListItem>
+                Webhook notification subscription system
+            </UnorderedListItem>
         </InfoCard>
         <DisplayAd/>
     </MudStack>

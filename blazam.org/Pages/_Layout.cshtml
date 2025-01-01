@@ -21,6 +21,9 @@
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="theme-color" content="#ffffff">
 
+
+
+
     <script async src="https://fundingchoicesmessages.google.com/i/pub-6618349802202909?ers=1" nonce="3_mXQL4rLddxvi4GfDzFeQ"></script>
     <script nonce="3_mXQL4rLddxvi4GfDzFeQ">(function () { function signalGooglefcPresent() { if (!window.frames['googlefcPresent']) { if (document.body) { const iframe = document.createElement('iframe'); iframe.style = 'width: 0; height: 0; border: none; z-index: -1000; left: -1000px; top: -1000px;'; iframe.style.display = 'none'; iframe.name = 'googlefcPresent'; document.body.appendChild(iframe); } else { setTimeout(signalGooglefcPresent, 0); } } } signalGooglefcPresent(); })();</script>
     <script>
@@ -101,12 +104,26 @@
 
     </script>
 
-
+    <!-- Google Tag Manager -->
+    <script>
+        (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','GTM-KJS8QZL8');</script>
+    <!-- End Google Tag Manager -->
 
 
     <component type="typeof(HeadOutlet)" render-mode="ServerPrerendered" />
 </head>
 <body style="background-color:#676767;">
+    <!-- Google Tag Manager (noscript) -->
+    <noscript>
+        <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KJS8QZL8"
+                height="0" width="0" style="display:none;visibility:hidden"></iframe>
+    </noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
     @RenderBody()
 
     <div id="blazor-error-ui">
@@ -155,5 +172,21 @@
 
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6618349802202909"
             crossorigin="anonymous"></script>
+
+    <script>
+        // Wait until a 'reload' button appears
+        new MutationObserver((mutations, observer) => {
+            if (document.querySelector('#components-reconnect-modal h5 a')) {
+                // Now every 10 seconds, see if the server appears to be back, and if so, reload
+                async function attemptReload() {
+                    await fetch(''); // Check the server really is back
+                    location.reload();
+                }
+                observer.disconnect();
+                attemptReload();
+                setInterval(attemptReload, 10000);
+            }
+        }).observe(document.body, { childList: true, subtree: true });
+    </script>
 </body>
 </html>

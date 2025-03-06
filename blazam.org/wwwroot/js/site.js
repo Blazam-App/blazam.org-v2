@@ -19,6 +19,7 @@ window.webInstallerDownloaded = async () => {
             }
         ]
     });
+    gtag('event', 'conversion', { 'send_to': 'AW-16531657046/75emCNfb1asZENai9Mo9' });
 }
 window.zipDownloaded = async () => {
     gtag('event', 'add_to_cart', {

@@ -1,0 +1,20 @@
+﻿@page "/installed"
+
+<h3>Installed</h3>
+<MudText Align="Align.Center">Thank you for installing Blazam.</MudText>
+<br />
+<MudText Align="Align.Center">Please wait while the application reboots.</MudText>
+<br />
+@code {
+
+    [Inject]
+    private IJSRuntime _jsRuntime { get; set; }
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        _=Task.Run(() => {
+            Task.Delay(5000);
+            _=_jsRuntime.InvokeVoidAsync("back", null);
+        });
+    }
+}

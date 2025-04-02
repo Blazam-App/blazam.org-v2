@@ -42,7 +42,9 @@ window.googleAdsConversion = async() =>{
       'send_to': 'AW-16531657046/75emCNfb1asZENai9Mo9'
   });
 }
-
+window.back = async () => {
+    history.back();
+}
 window.showDonateButton = async () => {
     PayPal.Donation.Button({
         env: 'production',

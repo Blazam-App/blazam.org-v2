@@ -4,26 +4,39 @@
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
             http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
-	<!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
 
 
 	<url>
 		<loc>https://blazam.org/</loc>
-		<lastmod>2025-03-15T21:09:58+00:00</lastmod>
+		<lastmod>2025-04-15T21:09:58+00:00</lastmod>
+	</url>
+	<url>
 		<loc>https://blazam.org/download</loc>
-		<lastmod>2025-03-15T21:09:58+00:00</lastmod>
+		<lastmod>2025-04-15T21:09:58+00:00</lastmod>
+	</url>
+	<url>
 		<loc>https://blazam.org/features</loc>
-		<lastmod>2025-03-15T21:09:58+00:00</lastmod>
+		<lastmod>2025-04-15T21:09:58+00:00</lastmod>
+	</url>
+	<url>
 		<loc>https://blazam.org/demo</loc>
-		<lastmod>2025-03-15T21:09:58+00:00</lastmod>
+		<lastmod>2025-04-15T21:09:58+00:00</lastmod>
+	</url>
+	<url>
 		<loc>https://blazam.org/tos</loc>
-		<lastmod>2025-03-15T21:09:58+00:00</lastmod>
+		<lastmod>2025-04-15T21:09:58+00:00</lastmod>
+	</url>
+	<url>
 		<loc>https://blazam.org/about</loc>
-		<lastmod>2025-03-15T21:09:58+00:00</lastmod>
+		<lastmod>2025-04-15T21:09:58+00:00</lastmod>
+	</url>
+	<url>
 		<loc>https://blazam.org/privacy</loc>
-		<lastmod>2025-03-15T21:09:58+00:00</lastmod>
+		<lastmod>2025-04-15T21:09:58+00:00</lastmod>
+	</url>
+	<url>
 		<loc>https://blazam.org/support</loc>
-		<lastmod>2025-03-15T21:09:58+00:00</lastmod>
+		<lastmod>2025-04-15T21:09:58+00:00</lastmod>
 	</url>
 
 

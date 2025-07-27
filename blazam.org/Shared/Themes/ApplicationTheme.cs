@@ -23,7 +23,7 @@ namespace BLAZAM.Themes
             {
                 return new MudTheme
                 {
-                    Palette = pallete,
+                    PaletteLight = pallete,
                     PaletteDark = darkPallete,
 
                 };

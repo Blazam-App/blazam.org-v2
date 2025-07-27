@@ -38,7 +38,7 @@
     public AppEvent OnItemRestored { get; set; }
 
     [CascadingParameter]
-    public MudDialogInstance MudDialog { get; set; }
+    public MudDialog MudDialog { get; set; }
 
     private List<NewsItem> DeletedItems = new();
 
@@ -62,7 +62,7 @@
                     OnItemRestored?.Invoke();
                     SnackbarService.Add("Item Restord", Severity.Success);
 
-                    MudDialog.Close();
+                    MudDialog.CloseAsync();
                 }
                 else
                 {

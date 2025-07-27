@@ -10,8 +10,8 @@
                 <MudSpacer />
 
                 <MudStack Spacing=0>
-                    <MudSwitch UnCheckedColor=Color.Error Color=Color.Success Label="Published" @bind-Checked=Item.Published />
-                    <MudSwitch Color=Color.Warning Label="Debug" @bind-Checked=Item.DevOnly />
+                    <MudSwitch T=bool UnCheckedColor=Color.Error Color=Color.Success Label="Published" @bind-Checked=Item.Published />
+                    <MudSwitch T=bool Color=Color.Warning Label="Debug" @bind-Checked=Item.DevOnly />
                 </MudStack>
             </MudStack>
         </MudCardHeader>
@@ -25,15 +25,13 @@
                             <MudButton OnClick="@(()=>{RemoveIcon();})">Remove Icon</MudButton>
                         }
                         <MudFileUpload Context="fileContext" T="IBrowserFile" FilesChanged="((file)=>{LoadIcon(file);})">
-                            <ButtonTemplate>
+                 
                                 <MudButton HtmlTag="label"
                                            Variant="Variant.Filled"
                                            Color="Color.Primary"
-                                           StartIcon="@Icons.Material.Filled.CloudUpload"
-                                           for=@fileContext.Id>
+                                           StartIcon="@Icons.Material.Filled.CloudUpload">
                                     Upload Icon
                                 </MudButton>
-                            </ButtonTemplate>
                         </MudFileUpload>
                     </MudStack>
                    

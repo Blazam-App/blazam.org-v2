@@ -44,7 +44,7 @@
     }
     private async void ShowNewItemDialog()
     {
-        var options = new DialogOptions { CloseButton = true, DisableBackdropClick = true };
+        var options = new DialogOptions { CloseButton = true, BackdropClick = false };
         var dialog = await DialogService.ShowAsync<CreateItemDialog>("Create New News Item",options);
         if(dialog.Dialog is CreateItemDialog ciDialog)
         {
@@ -53,7 +53,7 @@
     } 
     private async void ShowRestoreItemsDialog()
     {
-        var options = new DialogOptions { CloseButton = true, DisableBackdropClick = true };
+        var options = new DialogOptions { CloseButton = true, BackdropClick = false };
         var dialog = await DialogService.ShowAsync<ShowRestoreItemsDialog>("Restore News Item", options);
         if (dialog.Dialog is ShowRestoreItemsDialog ciDialog)
         {

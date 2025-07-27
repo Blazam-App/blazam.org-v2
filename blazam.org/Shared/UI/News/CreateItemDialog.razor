@@ -29,7 +29,7 @@
     public AppEvent OnItemCreated { get; set; }
 
     [CascadingParameter]
-    public MudDialogInstance MudDialog { get; set; }
+    public MudDialog MudDialog { get; set; }
 
     private NewsItem newItem = new();
     private DateTime MinimumExpirationDate
@@ -64,7 +64,7 @@
                 {
                     newItem = new();
                     OnItemCreated?.Invoke();
-                    MudDialog.Close();
+                    MudDialog.CloseAsync();
                 }
                 else
                 {

@@ -25,29 +25,54 @@ namespace blazam.org.Pages.API
             var latestRelese = branchReleases.FirstOrDefault()?.Assets.FirstOrDefault();
             if (latestRelese != null)
             {
-                return Redirect(latestRelese.BrowserDownloadUrl);
+                // Create a Uri object to guarantee you have an absolute URL
+                var downloadUri = new Uri(latestRelese.BrowserDownloadUrl);
+
+                // Redirect using the absolute URI string
+                return Redirect(downloadUri.AbsoluteUri);
             }
             return NotFound();
         }
-
-        [HttpGet("setup.exe")]
-        public async Task<IActionResult> GetExe()
+        [HttpGet("zip")]
+        public async Task<IActionResult> GetZip()
         {
             var client = new GitHubClient(new ProductHeaderValue("BLAZAM-APP"));
-            var releases = await client.Repository.Release.GetAll("Blazam-App", "BlazamSetup");
-            var latestRelese = releases.FirstOrDefault()?.Assets.FirstOrDefault();
+            var releases = await client.Repository.Release.GetAll("Blazam-App", "Blazam");
+            var branchReleases = releases.Where(r => r.TagName.Contains("Release", StringComparison.OrdinalIgnoreCase));
+            var latestRelese = branchReleases.FirstOrDefault()?.Assets.FirstOrDefault();
             if (latestRelese != null)
             {
-                return Redirect(latestRelese.BrowserDownloadUrl);
+                // Create a Uri object to guarantee you have an absolute URL
+                var downloadUri = new Uri(latestRelese.BrowserDownloadUrl);
+
+                // Redirect using the absolute URI string
+                return Redirect(downloadUri.AbsoluteUri);
             }
             return NotFound();
         }
 
-        [HttpGet("linux_install.sh")]
+        [HttpGet("beta")]
+        public async Task<IActionResult> GetBeta()
+        {
+            var client = new GitHubClient(new ProductHeaderValue("BLAZAM-APP"));
+            var releases = await client.Repository.Release.GetAll("Blazam-App", "Blazam");
+            var branchReleases = releases.Where(r => r.TagName.Contains("Beta-Dev", StringComparison.OrdinalIgnoreCase));
+            var latestRelese = branchReleases.FirstOrDefault()?.Assets.FirstOrDefault();
+            if (latestRelese != null)
+            {
+                // Create a Uri object to guarantee you have an absolute URL
+                var downloadUri = new Uri(latestRelese.BrowserDownloadUrl);
+
+                // Redirect using the absolute URI string
+                return Redirect(downloadUri.AbsoluteUri);
+            }
+            return NotFound();
+        }
+
+            [HttpGet("linux_install.sh")]
         public IActionResult GetLinuxScript()
         {
-            var path = Path.Combine(_hostingEnvironment.WebRootPath, "install.sh");
-            return PhysicalFile(path, "text/plain", "install.sh");
+            return Redirect("https://raw.githubusercontent.com/Blazam-App/BLAZAM/refs/heads/v1-Dev-Beta/linux_install.sh");
         }
     }
 }

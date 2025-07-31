@@ -32,21 +32,22 @@
                 </MudText>
             </MudAlert>
 
-            @if (latestSetup != null)
-            {
-                <MudLink Class="mx-auto d-table" Href="@latestSetup.DownloadUri" Target=Target.Blank>
+                <MudLink Class="mx-auto d-table" Href="/download/setup.exe" Target=Target.Blank>
                     <MudButton OnClick=@(async()=>{
                        await _jsRuntime.InvokeVoidAsync("webInstallerDownloaded", null);
                        await _jsRuntime.InvokeVoidAsync("googleAdsConversion", null);
                        }) Variant="Variant.Filled" Color="Color.Primary">Download Web Installer</MudButton>
 
                 </MudLink>
+                
+                <MudLink Class="mx-auto d-table mt-4" Href="/download/linux_insall.exe" Target=Target.Blank>
+                    <MudButton OnClick=@(async()=>{
+                               await _jsRuntime.InvokeVoidAsync("googleAdsConversion", null);
+                               await _jsRuntime.InvokeVoidAsync("shDownloaded", null);
+                               }) Variant="Variant.Filled" Color="Color.Primary">Download Linux Installer</MudButton>
+                </MudLink>
                 <MudText Align=Align.Center Class="mt-5 mud-width-full d-block" Typo="Typo.caption">MD5: 2f6321fa76ce81bb696c3d1ec56a347c</MudText>
-            }
-            else
-            {
-                <MudText>Getting latest setup...</MudText>
-            }
+           
 
 
         </InfoCard>
@@ -65,26 +66,27 @@
             </MudText>
 
 
-            @if (latestDownload != null)
-            {
+         
                 <MudLink Class="mx-auto d-table mb-1" Href="https://docs.blazam.org/install/manual/" Target=Target.Blank>
                     <MudButton Color=Color.Primary>Please start with the instructions</MudButton>
 
                 </MudLink>
                 <MudText Align=Align.Center Class="">then</MudText>
-                <MudLink Class="mx-auto d-table mt-4" Href="@latestDownload.DownloadUri" Target=Target.Blank>
+                <MudLink Class="mx-auto d-table mt-4" Href="/download/zip" Target=Target.Blank>
                     <MudButton OnClick=@(async()=>{
                        await _jsRuntime.InvokeVoidAsync("googleAdsConversion", null);
                        await _jsRuntime.InvokeVoidAsync("zipDownloaded", null);
-                       }) Variant="Variant.Filled" Color="Color.Primary">Download @("v" + latestDownload?.Version)</MudButton>
+                       }) Variant="Variant.Filled" Color="Color.Primary">Download Zip</MudButton>
 
                 </MudLink>
+                <MudLink Class="mx-auto d-table mt-4" Href="/download/beta" Target=Target.Blank>
+                    <MudButton OnClick=@(async()=>{
+                               await _jsRuntime.InvokeVoidAsync("googleAdsConversion", null);
+                               await _jsRuntime.InvokeVoidAsync("shDownloaded", null);
+                               }) Variant="Variant.Filled" Color="Color.Primary">Download Linux Zip</MudButton>
+                </MudLink>
 
-            }
-            else
-            {
-                <MudText>Getting latest version...</MudText>
-            }
+            
 
 
         </InfoCard>
@@ -101,34 +103,22 @@
     @* <DisplayAd /> *@
 </MudContainer>
 @code {
+
     [CascadingParameter]
     public MainLayout Layout { get; set; }
-    ManualDownload? latestDownload;
-    ManualDownload? latestSetup;
+
     [Inject]
     private IJSRuntime _jsRuntime { get; set; }
 
     string downloadUri = "";
     string Error = "";
-    async Task DownloadWeb()
-    {
-        await _jsRuntime.InvokeVoidAsync("webInstallerDownloaded", null);
 
-        Nav.NavigateTo(latestSetup.DownloadUri, true);
-
-    }
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         await base.OnAfterRenderAsync(firstRender);
         if (firstRender)
             await _jsRuntime.InvokeVoidAsync("productViewed", null);
+    }
 
-    }
-    protected override async Task OnInitializedAsync()
-    {
-        await base.OnInitializedAsync();
-        latestDownload = await Update.GetLatestUpdateUri();
-        latestSetup = await Update.GetLatestSetupUri();
-        await InvokeAsync(StateHasChanged);
-    }
+  
 }

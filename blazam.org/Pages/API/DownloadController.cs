@@ -30,7 +30,7 @@ namespace blazam.org.Pages.API
             return NotFound();
         }
 
-        [HttpGet("exe")]
+        [HttpGet("setup.exe")]
         public async Task<IActionResult> GetExe()
         {
             var client = new GitHubClient(new ProductHeaderValue("BLAZAM-APP"));
@@ -43,7 +43,7 @@ namespace blazam.org.Pages.API
             return NotFound();
         }
 
-        [HttpGet("sh")]
+        [HttpGet("linux_install.sh")]
         public IActionResult GetLinuxScript()
         {
             var path = Path.Combine(_hostingEnvironment.WebRootPath, "install.sh");

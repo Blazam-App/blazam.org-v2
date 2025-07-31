@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.JSInterop;
 using Octokit;
 
 namespace blazam.org.Pages.API
@@ -33,18 +34,16 @@ namespace blazam.org.Pages.API
             }
             return NotFound();
         }
-        [HttpGet("zip")]
-        public async Task<IActionResult> GetZip()
+        [HttpGet("setup.exe")]
+        public async Task<IActionResult> GetExe()
         {
             var client = new GitHubClient(new ProductHeaderValue("BLAZAM-APP"));
-            var releases = await client.Repository.Release.GetAll("Blazam-App", "Blazam");
-            var branchReleases = releases.Where(r => r.TagName.Contains("Release", StringComparison.OrdinalIgnoreCase));
-            var latestRelese = branchReleases.FirstOrDefault()?.Assets.FirstOrDefault();
+            var releases = await client.Repository.Release.GetAll("Blazam-App", "BlazamSetup");
+            var latestRelese = releases.FirstOrDefault()?.Assets.FirstOrDefault();
             if (latestRelese != null)
             {
                 // Create a Uri object to guarantee you have an absolute URL
                 var downloadUri = new Uri(latestRelese.BrowserDownloadUrl);
-
                 // Redirect using the absolute URI string
                 return Redirect(downloadUri.AbsoluteUri);
             }

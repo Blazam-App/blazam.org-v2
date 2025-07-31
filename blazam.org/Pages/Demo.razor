@@ -4,12 +4,15 @@
     <MudText Align=Align.Center Class="mb-7" Typo=Typo.h4>Live Demo</MudText>
 
     <MudText Class="mb-5" Typo="Typo.h6">
-        We've prepared a demo of the app connected to a sample Active Directory Domain. It's  fully
+        We've prepared a pair of demos connected to a sample Active Directory Domain. They're fully
         functional but there are some considerations...
     </MudText>
 
     <MudContainer Class="ps-4 mb-5">
         <UnorderedListItem>
+            The demos run on hardware with limited resources, so it may be slow at times.
+        </UnorderedListItem>
+       <UnorderedListItem>
             There are no computers in the sample domain, this would be expensive to replicate.
         </UnorderedListItem>
         <UnorderedListItem>
@@ -18,11 +21,12 @@
         
     </MudContainer>
     <MudButton Class="mx-auto d-table mb-3" Variant=Variant.Filled Color=Color.Primary Href="https://demo.blazam.org">
-        Go to demo
+        Go to Windows-Hosted demo
+    </MudButton>
+    <MudButton Class="mx-auto d-table mb-3" Variant=Variant.Filled Color=Color.Primary Href="https://beta.blazam.org">
+        Go to Linux-Hosted demo
     </MudButton>
     <MudText Align="Align.Center">
-        The demo always runs the latest nightly build.
+        The demos always run the latest nightly build.
     </MudText>
-    @*<iframe style="width:100%;height:85%" src="https://blazam.azurewebsites.net" />*@
-    @* <DisplayAd /> *@
 </MudContainer>

@@ -41,10 +41,10 @@
                 </MudLink>
                 
                 <MudLink Class="mx-auto d-table mt-4" Href="/download/linux_insall.sh" Target=Target.Blank>
-                    <MudButton OnClick=@(async()=>{
+                    <MudButton Disabled OnClick=@(async()=>{
                                await _jsRuntime.InvokeVoidAsync("googleAdsConversion", null);
                                await _jsRuntime.InvokeVoidAsync("shDownloaded", null);
-                               }) Variant="Variant.Filled" Color="Color.Primary">Download Linux Installer</MudButton>
+                               }) Variant="Variant.Filled" Color="Color.Primary">(Coming Soon) Download Linux Beta Installer</MudButton>
                 </MudLink>
                 <MudText Align=Align.Center Class="mt-5 mud-width-full d-block" Typo="Typo.caption">MD5: 2f6321fa76ce81bb696c3d1ec56a347c</MudText>
            
@@ -82,8 +82,8 @@
                 <MudLink Class="mx-auto d-table mt-4" Href="/download/beta" Target=Target.Blank>
                     <MudButton OnClick=@(async()=>{
                                await _jsRuntime.InvokeVoidAsync("googleAdsConversion", null);
-                               await _jsRuntime.InvokeVoidAsync("shDownloaded", null);
-                               }) Variant="Variant.Filled" Color="Color.Primary">Download Linux Zip</MudButton>
+                               await _jsRuntime.InvokeVoidAsync("zipDownloaded", null);
+                               }) Variant="Variant.Filled" Color="Color.Primary">Download Linux Beta Zip</MudButton>
                 </MudLink>
 
             

@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.JSInterop;
 using Octokit;
 
-namespace blazam.org.Pages.API
+namespace blazam.org.Pages
 {
     [Route("[controller]")]
     [ApiController]
@@ -55,7 +55,7 @@ namespace blazam.org.Pages.API
         {
             var client = new GitHubClient(new ProductHeaderValue("BLAZAM-APP"));
             var releases = await client.Repository.Release.GetAll("Blazam-App", "Blazam");
-            var branchReleases = releases.Where(r => r.TagName.Contains("Beta-Dev", StringComparison.OrdinalIgnoreCase));
+            var branchReleases = releases.Where(r => r.TagName.Contains("BetaDev1", StringComparison.OrdinalIgnoreCase));
             var latestRelese = branchReleases.FirstOrDefault()?.Assets.FirstOrDefault();
             if (latestRelese != null)
             {

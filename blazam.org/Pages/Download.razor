@@ -40,7 +40,7 @@
 
                 </MudLink>
                 
-                <MudLink Class="mx-auto d-table mt-4" Href="/download/linux_insall.sh" Target=Target.Blank>
+                <MudLink Class="mx-auto d-table mt-4" Disabled Href="/download/linux_insall.sh" Target=Target.Blank>
                     <MudButton Disabled OnClick=@(async()=>{
                                await _jsRuntime.InvokeVoidAsync("googleAdsConversion", null);
                                await _jsRuntime.InvokeVoidAsync("shDownloaded", null);

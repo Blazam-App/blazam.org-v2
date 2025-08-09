@@ -10,7 +10,7 @@
     {
 
 
-        <MudNavLink Match="NavLinkMatch.Prefix" Style="max-width:max-content;" Class="pa-0" Href="/">
+        <MudNavLink Style="max-width:max-content;" Class="pa-0" Href="/">
             <MudStack Row=true Class="ma-0 pa-0">
 
                 <MudImage Class="app-icon shadow-lg" Src="/img/default_logo.png" Style="height:65px;" />
@@ -34,36 +34,40 @@
                 <MudStack AlignItems="AlignItems.End" Row=true>
                     <Badges/>                    
                 </MudStack>
-                <MudStack AlignItems="AlignItems.End" Row=true>
-                    <MudButton Color=Color.Primary Size=Size.Large Href="/features" Match="NavLinkMatch.Prefix" Style="max-width:max-content;" Icon="@Icons.Material.Filled.List">
+                
+                <MudStack AlignItems="AlignItems.End" Style="display:block !important;" Row=true>
+                    <MudButton Color=Color.Primary Size=Size.Large Href="/features" Style="max-width:max-content;" StartIcon="@Icons.Material.Filled.List">
                         @AppLocalization["Features"]
                     </MudButton>
 
-                    <MudButton Color=Color.Primary Size=Size.Large Href="/demo" Match="NavLinkMatch.Prefix" Style="max-width:max-content;" Icon="@Icons.Material.Filled.CarRental">
+                    <MudButton Color=Color.Primary Size=Size.Large Href="/demo" Style="max-width:max-content;" StartIcon="@Icons.Material.Filled.CarRental">
                         Demo
                     </MudButton>
 
-                    <MudButton Color=Color.Primary Size=Size.Large Href="/download" Match="NavLinkMatch.Prefix" Style="max-width:max-content;" Icon="@Icons.Material.Filled.Download">
+                    <MudButton Color=Color.Primary Size=Size.Large Href="/download" Style="max-width:max-content;" StartIcon="@Icons.Material.Filled.Download">
                         Download
                     </MudButton>
-                    <MudButton Color=Color.Primary Size=Size.Large Target="_blank" Href="https://docs.blazam.org/" Style="max-width:max-content;" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Book">
+                    <MudButton Color=Color.Primary Size=Size.Large Target="_blank" Href="https://docs.blazam.org/" Style="max-width:max-content;" StartIcon="@Icons.Material.Filled.Book">
                         @AppLocalization["Documentation"]
                     </MudButton>
-                    <MudButton Color=Color.Primary Size=Size.Large Href="/support" Match="NavLinkMatch.Prefix" Style="max-width:max-content;" Icon="@Icons.Material.Filled.Support">
+                    <MudButton Color=Color.Primary Size=Size.Large Target="_blank" Href="/plugins" Style="max-width:max-content;" StartIcon="@Icons.Material.Filled.Book">
+                        @AppLocalization["Plugins"]
+                    </MudButton>
+                    <MudButton Color=Color.Primary Size=Size.Large Href="/support" Style="max-width:max-content;" StartIcon="@Icons.Material.Filled.Support">
                         Support
                     </MudButton>
                     
-                    <AuthorizeView>
+                    <AuthorizeView Roles="@UserRoles.SuperAdmin">
                         <Authorized>
-                            <MudButton Color=Color.Tertiary Size=Size.Large Href="/news" Match="NavLinkMatch.Prefix" Style="max-width:max-content;" Icon="@Icons.Material.Filled.Newspaper">
+                            <MudButton Color=Color.Tertiary Size=Size.Large Href="/news" Style="max-width:max-content;" StartIcon="@Icons.Material.Filled.Newspaper">
                                 Manage News
                             </MudButton>
-                            <MudButton Color=Color.Primary Size=Size.Large Href="/logout" Match="NavLinkMatch.Prefix" Style="max-width:max-content;" Icon="@Icons.Material.Filled.Login">
+                            <MudButton Color=Color.Primary Size=Size.Large Href="/logout" Style="max-width:max-content;" StartIcon="@Icons.Material.Filled.Login">
                                 Logout
                             </MudButton>
                         </Authorized>
                         <NotAuthorized>
-                            <MudButton Color=Color.Primary Size=Size.Large Href="/login" Match="NavLinkMatch.Prefix" Style="max-width:max-content;" Icon="@Icons.Material.Filled.Login">
+                            <MudButton Color=Color.Primary Size=Size.Large Href="/login" Style="max-width:max-content;" StartIcon="@Icons.Material.Filled.Login">
                                 Login
                             </MudButton>
                         </NotAuthorized>

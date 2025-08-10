@@ -12,8 +12,8 @@ using blazam.org.Data.Plugins;
 namespace blazam.org.Migrations
 {
     [DbContext(typeof(PluginsDbContext))]
-    [Migration("20250810114227_Plugins_Seed")]
-    partial class Plugins_Seed
+    [Migration("20250810140049_Plugin_Seed")]
+    partial class Plugin_Seed
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,7 +25,7 @@ namespace blazam.org.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("blazam.org.Data.Plugins.Plugin", b =>
+            modelBuilder.Entity("blazam.org.Data.Plugins.Models.BlazamPlugin", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -39,6 +39,9 @@ namespace blazam.org.Migrations
                     b.Property<string>("ContentType")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -58,13 +61,17 @@ namespace blazam.org.Migrations
                     b.Property<long>("FileSize")
                         .HasColumnType("bigint");
 
+                    b.Property<DateTime>("LastUpdated")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<DateTime>("UploadedAt")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("Version")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -73,7 +80,70 @@ namespace blazam.org.Migrations
                     b.ToTable("Plugins");
                 });
 
-            modelBuilder.Entity("blazam.org.Data.Plugins.PluginUser", b =>
+            modelBuilder.Entity("blazam.org.Data.Plugins.Models.PluginComment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("PluginId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PluginId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("PluginComments");
+                });
+
+            modelBuilder.Entity("blazam.org.Data.Plugins.Models.PluginReview", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("PluginId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Rating")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ReviewText")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PluginId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("PluginReviews");
+                });
+
+            modelBuilder.Entity("blazam.org.Data.Plugins.Models.PluginUser", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -114,7 +184,7 @@ namespace blazam.org.Migrations
                     b.UseTphMappingStrategy();
                 });
 
-            modelBuilder.Entity("blazam.org.Data.Plugins.PluginVerification", b =>
+            modelBuilder.Entity("blazam.org.Data.Plugins.Models.PluginVerification", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -140,16 +210,16 @@ namespace blazam.org.Migrations
                     b.ToTable("Verifications");
                 });
 
-            modelBuilder.Entity("blazam.org.Data.Plugins.PendingPluginUser", b =>
+            modelBuilder.Entity("blazam.org.Data.Plugins.Models.PendingPluginUser", b =>
                 {
-                    b.HasBaseType("blazam.org.Data.Plugins.PluginUser");
+                    b.HasBaseType("blazam.org.Data.Plugins.Models.PluginUser");
 
                     b.HasDiscriminator().HasValue("PendingPluginUser");
                 });
 
-            modelBuilder.Entity("blazam.org.Data.Plugins.Plugin", b =>
+            modelBuilder.Entity("blazam.org.Data.Plugins.Models.BlazamPlugin", b =>
                 {
-                    b.HasOne("blazam.org.Data.Plugins.PluginUser", "Author")
+                    b.HasOne("blazam.org.Data.Plugins.Models.PluginUser", "Author")
                         .WithMany("Plugins")
                         .HasForeignKey("AuthorId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -158,23 +228,61 @@ namespace blazam.org.Migrations
                     b.Navigation("Author");
                 });
 
-            modelBuilder.Entity("blazam.org.Data.Plugins.PluginVerification", b =>
+            modelBuilder.Entity("blazam.org.Data.Plugins.Models.PluginComment", b =>
                 {
-                    b.HasOne("blazam.org.Data.Plugins.PendingPluginUser", "PendingUser")
+                    b.HasOne("blazam.org.Data.Plugins.Models.BlazamPlugin", "Plugin")
+                        .WithMany()
+                        .HasForeignKey("PluginId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("blazam.org.Data.Plugins.Models.PluginUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Plugin");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("blazam.org.Data.Plugins.Models.PluginReview", b =>
+                {
+                    b.HasOne("blazam.org.Data.Plugins.Models.BlazamPlugin", "Plugin")
+                        .WithMany()
+                        .HasForeignKey("PluginId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("blazam.org.Data.Plugins.Models.PluginUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Plugin");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("blazam.org.Data.Plugins.Models.PluginVerification", b =>
+                {
+                    b.HasOne("blazam.org.Data.Plugins.Models.PendingPluginUser", "PendingUser")
                         .WithOne("Verification")
-                        .HasForeignKey("blazam.org.Data.Plugins.PluginVerification", "UserId")
+                        .HasForeignKey("blazam.org.Data.Plugins.Models.PluginVerification", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("PendingUser");
                 });
 
-            modelBuilder.Entity("blazam.org.Data.Plugins.PluginUser", b =>
+            modelBuilder.Entity("blazam.org.Data.Plugins.Models.PluginUser", b =>
                 {
                     b.Navigation("Plugins");
                 });
 
-            modelBuilder.Entity("blazam.org.Data.Plugins.PendingPluginUser", b =>
+            modelBuilder.Entity("blazam.org.Data.Plugins.Models.PendingPluginUser", b =>
                 {
                     b.Navigation("Verification")
                         .IsRequired();

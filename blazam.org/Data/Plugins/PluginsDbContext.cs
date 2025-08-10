@@ -1,4 +1,4 @@
-using System.ComponentModel.DataAnnotations;
+using blazam.org.Data.Plugins.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace blazam.org.Data.Plugins
@@ -13,8 +13,10 @@ namespace blazam.org.Data.Plugins
 
         public DbSet<PluginUser> Users { get; set; }
         public DbSet<PendingPluginUser> PendingUsers { get; set; }
-        public DbSet<Plugin> Plugins { get; set; }
+        public DbSet<BlazamPlugin> Plugins { get; set; }
         public DbSet<PluginVerification> Verifications { get; set; }
+        public DbSet<PluginReview> PluginReviews { get; set; }
+        public DbSet<PluginComment> PluginComments { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -29,10 +31,10 @@ namespace blazam.org.Data.Plugins
             base.OnModelCreating(modelBuilder);
 
             // Configure Plugin
-            modelBuilder.Entity<Plugin>()
-                .HasOne(p => p.Author)
+            modelBuilder.Entity<BlazamPlugin>()
+                .HasOne(p => p.Uploader)
                 .WithMany(u => u.Plugins)
-                .HasForeignKey(p => p.AuthorId);
+                .HasForeignKey(p => p.UploaderId);
 
             // Configure one-to-one relationship between User and Verification
             modelBuilder.Entity<PluginVerification>()
@@ -40,78 +42,30 @@ namespace blazam.org.Data.Plugins
                 .WithOne(u => u.Verification)
                 .HasForeignKey<PluginVerification>(v => v.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            // Configure PluginReview relationships
+            modelBuilder.Entity<PluginReview>()
+                .HasOne(r => r.Plugin)
+                .WithMany()
+                .HasForeignKey(r => r.PluginId);
+
+            modelBuilder.Entity<PluginReview>()
+                .HasOne(r => r.User)
+                .WithMany()
+                .HasForeignKey(r => r.UserId)
+                .OnDelete(DeleteBehavior.Restrict); // Prevent cascade delete
+
+            // Configure PluginComment relationships
+            modelBuilder.Entity<PluginComment>()
+                .HasOne(c => c.Plugin)
+                .WithMany()
+                .HasForeignKey(c => c.PluginId);
+
+            modelBuilder.Entity<PluginComment>()
+                .HasOne(c => c.User)
+                .WithMany()
+                .HasForeignKey(c => c.UserId)
+                .OnDelete(DeleteBehavior.Restrict); // Prevent cascade delete
         }
-    }
-
-    public class PluginUser
-    {
-        [Key]
-        public int Id { get; set; }
-
-        [Required, EmailAddress, MaxLength(256)]
-        public string Email { get; set; }
-
-        [Required, MaxLength(128)]
-        public string Username { get; set; }
-
-        [Required]
-        public string PasswordHash { get; set; }
-
-        public bool IsVerified { get; set; } = false;
-
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-
-        // Navigation properties
-        public virtual ICollection<Plugin> Plugins { get; set; } = new List<Plugin>();
-        public virtual PluginVerification Verification { get; set; }
-    }
-
-    public class Plugin
-    {
-        [Key]
-        public int Id { get; set; }
-
-        [Required, MaxLength(100)]
-        public string Name { get; set; }
-
-        [Required]
-        public string Description { get; set; }
-
-        [Required]
-        public byte[] FileData { get; set; }
-
-        [Required]
-        public string FileName { get; set; }
-
-        [Required]
-        public string ContentType { get; set; }
-
-        public long FileSize { get; set; }
-
-        public DateTime UploadedAt { get; set; } = DateTime.UtcNow;
-
-        public int Downloads { get; set; } = 0;
-
-        public int AuthorId { get; set; }
-        public virtual PluginUser Author { get; set; }
-    }
-
-    public class PendingPluginUser : PluginUser
-    {
-
-    }
-
-    public class PluginVerification
-    {
-        [Key]
-        public int Id { get; set; }
-
-        [Required]
-        public string Token { get; set; }
-
-        public DateTime ExpiresAt { get; set; }
-
-        public int UserId { get; set; }
-        public virtual PendingPluginUser PendingUser { get; set; }
     }
 }

@@ -157,7 +157,7 @@ namespace blazam.org.Migrations
 
             modelBuilder.Entity("blazam.org.Data.Plugins.PluginVerification", b =>
                 {
-                    b.HasOne("blazam.org.Data.Plugins.PluginUser", "PendingUser")
+                    b.HasOne("blazam.org.Data.Plugins.PendingPluginUser", "PendingUser")
                         .WithOne("Verification")
                         .HasForeignKey("blazam.org.Data.Plugins.PluginVerification", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -169,7 +169,10 @@ namespace blazam.org.Migrations
             modelBuilder.Entity("blazam.org.Data.Plugins.PluginUser", b =>
                 {
                     b.Navigation("Plugins");
+                });
 
+            modelBuilder.Entity("blazam.org.Data.Plugins.PendingPluginUser", b =>
+                {
                     b.Navigation("Verification")
                         .IsRequired();
                 });

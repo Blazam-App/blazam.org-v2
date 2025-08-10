@@ -12,81 +12,9 @@
 
 <MudContainer Class="pt-5 px-0">
     <MudText Typo="Typo.h2" Class="pb-7" Style="text-align:center">Blazam Plugins</MudText>
-    
-    @if (!IsAuthenticated)
-    {
-        <MudGrid>
-            <MudItem xs="12" md="6">
-                <MudCard Class="pa-4 mb-4">
-                    <MudCardHeader>
-                        <CardHeaderContent>
-                            <MudText Typo="Typo.h5">Register</MudText>
-                        </CardHeaderContent>
-                    </MudCardHeader>
-                    <MudCardContent>
-                        <EditForm Model="@_registrationModel" OnValidSubmit="RegisterUser">
-                            <DataAnnotationsValidator />
-
-                            <MudTextField Label="Username" 
-                                @bind-Value="_registrationModel.Username" 
-                                For="@(() => _registrationModel.Username)" />
-                                
-                            <MudTextField Label="Email" 
-                                @bind-Value="_registrationModel.Email" 
-                                For="@(() => _registrationModel.Email)" />
-                                
-                            <MudTextField Label="Password" 
-                                @bind-Value="_registrationModel.Password" 
-                                For="@(() => _registrationModel.Password)" 
-                                InputType="InputType.Password" />
-                                
-                            <MudTextField Label="Confirm Password" 
-                                @bind-Value="_registrationModel.ConfirmPassword" 
-                                For="@(() => _registrationModel.ConfirmPassword)" 
-                                InputType="InputType.Password" />
-                                
-                            <MudButton ButtonType="ButtonType.Submit" 
-                                Variant="Variant.Filled" 
-                                Color="Color.Primary" 
-                                Class="mt-4">Register</MudButton>
-                        </EditForm>
-                    </MudCardContent>
-                </MudCard>
-            </MudItem>
-            
-            <MudItem xs="12" md="6">
-                <MudCard Class="pa-4 mb-4">
-                    <MudCardHeader>
-                        <CardHeaderContent>
-                            <MudText Typo="Typo.h5">Login</MudText>
-                        </CardHeaderContent>
-                    </MudCardHeader>
-                    <MudCardContent>
-                        <EditForm Model="@_loginModel" OnValidSubmit="LoginUser">
-                            <DataAnnotationsValidator />
-                            
-                            <MudTextField Label="Email" 
-                                @bind-Value="_loginModel.Email" 
-                                For="@(() => _loginModel.Email)" />
-                                
-                            <MudTextField Label="Password" 
-                                @bind-Value="_loginModel.Password" 
-                                For="@(() => _loginModel.Password)" 
-                                InputType="InputType.Password" />
-                                
-                            <MudButton ButtonType="ButtonType.Submit" 
-                                Variant="Variant.Filled" 
-                                Color="Color.Primary" 
-                                Class="mt-4">Login</MudButton>
-                        </EditForm>
-                    </MudCardContent>
-                </MudCard>
-            </MudItem>
-        </MudGrid>
-    }
-    else
-    {
-        <MudCard Class="mb-6">
+    <AuthorizeView Roles="@(UserRoles.SuperAdmin+","+UserRoles.VerifiedPluginUser)">
+        <Authorized>
+                <MudCard Class="mb-6">
             <MudCardHeader>
                 <CardHeaderContent>
                     <MudText Typo="Typo.h5">Upload Plugin</MudText>
@@ -96,7 +24,7 @@
                 </CardHeaderActions>
             </MudCardHeader>
             <MudCardContent>
-                <EditForm Model="@_uploadModel" OnValidSubmit="UploadPlugin">
+                <EditForm Context="editContext" Model="@_uploadModel" OnValidSubmit="UploadPlugin">
                     <DataAnnotationsValidator />
                     
                     <MudTextField Label="Plugin Name" 
@@ -108,18 +36,12 @@
                         For="@(() => _uploadModel.Description)" 
                         Lines="3" />
                         
-                    <MudFileUpload T="IBrowserFile" FilesChanged="OnFileSelection">
-                        <ButtonTemplate>
-                            <MudButton HtmlTag="label"
-                                       Variant="Variant.Filled"
-                                       Color="Color.Primary"
-                                       StartIcon="@Icons.Material.Filled.CloudUpload"
-                                       for="@context">
-                                Select Plugin File
-                            </MudButton>
-                        </ButtonTemplate>
-                    </MudFileUpload>
-                    
+                        <MudFileUpload Accept=".zip" T="IBrowserFile"  FilesChanged="OnFileSelection">
+                            <ActivatorContent>
+                                <MudFab Color="Color.Success"
+                                        StartIcon="@Icons.Material.Filled.AttachFile" />
+                            </ActivatorContent>
+                        </MudFileUpload>
                     @if (_selectedFile != null)
                     {
                         <MudText Class="mt-2">
@@ -135,7 +57,80 @@
                 </EditForm>
             </MudCardContent>
         </MudCard>
-    }
+        </Authorized>
+        <NotAuthorized>
+            <MudGrid>
+                <MudItem xs="12" md="6">
+                    <MudCard Class="pa-4 mb-4">
+                        <MudCardHeader>
+                            <CardHeaderContent>
+                                <MudText Typo="Typo.h5">Register</MudText>
+                            </CardHeaderContent>
+                        </MudCardHeader>
+                        <MudCardContent>
+                            <EditForm Context="editContext" Model="@_registrationModel" OnValidSubmit="RegisterUser">
+                                <DataAnnotationsValidator />
+
+                                <MudTextField Label="Username"
+                                              name="username"
+                                              @bind-Value="_registrationModel.Username"
+                                              For="@(() => _registrationModel.Username)" />
+
+                                <MudTextField Label="Email"
+                                              name="email"
+                                              @bind-Value="_registrationModel.Email"
+                                              For="@(() => _registrationModel.Email)" />
+
+                                <MudTextField Label="Password"
+                                              @bind-Value="_registrationModel.Password"
+                                              For="@(() => _registrationModel.Password)"
+                                              InputType="InputType.Password" />
+
+                                <MudTextField Label="Confirm Password"
+                                              @bind-Value="_registrationModel.ConfirmPassword"
+                                              For="@(() => _registrationModel.ConfirmPassword)"
+                                              InputType="InputType.Password" />
+
+                                <MudButton ButtonType="ButtonType.Submit"
+                                           Variant="Variant.Filled"
+                                           Color="Color.Primary"
+                                           Class="mt-4">Register</MudButton>
+                            </EditForm>
+                        </MudCardContent>
+                    </MudCard>
+                </MudItem>
+
+                <MudItem xs="12" md="6">
+                    <MudCard Class="pa-4 mb-4">
+                        <MudCardHeader>
+                            <CardHeaderContent>
+                                <MudText Typo="Typo.h5">Login</MudText>
+                            </CardHeaderContent>
+                        </MudCardHeader>
+                        <MudCardContent>
+                            <EditForm Context="editContext" Model="@_loginModel" OnValidSubmit="LoginUser">
+                                <DataAnnotationsValidator />
+
+                                <MudTextField Label="Email"
+                                              @bind-Value="_loginModel.Email"
+                                              For="@(() => _loginModel.Email)" />
+
+                                <MudTextField Label="Password"
+                                              @bind-Value="_loginModel.Password"
+                                              For="@(() => _loginModel.Password)"
+                                              InputType="InputType.Password" />
+
+                                <MudButton ButtonType="ButtonType.Submit"
+                                           Variant="Variant.Filled"
+                                           Color="Color.Primary"
+                                           Class="mt-4">Login</MudButton>
+                            </EditForm>
+                        </MudCardContent>
+                    </MudCard>
+                </MudItem>
+            </MudGrid>
+        </NotAuthorized>
+    </AuthorizeView>
     
     <MudDivider Class="my-6" />
     
@@ -283,7 +278,7 @@
     {
         var user = await PluginAuth.AuthenticateAsync(
             _loginModel.Email, 
-            _loginModel.Password);
+            _loginModel.Password.ToSecureString());
             
         if (user == null)
         {

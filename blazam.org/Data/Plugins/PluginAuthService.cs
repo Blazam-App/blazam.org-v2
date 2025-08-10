@@ -1,5 +1,7 @@
+using System.Security;
 using System.Security.Cryptography;
 using System.Text;
+using blazam.org.Shared;
 using Microsoft.EntityFrameworkCore;
 
 namespace blazam.org.Data.Plugins
@@ -83,20 +85,21 @@ namespace blazam.org.Data.Plugins
                 IsVerified = true
             };
             context.Users.Add(registeredUser);
+            context.PendingUsers.Remove(verification.PendingUser);
             context.Verifications.Remove(verification);
             await context.SaveChangesAsync();
 
             return true;
         }
 
-        public async Task<PluginUser> AuthenticateAsync(string email, string password)
+        public async Task<PluginUser> AuthenticateAsync(string email, SecureString password)
         {
             using var context = await _contextFactory.CreateDbContextAsync();
 
             var user = await context.Users.FirstOrDefaultAsync(
                 u => u.Email.ToLower() == email.ToLower());
 
-            if (user == null || !VerifyPassword(password, user.PasswordHash))
+            if (user == null || !VerifyPassword(password.ToPlainText(), user.PasswordHash))
             {
                 return null;
             }

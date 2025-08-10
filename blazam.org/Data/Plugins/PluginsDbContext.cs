@@ -38,7 +38,8 @@ namespace blazam.org.Data.Plugins
             modelBuilder.Entity<PluginVerification>()
                 .HasOne(v => v.PendingUser)
                 .WithOne(u => u.Verification)
-                .HasForeignKey<PluginVerification>(v => v.UserId);
+                .HasForeignKey<PluginVerification>(v => v.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 
@@ -111,6 +112,6 @@ namespace blazam.org.Data.Plugins
         public DateTime ExpiresAt { get; set; }
 
         public int UserId { get; set; }
-        public virtual PluginUser PendingUser { get; set; }
+        public virtual PendingPluginUser PendingUser { get; set; }
     }
 }

@@ -1,13 +1,11 @@
+using System.Globalization;
 using ApplicationNews;
 using blazam.org.Data;
-using blazam.org.Pages.API;
+using blazam.org.Data.Plugins;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Localization;
+using Microsoft.EntityFrameworkCore;
 using MudBlazor.Services;
-using SixLabors.ImageSharp;
-using System.Globalization;
 
 namespace blazam.org
 {
@@ -67,7 +65,29 @@ namespace blazam.org
             //builder.Services.AddSingleton<NewsDatabaseContextFactory>(factory);
             builder.Services.AddDbContextFactory<NewsDbContext>();
 
+
+            // Add plugins database
+            var pluginsConnectionString = builder.Configuration.GetConnectionString("PluginsConnection");
+            builder.Services.AddDbContextFactory<PluginsDbContext>(options =>
+                options.UseSqlServer(pluginsConnectionString));
+            PluginsDbContext.ConnectionString = pluginsConnectionString;
+
+            // Register plugin services
+            builder.Services.AddScoped<EmailService>();
+            builder.Services.AddScoped<PluginAuthService>();
+
+
+
+
+
             var app = builder.Build();
+
+            // Apply migrations on startup
+            using (var scope = app.Services.CreateScope())
+            {
+                var pluginsContext = scope.ServiceProvider.GetRequiredService<PluginsDbContext>();
+                pluginsContext.Database.Migrate();
+            }
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())

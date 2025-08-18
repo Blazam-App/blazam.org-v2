@@ -14,6 +14,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Localization.Abstractions" Version="9.0.8" />
     <PackageReference Include="MimeKit" Version="4.13.0" />
     <PackageReference Include="MudBlazor" Version="8.10.0" />
     <PackageReference Include="Octokit" Version="14.0.0" />
@@ -30,6 +31,9 @@
     </Reference>
     <Reference Include="BLAZAMGui">
       <HintPath>..\..\BLAZAM\BLAZAM\bin\Debug\net8.0\BLAZAMGui.dll</HintPath>
+    </Reference>
+    <Reference Include="BLAZAMNotifications">
+      <HintPath>..\..\BLAZAM\BLAZAM\bin\Debug\net8.0\BLAZAMNotifications.dll</HintPath>
     </Reference>
     <Reference Include="BLAZAMPlugins">
       <HintPath>..\..\BLAZAM\BLAZAM\bin\Debug\net8.0\BLAZAMPlugins.dll</HintPath>

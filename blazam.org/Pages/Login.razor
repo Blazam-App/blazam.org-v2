@@ -1,4 +1,5 @@
 @page "/login"
+@using blazam.org.Shared.UI.Plugins
 @inject ISnackbar SnackBarService
 @inject NavigationManager Nav
 @inject IDbContextFactory<NewsDbContext> Factory
@@ -11,29 +12,40 @@
 
 
 <MudContainer Class="py-5">
-       Blazam News
 
 
-   
-    <form onsubmit="@(()=>{AttemptSignIn();})" class="login-form" method="post" action="/signin" id="login-form">
+
+    <form onsubmit="@(() => { AttemptSignIn(); })" class="login-form" method="post" action="/signin" id="login-form">
         <MudContainer Style="max-width:300px;" Class="py-4">
-            
-                <MudTextField @ref=_usernameTextField Disabled=@attemptingSignIn Class="justify-center" AutoFocus Label="Username" name="Username" @bind-Value=LoginRequest.Username />
 
-                <MudTextField @ref=_passwordTextField Disabled=@attemptingSignIn Class="justify-center" Label="Password" name="Password" InputType="InputType.Password" @bind-Value=LoginRequest.Password />
-                <MudTextField Class="d-none" name="ReturnUrl" Value="@redirectUrl" />
-                <MudButton OnClick=@(()=>{attemptingSignIn=true;}) Class="my-5" ButtonType=ButtonType.Submit Color="Color.Primary">Log In</MudButton>
+            <MudTextField @ref=_usernameTextField Disabled=@attemptingSignIn Class="justify-center" AutoFocus Label="Username" name="Username" @bind-Value=LoginRequest.Username />
 
-          
+            <MudTextField @ref=_passwordTextField Disabled=@attemptingSignIn Class="justify-center" Label="Password" name="Password" InputType="InputType.Password" @bind-Value=LoginRequest.Password />
+            <MudTextField Class="d-none" name="ReturnUrl" Value="@redirectUrl" />
+            <MudStack Row=true>
+                <MudButton OnClick=@(() => { attemptingSignIn = true; }) 
+                    Class="my-5"
+                    ButtonType=ButtonType.Submit 
+                    Color="Color.Primary">Log In</MudButton>
+
+                <MudButton OnClick="@(() => { _registrationModal?.ShowAsync(); })"
+                Color="Color.Primary">Register</MudButton>
+        </MudStack>
+           
+
 
         </MudContainer>
 
         <MudOverlay Visible="attemptingSignIn" DarkBackground="true" Absolute="true">
             @*<MudProgressCircular Color="Color.Secondary" Indeterminate="true" />*@
         </MudOverlay>
+        
+        <AppModal @ref=_registrationModal Title="Register">
+            <RegistrationModalContent />
+        </AppModal>
     </form>
-    <MudElement Class="d-flex mud-width-full justify-end">  
-       
+    <MudElement Class="d-flex mud-width-full justify-end">
+
     </MudElement>
 </MudContainer>
 
@@ -60,6 +72,8 @@
     MudTextField<string>? _usernameTextField;
     MudTextField<string>? _passwordTextField;
 
+    AppModal? _registrationModal;
+
     bool attemptingSignIn = false;
     string redirectUrl;
 
@@ -79,7 +93,7 @@
         }
     }
 
-   
+
     async void AttemptSignIn()
     {
         attemptingSignIn = true;
@@ -93,7 +107,7 @@
             catch (Exception ex)
             {
 
-                SnackBarService.Add(ex.Message,Severity.Error);
+                SnackBarService.Add(ex.Message, Severity.Error);
             }
 
         attemptingSignIn = false;
@@ -108,17 +122,17 @@
                 case LoginResultStatus.NoUsername:
                     SnackBarService.Add("Username is missing");
                     break;
-                 case LoginResultStatus.NoPassword:
-                     SnackBarService.Add("Password is missing");
-                     break;
+                case LoginResultStatus.NoPassword:
+                    SnackBarService.Add("Password is missing");
+                    break;
                 case LoginResultStatus.NoData:
-                    SnackBarService.Add("Login request is missing",Severity.Warning);
+                    SnackBarService.Add("Login request is missing", Severity.Warning);
 
                     break;
                 case LoginResultStatus.BadCredentials:
                     SnackBarService.Add("Username or password not correct", Severity.Warning);
                     break;
-                
+
                 case LoginResultStatus.DeniedLogin:
                     SnackBarService.Add("You are not authorized to login", Severity.Warning);
 

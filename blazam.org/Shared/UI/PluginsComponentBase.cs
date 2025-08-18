@@ -14,8 +14,7 @@ namespace blazam.org.Shared.UI
         protected ClaimsPrincipal? CurrentUser => HttpContextAccessor.HttpContext?.User;
         [Inject]
         protected IDbContextFactory<PluginsDbContext> Factory { get; set; }
-        [Inject]
-        protected ISnackbar SnackbarService { get; set; }
+
         [Inject]
         protected IDialogService DialogService { get; set; }
         [Inject]

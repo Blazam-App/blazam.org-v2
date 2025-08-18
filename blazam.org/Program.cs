@@ -2,6 +2,7 @@ using System.Globalization;
 using ApplicationNews;
 using blazam.org.Data;
 using blazam.org.Data.Plugins;
+using BLAZAM.Notifications.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
@@ -33,7 +34,7 @@ namespace blazam.org
                 options.SnackbarConfiguration.ShowTransitionDuration = 25;
 
             });
-
+            builder.Services.AddScoped<AppSnackBarService>();
             //Set up string localization
             builder.Services.AddLocalization();
             builder.Services.Configure<RequestLocalizationOptions>(options =>

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace blazam.org.Migrations
 {
     /// <inheritdoc />
-    public partial class Plugin_Seed : Migration
+    public partial class PluginSeed : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -37,6 +37,7 @@ namespace blazam.org.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Author = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Version = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     FileData = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
                     FileName = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -45,14 +46,14 @@ namespace blazam.org.Migrations
                     Created = table.Column<DateTime>(type: "datetime2", nullable: false),
                     LastUpdated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Downloads = table.Column<int>(type: "int", nullable: false),
-                    AuthorId = table.Column<int>(type: "int", nullable: false)
+                    UploaderId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Plugins", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Plugins_Users_AuthorId",
-                        column: x => x.AuthorId,
+                        name: "FK_Plugins_Users_UploaderId",
+                        column: x => x.UploaderId,
                         principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -114,7 +115,7 @@ namespace blazam.org.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Rating = table.Column<int>(type: "int", nullable: false),
-                    ReviewText = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ReviewText = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     PluginId = table.Column<int>(type: "int", nullable: false),
                     UserId = table.Column<int>(type: "int", nullable: false)
@@ -135,6 +136,11 @@ namespace blazam.org.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
+
+            migrationBuilder.InsertData(
+                table: "Users",
+                columns: new[] { "Id", "CreatedAt", "Discriminator", "Email", "IsVerified", "PasswordHash", "Username" },
+                values: new object[] { 1, new DateTime(2025, 8, 18, 18, 31, 27, 316, DateTimeKind.Utc).AddTicks(3058), "PluginUser", "support@blazam.org", true, "C9A61E2F844812FC0E3C3F8444E62E06", "Blazam" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_PluginComments_PluginId",
@@ -157,9 +163,9 @@ namespace blazam.org.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Plugins_AuthorId",
+                name: "IX_Plugins_UploaderId",
                 table: "Plugins",
-                column: "AuthorId");
+                column: "UploaderId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Verifications_UserId",

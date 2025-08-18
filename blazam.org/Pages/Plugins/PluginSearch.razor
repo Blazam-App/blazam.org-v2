@@ -11,9 +11,17 @@
               AdornmentIcon="@Icons.Material.Filled.Search"
               OnAdornmentClick="SearchPlugins"
               Class="mb-4" />
-              <AuthorizeView Roles=@(UserRoles.SuperAdmin+","+UserRoles.VerifiedPluginUser)>
-                  <AppIconButton Icon="@Icons.Material.Filled.CloudUpload" OnClick="@(()=>{_uploadModal?.ShowAsync();})"/>
-              </AuthorizeView>
+    <AuthorizeView Roles="@(UserRoles.SuperAdmin + "," + UserRoles.VerifiedPluginUser)">
+        <Authorized>
+            <AppIconButton Icon="@Icons.Material.Filled.CloudUpload" OnClick="@(() => { _uploadModal?.ShowAsync(); })" />
+
+
+        </Authorized>
+        <NotAuthorized>
+            <AppIconButton Icon="@Icons.Material.Filled.CloudUpload" OnClick="@(() => {Nav.NavigateTo("/login"); })" />
+        </NotAuthorized>
+    </AuthorizeView>
+
 </MudStack>
 
 @if (_plugins == null)
@@ -29,30 +37,7 @@ else
     <MudGrid>
         @foreach (var plugin in _plugins)
         {
-            <MudItem xs="12" md="6" lg="4">
-                <MudCard>
-                    <MudCardHeader>
-                        <CardHeaderContent>
-                            <MudText Typo="Typo.h6">@plugin.Name</MudText>
-                            <MudText Typo="Typo.body2">By @plugin.Author</MudText>
-                            <MudText Typo="Typo.body2">Uploaded By @plugin.Uploader</MudText>
-                        </CardHeaderContent>
-                    </MudCardHeader>
-                    <MudCardContent>
-                        <MudText Typo="Typo.body2">@plugin.Description</MudText>
-                        <MudText Typo="Typo.body2" Class="mt-2">Uploaded: @plugin.Created.ToString("MMM dd, yyyy")</MudText>
-                        <MudText Typo="Typo.body2">Downloads: @plugin.Downloads</MudText>
-                        <MudText Typo="Typo.body2">Size: @(plugin.FileSize / 1024.0 / 1024.0) MB</MudText>
-                    </MudCardContent>
-                    <MudCardActions>
-                        <MudButton Variant="Variant.Filled"
-                                   Color="Color.Primary"
-                                   OnClick="() => DownloadPlugin(plugin.Id)">
-                            Download
-                        </MudButton>
-                    </MudCardActions>
-                </MudCard>
-            </MudItem>
+          <PluginSearchResult Plugin=plugin/>
         }
     </MudGrid>
 }
@@ -65,8 +50,6 @@ else
         <MudText Typo="Typo.h5">Upload Plugin</MudText>
     </TitleContent>
     <DialogContent>
-    <EditForm Context="editContext" Model="@_uploadModel" OnValidSubmit="UploadPlugin">
-            <DataAnnotationsValidator />
 
             @if (newPlugin!=null)
             {
@@ -100,12 +83,12 @@ else
             </MudText>
         }
 
-        <MudButton ButtonType="ButtonType.Submit"
+        <MudButton OnClick="@(()=>{UploadPlugin();})"
                    Disabled="@(_selectedFile == null)"
                    Variant="Variant.Filled"
                    Color="Color.Success"
                    Class="mt-4">Upload Plugin</MudButton>
-    </EditForm>
+
     </DialogContent>
 </MudDialog>
 
@@ -115,6 +98,7 @@ else
     MudDialog? _uploadModal;
     private List<BlazamPlugin> _plugins;
 
+    [Required]
     private IBrowserFile _selectedFile;
     private string searchTerm = "";
 
@@ -124,28 +108,7 @@ else
         await LoadPlugins();
     }
 
-    private async Task DownloadPlugin(int pluginId)
-    {
-        using var context = await Factory.CreateDbContextAsync();
-        var plugin = await context.Plugins.FindAsync(pluginId);
-
-        if (plugin == null)
-        {
-            Snackbar.Add("Plugin not found", Severity.Error);
-            return;
-        }
-
-        // Increment download count
-        plugin.Downloads++;
-        await context.SaveChangesAsync();
-
-        // Trigger file download
-        await JSRuntime.InvokeVoidAsync(
-            "downloadFileFromBytes",
-            Convert.ToBase64String(plugin.FileData),
-            plugin.FileName,
-            plugin.ContentType);
-    }
+   
 
     private async Task SearchPlugins()
     {
@@ -187,7 +150,6 @@ else
         }
 
         _selectedFile = file;
-
         newPlugin = new BlazamPlugin
         {
             Name = validationResult.Name,
@@ -210,7 +172,11 @@ else
             Snackbar.Add("Please select a file", Severity.Warning);
             return;
         }
-
+        if (_uploadModel.Description == null)
+        {
+            Snackbar.Add("Please provide a description", Severity.Warning);
+            return;
+        }
         try
         {
             // Read file data

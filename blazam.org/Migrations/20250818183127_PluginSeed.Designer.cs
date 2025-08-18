@@ -12,8 +12,8 @@ using blazam.org.Data.Plugins;
 namespace blazam.org.Migrations
 {
     [DbContext(typeof(PluginsDbContext))]
-    [Migration("20250810141944_Plugin_Seed2")]
-    partial class Plugin_Seed2
+    [Migration("20250818183127_PluginSeed")]
+    partial class PluginSeed
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -132,7 +132,6 @@ namespace blazam.org.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("ReviewText")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("UserId")
@@ -186,6 +185,17 @@ namespace blazam.org.Migrations
                     b.HasDiscriminator<string>("Discriminator").HasValue("PluginUser");
 
                     b.UseTphMappingStrategy();
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedAt = new DateTime(2025, 8, 18, 18, 31, 27, 316, DateTimeKind.Utc).AddTicks(3058),
+                            Email = "support@blazam.org",
+                            IsVerified = true,
+                            PasswordHash = "C9A61E2F844812FC0E3C3F8444E62E06",
+                            Username = "Blazam"
+                        });
                 });
 
             modelBuilder.Entity("blazam.org.Data.Plugins.Models.PluginVerification", b =>

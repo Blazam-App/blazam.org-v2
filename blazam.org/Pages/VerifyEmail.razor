@@ -1,0 +1,61 @@
+@page "/verify-email"
+@using blazam.org.Data.Plugins
+@inject PluginAuthService PluginAuth
+@inject NavigationManager NavManager
+@inject ISnackbar Snackbar
+
+<PageTitle>Email Verification - Blazam</PageTitle>
+
+<MudContainer Class="pt-7">
+    <MudPaper Elevation="3" Class="pa-6 mx-auto" Style="max-width: 500px;">
+        <MudText Typo="Typo.h4" Class="mb-4">Email Verification</MudText>
+        
+        @if (isLoading)
+        {
+            <MudProgressLinear Indeterminate="true" Color="Color.Primary" Class="my-7" />
+            <MudText Align="Align.Center">Verifying your email...</MudText>
+        }
+        else if (isVerified)
+        {
+            <MudAlert Severity="Severity.Success" Class="mb-4">Your email has been successfully verified!</MudAlert>
+            <MudText>You can now log in to your account and start uploading plugins.</MudText>
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" Href="/plugins" Class="mt-4">Go to Plugins Page</MudButton>
+        }
+        else
+        {
+            <MudAlert Severity="Severity.Error" Class="mb-4">Email verification failed.</MudAlert>
+            <MudText>The verification link may have expired or is invalid.</MudText>
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" Href="/plugins" Class="mt-4">Back to Plugins Page</MudButton>
+        }
+    </MudPaper>
+</MudContainer>
+
+@code {
+    private bool isLoading = true;
+    private bool isVerified = false;
+    
+    [Parameter]
+    [SupplyParameterFromQuery]
+    public string Token { get; set; }
+    
+    protected override async Task OnInitializedAsync()
+    {
+        if (string.IsNullOrEmpty(Token))
+        {
+            isLoading = false;
+            return;
+        }
+        
+        isVerified = await PluginAuth.VerifyEmailAsync(Token);
+        isLoading = false;
+        
+        if (isVerified)
+        {
+            Snackbar.Add("Email verified successfully!", Severity.Success);
+        }
+        else
+        {
+            Snackbar.Add("Email verification failed.", Severity.Error);
+        }
+    }
+}

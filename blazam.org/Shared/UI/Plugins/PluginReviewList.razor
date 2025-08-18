@@ -1,0 +1,36 @@
+@using blazam.org.Data.Plugins.Models
+@inject PluginsDbContext DbContext
+
+@code {
+    [Parameter] public int PluginId { get; set; }
+    private List<PluginReview> Reviews;
+
+    protected override async Task OnInitializedAsync()
+    {
+        Reviews = await DbContext.PluginReviews
+            .Where(r => r.PluginId == PluginId)
+            .OrderByDescending(r => r.CreatedAt)
+            .ToListAsync();
+    }
+}
+
+<div>
+    <h4>Reviews</h4>
+    @if (Reviews?.Count > 0)
+    {
+        <ul>
+            @foreach (var review in Reviews)
+            {
+                <li>
+                    <b>@review.User.Username</b> - Rating: @review.Rating<br />
+                    @review.ReviewText
+                    <span class="text-muted">(@review.CreatedAt.ToLocalTime())</span>
+                </li>
+            }
+        </ul>
+    }
+    else
+    {
+        <p>No reviews yet.</p>
+    }
+</div>

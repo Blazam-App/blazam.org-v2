@@ -1,0 +1,219 @@
+@using System.ComponentModel.DataAnnotations
+@using blazam.org.Data.Plugins.Models
+@inherits PluginsComponentBase
+
+<MudText Typo="Typo.h4" Class="mb-4">Available Plugins</MudText>
+<MudStack Row=true>
+<MudTextField @bind-Value="searchTerm"
+              Label="Search plugins"
+              Variant="Variant.Outlined"
+              Adornment="Adornment.End"
+              AdornmentIcon="@Icons.Material.Filled.Search"
+              OnAdornmentClick="SearchPlugins"
+              Class="mb-4" />
+    <AuthorizeView Roles="@(UserRoles.SuperAdmin + "," + UserRoles.VerifiedPluginUser)">
+        <Authorized>
+            <AppIconButton Icon="@Icons.Material.Filled.CloudUpload" OnClick="@(() => { _uploadModal?.ShowAsync(); })" />
+
+
+        </Authorized>
+        <NotAuthorized>
+            <AppIconButton Icon="@Icons.Material.Filled.CloudUpload" OnClick="@(() => {Nav.NavigateTo("/login"); })" />
+        </NotAuthorized>
+    </AuthorizeView>
+
+</MudStack>
+
+@if (_plugins == null)
+{
+    <MudProgressCircular Color="Color.Primary" Indeterminate="true" />
+}
+else if (!_plugins.Any())
+{
+    <MudAlert Severity="Severity.Info">No plugins found.</MudAlert>
+}
+else
+{
+    <MudGrid>
+        @foreach (var plugin in _plugins)
+        {
+          <PluginSearchResult Plugin=plugin/>
+        }
+    </MudGrid>
+}
+
+
+
+
+<MudDialog @ref=_uploadModal>
+    <TitleContent>
+        <MudText Typo="Typo.h5">Upload Plugin</MudText>
+    </TitleContent>
+    <DialogContent>
+
+            @if (newPlugin!=null)
+            {
+
+                <MudTextField ReadOnly=true Label="Plugin Name"
+                              Value="@newPlugin?.Name" />
+
+                <MudTextField ReadOnly=true Label="Plugin Version"
+                              Value="@newPlugin?.Version" />
+
+                <MudTextField ReadOnly=true Label="Plugin Author"
+                              Value="@newPlugin?.Author" />
+
+                <MudTextField Label="Description"
+                              @bind-Value="_uploadModel.Description"
+                              For="@(() => _uploadModel.Description)"
+                              Lines="3" />
+            }
+            
+
+        <MudFileUpload Accept=".zip" T="IBrowserFile" FilesChanged="OnFileSelection">
+            <ActivatorContent>
+                <MudFab Color="Color.Success"
+                        StartIcon="@Icons.Material.Filled.AttachFile" />
+            </ActivatorContent>
+        </MudFileUpload>
+        @if (_selectedFile != null)
+        {
+            <MudText Class="mt-2">
+                Selected File: @_selectedFile.Name (@((_selectedFile.Size / 1024.0 / 1024.0)) MB)
+            </MudText>
+        }
+
+        <MudButton OnClick="@(()=>{UploadPlugin();})"
+                   Disabled="@(_selectedFile == null)"
+                   Variant="Variant.Filled"
+                   Color="Color.Success"
+                   Class="mt-4">Upload Plugin</MudButton>
+
+    </DialogContent>
+</MudDialog>
+
+
+@code{
+    BlazamPlugin? newPlugin;
+    MudDialog? _uploadModal;
+    private List<BlazamPlugin> _plugins;
+
+    [Required]
+    private IBrowserFile _selectedFile;
+    private string searchTerm = "";
+
+    private UploadModel _uploadModel = new();
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadPlugins();
+    }
+
+   
+
+    private async Task SearchPlugins()
+    {
+        await LoadPlugins(searchTerm);
+    }
+
+    private async Task LoadPlugins(string search = null)
+    {
+        using var context = await Factory.CreateDbContextAsync();
+
+        var query = context.Plugins
+            .Include(p => p.Uploader)
+            .AsQueryable();
+
+        if (!string.IsNullOrWhiteSpace(search))
+        {
+            search = search.ToLower();
+            query = query.Where(p =>
+                p.Name.ToLower().Contains(search) ||
+                p.Description.ToLower().Contains(search));
+        }
+
+        _plugins = await query
+            .OrderByDescending(p => p.LastUpdated)
+            .ToListAsync();
+    }
+    private async Task OnFileSelection(IBrowserFile file)
+    {
+        if (file.Size > 5 * 1024 * 1024) // 5MB in bytes
+        {
+            Snackbar.Add("File size exceeds the 5MB limit", Severity.Error);
+            return;
+        }
+        var validationResult = await PluginValidator.ValidateUploadAsync(file);
+        if (validationResult == null)
+        {
+            Snackbar.Add("Plugin is not valid", Severity.Error);
+            return;
+        }
+
+        _selectedFile = file;
+        newPlugin = new BlazamPlugin
+        {
+            Name = validationResult.Name,
+            Description = _uploadModel.Description,
+            Version = validationResult.Version,
+            FileName = _selectedFile.Name,
+            ContentType = _selectedFile.ContentType,
+            FileSize = _selectedFile.Size,
+            Author = validationResult.Author,
+            UploaderId = CurrentUser.GetUserId()
+        };
+        validationResult = null;
+        await InvokeAsync(StateHasChanged);
+
+    }
+    private async Task UploadPlugin()
+    {
+        if (_selectedFile == null)
+        {
+            Snackbar.Add("Please select a file", Severity.Warning);
+            return;
+        }
+        if (_uploadModel.Description == null)
+        {
+            Snackbar.Add("Please provide a description", Severity.Warning);
+            return;
+        }
+        try
+        {
+            // Read file data
+            using var ms = new MemoryStream();
+            await _selectedFile.OpenReadStream(5 * 1024 * 1024).CopyToAsync(ms);
+            byte[] fileData = ms.ToArray();
+
+            // Create plugin
+            newPlugin.Description = _uploadModel.Description;
+            newPlugin.FileData = fileData;
+
+
+            // Save to database
+            using var context = await Factory.CreateDbContextAsync();
+            context.Plugins.Add(newPlugin);
+            await context.SaveChangesAsync();
+            Snackbar.Add("Plugin uploaded successfully", Severity.Success);
+            _uploadModel = new UploadModel();
+            _selectedFile = null;
+            newPlugin = null;
+
+
+            await InvokeAsync(StateHasChanged);
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add($"Error: {ex.Message}", Severity.Error);
+        }
+    }
+
+    public class UploadModel
+    {
+        [Required(ErrorMessage = "Plugin name is required")]
+        [StringLength(100, MinimumLength = 3, ErrorMessage = "Name must be between 3 and 100 characters")]
+        public string Name { get; set; }
+
+        [Required(ErrorMessage = "Description is required")]
+        public string Description { get; set; }
+    }
+}

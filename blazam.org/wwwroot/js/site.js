@@ -85,3 +85,25 @@ window.attemptSignIn = async () => {
     });
     return response;
 };
+
+// Add this function to the existing site.js file
+
+window.downloadFileFromBytes = function (base64Data, fileName, contentType) {
+    var byteCharacters = atob(base64Data);
+    var byteNumbers = new Array(byteCharacters.length);
+    
+    for (var i = 0; i < byteCharacters.length; i++) {
+        byteNumbers[i] = byteCharacters.charCodeAt(i);
+    }
+    
+    var byteArray = new Uint8Array(byteNumbers);
+    var blob = new Blob([byteArray], { type: contentType });
+    
+    var link = document.createElement('a');
+    link.href = window.URL.createObjectURL(blob);
+    link.download = fileName;
+    
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+};

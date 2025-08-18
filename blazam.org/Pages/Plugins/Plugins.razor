@@ -1,0 +1,23 @@
+@page "/plugins"
+@using blazam.org.Data.Plugins
+@using Microsoft.EntityFrameworkCore
+@using System.ComponentModel.DataAnnotations
+@inherits PluginsComponentBase
+
+
+<PageTitle>Plugins - Blazam</PageTitle>
+<MudAlert Severity="Severity.Warning" Variant="Variant.Filled">This plugins marketplace is very much not done. If you try and use it,
+    your account and uploads may be deleted at any time as development continues towards full functionality.
+</MudAlert>
+<MudContainer Class="pt-5 px-0">
+    <MudText Typo="Typo.h2" Class="pb-7" Style="text-align:center">Blazam Plugins</MudText>
+ 
+
+
+    <PluginSearch />
+    <MudDivider Class="my-6" />
+</MudContainer>
+
+@code {
+  
+}

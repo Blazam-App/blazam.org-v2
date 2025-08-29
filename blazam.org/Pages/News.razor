@@ -4,12 +4,26 @@
 @attribute [Authorize]
 @if (Context != null)
 {
-    foreach(var item in NewsItems)
-    {
-        <NewsItemCard Item=item ItemChanged="RefreshItems"/>
-    }
+    <MudDataGrid Items="@NewsItems">
+        <Columns>
+            <PropertyColumn Property="@(x=>x.Title)"/>
+            <PropertyColumn Property="@(x=>x.ScheduledAt)"/>
+            <PropertyColumn Property="@(x=>x.ExpiresAt)"/>
+            <TemplateColumn CellClass="d-flex justify-end">
+                <CellTemplate>
+                    <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Outlined.Edit" OnClick="@(() => {EditItem(context.Item);})" />
+                </CellTemplate>
+            </TemplateColumn>
+        </Columns>
+    </MudDataGrid>
+    <MudDialog @ref=_editModal Options="new(){CloseButton=true, MaxWidth=MaxWidth.Medium, FullWidth=true}">
+        <DialogContent>
+            <NewsItemCard Item=_selectedItem ItemChanged="RefreshItems" />
 
-    <MudFab OnClick=@(()=>{ShowNewItemDialog();}) StartIcon="@Icons.Material.Filled.Add" />
+        </DialogContent>
+    </MudDialog>
+
+ 
     @if (DeletedCount > 0)
     {
         <MudFab OnClick=@(()=>{ShowRestoreItemsDialog();}) StartIcon="@Icons.Material.Filled.RestoreFromTrash" />
@@ -17,6 +31,8 @@
 }
 
 @code {
+    private MudDialog? _editModal;
+    private NewsItem? _selectedItem;
     private int DeletedCount;
     private List<NewsItem> NewsItems = new();
     protected override async Task OnInitializedAsync()
@@ -35,11 +51,17 @@
         await RefreshItems();
     }
 
+    private async Task EditItem(NewsItem item)
+    {
+        _selectedItem = item;
+        await _editModal.CloseAsync();
+        await _editModal.ShowAsync();
+    }
+
     private async Task RefreshItems()
     {
         NewsItems = await Factory.CreateDbContext().NewsItems.Where(x => x.DeletedAt == null).ToListAsync();
         DeletedCount = await Factory.CreateDbContext().NewsItems.CountAsync(x => x.DeletedAt != null);
-
         await InvokeAsync(StateHasChanged);
     }
     private async void ShowNewItemDialog()

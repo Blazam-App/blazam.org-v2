@@ -62,6 +62,7 @@
     {
         NewsItems = await Factory.CreateDbContext().NewsItems.Where(x => x.DeletedAt == null).ToListAsync();
         DeletedCount = await Factory.CreateDbContext().NewsItems.CountAsync(x => x.DeletedAt != null);
+        await _editModal.CloseAsync();
         await InvokeAsync(StateHasChanged);
     }
     private async void ShowNewItemDialog()

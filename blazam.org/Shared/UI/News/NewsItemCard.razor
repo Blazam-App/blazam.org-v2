@@ -1,24 +1,24 @@
 @inherits NewsComponentBase
 
-@if (Item != null)
+@if (_item != null)
 {
 
 
     <MudStack Spacing=0 Row=true Class="mud-width-full">
-        <MudText Typo="Typo.h5">@Item.Title</MudText>
+        <MudText Typo="Typo.h5">@_item.Title</MudText>
         <MudSpacer />
 
         <MudStack Spacing=0>
-            <MudSwitch T=bool UnCheckedColor=Color.Error Color=Color.Success Label="Published" @bind-Value=Item.Published />
-            <MudSwitch T=bool Color=Color.Warning Label="Debug" @bind-Value=Item.DevOnly />
+            <MudSwitch T=bool UnCheckedColor=Color.Error Color=Color.Success Label="Published" @bind-Value=_item.Published />
+            <MudSwitch T=bool Color=Color.Warning Label="Debug" @bind-Value=_item.DevOnly />
         </MudStack>
     </MudStack>
     <MudStack Spacing=0>
         <MudStack Row=true>
             <MudStack Spacing=0>
-                @if (Item.Icon != null)
+                @if (_item.Icon != null)
                 {
-                    <Base64Image Data="@Item.Icon.ResizeRawImage(150)" />
+                    <Base64Image Data="@_item.Icon.ResizeRawImage(150)" />
                     <MudButton OnClick="@(() => { RemoveIcon(); })">Remove Icon</MudButton>
                 }
                 <MudFileUpload Context="fileContext" T="IBrowserFile" FilesChanged="((file) => { LoadIcon(file); })">
@@ -32,22 +32,22 @@
                 </MudFileUpload>
             </MudStack>
 
-            <MudTextField Label="Title" Immediate=true Required=true T="string" @bind-Text=@Item.Title />
+            <MudTextField Label="Title" Immediate=true Required=true T="string" @bind-Text=@_item.Title />
 
         </MudStack>
-        <MudTextField Label="Link" T="string" @bind-Text=@Item.Link />
+        <MudTextField Label="Link" T="string" @bind-Text=@_item.Link />
 
-        <MudTextField AutoGrow=true Label="Body" Immediate=true @bind-Value=@Item.Body />
+        <MudTextField AutoGrow=true Label="Body" Immediate=true @bind-Value=@_item.Body />
         <MudCard>
             <MudCardHeader>
                 Preview
             </MudCardHeader>
             <MudCardContent>
-                @((MarkupString)Item.Body)
+                @((MarkupString)_item.Body)
             </MudCardContent>
         </MudCard>
-        <MudDatePicker Label="Start Date" @bind-Date=@Item.ScheduledAt />
-        <MudDatePicker Label="End Date" MinDate="@Item.ScheduledAt" @bind-Date=@Item.ExpiresAt />
+        <MudDatePicker Label="Start Date" @bind-Date=@_item.ScheduledAt />
+        <MudDatePicker Label="End Date" MinDate="@_item.ScheduledAt" @bind-Date=@_item.ExpiresAt />
 
     </MudStack>
 
@@ -69,9 +69,9 @@
             </MudButton>
         </MudStack>
         <MudStack Row=true Class="mud-width-full">
-            <MudText Typo="Typo.caption">Created: @Item.CreatedAt.ToShortDateString() @Item.CreatedAt.ToShortTimeString()</MudText>
+            <MudText Typo="Typo.caption">Created: @Item.CreatedAt.ToShortDateString() @_item.CreatedAt.ToShortTimeString()</MudText>
             <MudSpacer />
-            <MudText Typo="Typo.caption">Updated: @Item.UpdatedAt.ToShortDateString() @Item.UpdatedAt.ToShortTimeString()</MudText>
+            <MudText Typo="Typo.caption">Updated: @Item.UpdatedAt.ToShortDateString() @_item.UpdatedAt.ToShortTimeString()</MudText>
         </MudStack>
     </MudStack>
 
@@ -84,14 +84,15 @@
     public EventCallback ItemChanged { get; set; }
     [Parameter]
     public NewsItem? Item { get; set; }
+    public NewsItem? _item;
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
-        Item = await Context.NewsItems.FirstOrDefaultAsync(i => i.Id == Item.Id);
+        _item = await Context.NewsItems.FirstOrDefaultAsync(i => i.Id == Item.Id);
     }
     private async void RemoveIcon()
     {
-        Item.Icon = null;
+        _item.Icon = null;
         //await Context.SaveChangesAsync();
         await InvokeAsync(StateHasChanged);
     }
@@ -108,7 +109,7 @@
             }
         }
         var bytes = await e.ToByteArrayAsync(5000000);
-        Item.Icon = bytes;
+        _item.Icon = bytes;
 
         await InvokeAsync(StateHasChanged);
 
@@ -116,19 +117,20 @@
     }
     private async Task DeleteItem()
     {
-        Item.Published = false;
-        Item.DeletedAt = DateTime.Now;
+        _item.Published = false;
+        _item.DeletedAt = DateTime.Now;
         SaveItem();
     }
     private async Task SaveItem()
     {
-        Item.UpdatedAt = DateTime.Now;
+        _item.UpdatedAt = DateTime.Now;
 
         if (await Context.SaveChangesAsync() > 0)
         {
 
             ItemChanged.InvokeAsync();
             SnackbarService.Add("Changes have been saved", Severity.Success);
+
         }
     }
 }

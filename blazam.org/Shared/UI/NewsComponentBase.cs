@@ -5,7 +5,7 @@ using MudBlazor;
 
 namespace blazam.org.Shared.UI
 {
-    public class AppComponentBase : ComponentBase
+    public class NewsComponentBase : ComponentBase
     {
         [Inject]
         protected IDbContextFactory<NewsDbContext> Factory { get; set; }

@@ -1,0 +1,35 @@
+@using blazam.org.Data.Plugins.Models
+@inject PluginsDbContext DbContext
+
+@code {
+    [Parameter] public int PluginId { get; set; }
+    private List<PluginComment> Comments;
+
+    protected override async Task OnInitializedAsync()
+    {
+        Comments = await DbContext.PluginComments
+            .Where(c => c.PluginId == PluginId)
+            .OrderByDescending(c => c.CreatedAt)
+            .ToListAsync();
+    }
+}
+
+<div>
+    <h4>Comments</h4>
+    @if (Comments?.Count > 0)
+    {
+        <ul>
+            @foreach (var comment in Comments)
+            {
+                <li>
+                    <b>@comment.User.Username</b>: @comment.Content
+                    <span class="text-muted">(@comment.CreatedAt.ToLocalTime())</span>
+                </li>
+            }
+        </ul>
+    }
+    else
+    {
+        <p>No comments yet.</p>
+    }
+</div>

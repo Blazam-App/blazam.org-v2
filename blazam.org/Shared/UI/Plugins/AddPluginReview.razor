@@ -1,0 +1,36 @@
+@using blazam.org.Data.Plugins.Models
+@inject PluginsDbContext DbContext
+
+@code {
+    [Parameter] public int PluginId { get; set; }
+    [Parameter] public int UserId { get; set; }
+    private int Rating = 5;
+    private string ReviewText;
+
+    private async Task AddReview()
+    {
+        if (Rating >= 1 && Rating <= 5)
+        {
+            var review = new PluginReview
+            {
+                Rating = Rating,
+                ReviewText = ReviewText,
+                PluginId = PluginId,
+                UserId = UserId,
+                CreatedAt = DateTime.UtcNow
+            };
+            DbContext.PluginReviews.Add(review);
+            await DbContext.SaveChangesAsync();
+            ReviewText = string.Empty;
+            Rating = 5;
+        }
+    }
+}
+
+<div>
+    <label>Rating:</label>
+    <input type="number" min="1" max="5" @bind="Rating" />
+    <br />
+    <textarea @bind="ReviewText" placeholder="Write your review"></textarea>
+    <button @onclick="AddReview">Submit</button>
+</div>

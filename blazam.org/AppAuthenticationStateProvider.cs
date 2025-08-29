@@ -1,23 +1,25 @@
-﻿using ApplicationNews;
+﻿using System.Security.Claims;
+using ApplicationNews;
 using blazam.org.Data;
+using blazam.org.Data.Plugins;
 using blazam.org.Shared;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.EntityFrameworkCore;
-using System.Security.Claims;
 
 namespace blazam.org
 {
     public class AppAuthenticationStateProvider : AuthenticationStateProvider
     {
         public static int SessionTimeout { get; set; } = 15;
-        public AppAuthenticationStateProvider(IHttpContextAccessor ca, IDbContextFactory<NewsDbContext> con)
+        public AppAuthenticationStateProvider(IHttpContextAccessor ca, IDbContextFactory<NewsDbContext> con, PluginAuthService pluginAuth)
         {
-
+            _pluiginAuthService = pluginAuth;
             this.CurrentUser = this.GetAnonymous();
             this._httpContextAccessor = ca;
             this._factory = con;
         }
+
 
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IDbContextFactory<NewsDbContext> _factory;
@@ -52,6 +54,7 @@ namespace blazam.org
             };
         }
 
+        private readonly PluginAuthService _pluiginAuthService;
         private ClaimsPrincipal? CurrentUser;
 
         public override Task<AuthenticationState> GetAuthenticationStateAsync()
@@ -101,14 +104,67 @@ namespace blazam.org
         {
             LoginResult loginResult = new();
 
-            var context = await _factory.CreateDbContextAsync();
-            AuthenticationState? result = null;
+
+
 
             //Set the current user from the HttpContext which gets it from the user's browser cookie
             CurrentUser = _httpContextAccessor?.HttpContext?.User;
 
             if (loginReq == null) return loginResult.NoData();
             if (loginReq.Username.IsNullOrEmpty()) return loginResult.NoUsername();
+
+            var result = await AuthenticateAdmin(loginReq);
+
+            if (result == null)
+            {
+                result = await AuthenticatePluginUser(loginReq);
+            }
+
+            //Return the authenticationstate
+            if (result != null)
+            {
+
+
+                return loginResult.Success(result);
+            }
+            else
+                return loginResult.BadCredentials();
+
+
+        }
+
+        private async Task<AuthenticationState?> AuthenticatePluginUser(LoginRequest loginReq)
+        {
+            AuthenticationState? result = null;
+            var pluginUser = await _pluiginAuthService.AuthenticateAsync(loginReq.Username, loginReq.SecurePassword);
+            if (pluginUser != null)
+            {
+                var claims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.Sid, pluginUser.Id.ToString()),
+                    new Claim(ClaimTypes.Name, pluginUser.Username),
+                    new Claim(ClaimTypes.Email, pluginUser.Email),
+                    new Claim(ClaimTypes.Actor, pluginUser.Id.ToString()),
+                    new Claim(ClaimTypes.Role, "PluginUser")
+                };
+                if (pluginUser.IsVerified)
+                {
+                    claims.Add(new Claim(ClaimTypes.Role, UserRoles.VerifiedPluginUser));
+                }
+                var identity = new ClaimsIdentity(claims, "PluginAuth");
+                result = await SetUser(new ClaimsPrincipal(identity));
+            }
+            else
+            {
+                result = null;
+            }
+            return result;
+        }
+
+        private async Task<AuthenticationState?> AuthenticateAdmin(LoginRequest loginReq)
+        {
+            AuthenticationState? result = null;
+            var context = await _factory.CreateDbContextAsync();
             var settings = context.Settings.FirstOrDefault();
             if (settings == null)
             {
@@ -128,18 +184,7 @@ namespace blazam.org
 
             }
 
-
-            //Return the authenticationstate
-            if (result != null)
-            {
-                //await _audit.Logon.Login(result.User);
-
-                return loginResult.Success(result);
-            }
-            else
-                return loginResult.BadCredentials();
-
-
+            return result;
         }
 
 
@@ -175,5 +220,9 @@ namespace blazam.org
     {
 
         public const string SuperAdmin = "SuperAdmin";
+        /// <summary>
+        /// This is the role for verified plugin users.
+        /// </summary>
+        public const string VerifiedPluginUser = "VerifiedPluginUser";
     }
 }

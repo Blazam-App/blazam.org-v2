@@ -50,7 +50,7 @@
                     <MudButton Color=Color.Primary Size=Size.Large Target="_blank" Href="https://docs.blazam.org/" Style="max-width:max-content;" StartIcon="@Icons.Material.Filled.Book">
                         @AppLocalization["Documentation"]
                     </MudButton>
-                    <MudButton Color=Color.Primary Size=Size.Large Target="_blank" Href="/plugins" Style="max-width:max-content;" StartIcon="@Icons.Material.Filled.Book">
+                    <MudButton Color=Color.Primary Size=Size.Large Href="/plugins" Style="max-width:max-content;" StartIcon="@Icons.Material.Filled.Book">
                         @AppLocalization["Plugins"]
                     </MudButton>
                     <MudButton Color=Color.Primary Size=Size.Large Href="/support" Style="max-width:max-content;" StartIcon="@Icons.Material.Filled.Support">
@@ -62,6 +62,10 @@
                             <MudButton Color=Color.Tertiary Size=Size.Large Href="/news" Style="max-width:max-content;" StartIcon="@Icons.Material.Filled.Newspaper">
                                 Manage News
                             </MudButton>
+                        </Authorized>
+                    </AuthorizeView>
+                    <AuthorizeView>
+                        <Authorized>
                             <MudButton Color=Color.Primary Size=Size.Large Href="/logout" Style="max-width:max-content;" StartIcon="@Icons.Material.Filled.Login">
                                 Logout
                             </MudButton>
@@ -71,9 +75,8 @@
                                 Login
                             </MudButton>
                         </NotAuthorized>
-                        
+
                     </AuthorizeView>
-                    
 
                 </MudStack>
             </MudStack>

@@ -1,0 +1,105 @@
+@using System.Security.Claims
+@inherits PluginsComponentBase
+<MudItem xs="12" md="6" lg="4">
+    <MudCard>
+        <MudCardHeader>
+            <CardHeaderContent>
+                <MudStack Row=true>
+                    <MudText Typo="Typo.h6">@Plugin.Name</MudText>
+                    <MudSpacer />
+                    <MudStack>
+                        <MudRating Color="Color.Tertiary" SelectedValueChanged="SetUsersRating" SelectedValue="(int)_averageRating" />
+                        <MudText Align=Align.Center Typo="Typo.caption">Ratings: @_numberOfRatings</MudText>
+                    </MudStack>
+                        </MudStack>
+                <MudText Typo="Typo.caption">By @Plugin.Author</MudText><br />
+                <MudText Typo="Typo.caption">Uploaded By @Plugin.Uploader.Username</MudText>
+            </CardHeaderContent>
+        </MudCardHeader>
+        <MudCardContent>
+            <MudText>Description</MudText>
+            <MudText Typo="Typo.body2">@Plugin.Description</MudText>
+
+            <MudText Class="mt-2">Uploaded</MudText>
+            <MudText Typo="Typo.body2">@Plugin.Created.ToString("MMM dd, yyyy")</MudText>
+
+            <MudText Class="mt-2">Last Updated</MudText>
+            <MudText Typo="Typo.body2">@Plugin.LastUpdated.ToString("MMM dd, yyyy")</MudText>
+
+            <MudText Class="mt-2">Downloads</MudText>
+            <MudText Typo="Typo.body2">@Plugin.Downloads</MudText>
+
+            <MudText Class="mt-2">File Size</MudText>
+            <MudText Typo="Typo.body2">@(Plugin.FileSize / 1024.0 / 1024.0) MB</MudText>
+        </MudCardContent>
+        <MudCardActions>
+            <MudButton Variant="Variant.Filled"
+                       Color="Color.Primary"
+                       OnClick="() => DownloadPlugin(Plugin.Id)">
+                Download
+            </MudButton>
+        </MudCardActions>
+    </MudCard>
+</MudItem>
+
+@code {
+    [Parameter]
+    public BlazamPlugin Plugin { get; set; }
+    double _averageRating;
+    int _numberOfRatings;
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        var ratingSearch = Context.PluginReviews.Where(x => x.PluginId == Plugin.Id);
+        if(await ratingSearch.AnyAsync())
+        {
+            _numberOfRatings = await ratingSearch.CountAsync();
+            _averageRating = await ratingSearch.AverageAsync(x => x.Rating);
+        }
+    }
+    private async Task SetUsersRating(int setRating)
+    {
+        var userId = int.Parse(CurrentUser.Claims.First(c => c.Type == ClaimTypes.Sid).Value);
+        var rating = await Context.PluginReviews.FirstOrDefaultAsync(x => x.PluginId == Plugin.Id && x.UserId == userId);
+        if (rating == null)
+        {
+            rating = new PluginReview()
+                {
+                    PluginId = Plugin.Id,
+                    UserId = userId
+                };
+            Context.PluginReviews.Add(rating);
+        }
+        rating.Rating = setRating;
+        try{
+            var result = await Context.SaveChangesAsync();
+        }
+        catch(Exception ex)
+        {
+            Snackbar.Add(ex.Message, Severity.Error);
+        }
+
+    }
+    private async Task DownloadPlugin(int pluginId)
+    {
+        using var context = await Factory.CreateDbContextAsync();
+        var plugin = await context.Plugins.FindAsync(pluginId);
+
+        if (plugin == null)
+        {
+            Snackbar.Add("Plugin not found", Severity.Error);
+            return;
+        }
+
+        // Increment download count
+        plugin.Downloads++;
+        await context.SaveChangesAsync();
+
+        // Trigger file download
+        await JSRuntime.InvokeVoidAsync(
+            "downloadFileFromBytes",
+            Convert.ToBase64String(plugin.FileData),
+            plugin.FileName,
+            plugin.ContentType);
+    }
+}

@@ -23,6 +23,7 @@
         </DialogContent>
     </MudDialog>
 
+    <MudFab OnClick=@(()=>{ShowNewItemDialog();}) StartIcon="@Icons.Material.Filled.Add" />
  
     @if (DeletedCount > 0)
     {

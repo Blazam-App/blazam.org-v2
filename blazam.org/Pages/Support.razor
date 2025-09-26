@@ -3,9 +3,88 @@
 <MudContainer Class="pt-7">
     <MudText Typo=Typo.h3 Align="Align.Center">How to get support...</MudText>
     <MudText Class="my-3" Align="Align.Center">If you have a question about using Blazam, check the <MudLink Target="_blank" Href="https://docs.blazam.org">documentation</MudLink> under the Admin Guide.</MudText>
-    <MudText Class="my-3" Align="Align.Center">All support requests for Blazam should be entered on GitHub. You can use the button below.</MudText>
+    <MudText Class="my-3" Align="Align.Center">All general support requests for Blazam should be entered on GitHub. You can use the button below.</MudText>
     <MudButton Target="_blank" Variant=Variant.Filled Color=Color.Primary Class="mx-auto d-table" Href="https://github.com/Blazam-App/BLAZAM/issues/new/choose">Create Request</MudButton>
+
+@* 
+    <MudDivider Class="my-5" />
+    <MudText Class="my-3" Align="Align.Center">
+        <MudStack>
+            <MudText>Commercial Support Offers the following benefits:</MudText>
+            <MudText>Remote installation services</MudText>
+            <MudText>Remote troubleshooting and diagnostics</MudText>
+            <MudText>Database corruption data recovery</MudText>
+            <MudText>Depending on tier, custom plugin developement with customer assistance</MudText>
+            <MudText>A happy developer</MudText>
+
+        </MudStack>
+        <br/>
+        <MudText>Commerical Support does not provide SLA deadlines and should not be expected to respond quicker than GitHub requests.</MudText>
+        <br />Windows Web Hosts Only <br />Cancel at any time.<br /><br />
+
+   <MudText Typo="Typo.h6">Configure Support</MudText>
+   <MudText>Use the following PS command to get your directory's count</MudText>
+        <code>(Get-ADGroup -Filter *).Count + (Get-ADUser -Filter 'Enabled -eq $true').Count + (Get-ADObject -Filter 'objectClass -eq "printQueue"').Count + (Get-ADContact -Filter *).Count + (Get-ADComputer -Filter 'Enabled -eq $true').Count</code>
+
+        <form class="mt-3" action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+            <input type="hidden" name="cmd" value="_s-xclick" />
+            <input type="hidden" name="hosted_button_id" value="ZGJC7UMBW8SG6" />
+            <MudStack Spacing="0">
+                <MudText>
+                    <input type="hidden" name="on0" value="Enabled AD Objects" />
+                    Enabled AD Objects
+                </MudText>
+                <MudText Align="Align.Center">
+
+                    <select name="os0">
+                        <option value="0-100">
+                            0-100 $15.00 USD - month(s)
+                        </option>
+                        <option value="101-500">
+                            101-500 $30.00 USD - month(s)
+                        </option>
+                        <option value="501-1000">
+                            501-1000 $40.00 USD - month(s)
+                        </option>
+                        <option value="1001-2000">
+                            1001-2000 $55.00 USD - month(s)
+                        </option>
+                        <option value="2001-4000">
+                            2001-4000 $75.00 USD - month(s)
+                        </option>
+                        <option value="4001-8000">
+                            4001-8000 $90.00 USD - month(s)
+                        </option>
+                        <option value="8001-16000">
+                            8001-16000 $150.00 USD - month(s)
+                        </option>
+                        <option value="Over 16000">
+                            Over 16000 $200.00 USD - month(s)
+                        </option>
+                    </select>
+                </MudText>
+            </MudStack>
+            <br/>
+                       
+                
+            <input type="hidden" name="currency_code" value="USD" />
+            <MudButton Variant="Variant.Filled"
+                       ButtonType="ButtonType.Submit"
+                       name=submit
+                       Color="Color.Primary"
+                       Class="mx-auto d-table">Purchase Support</MudButton>
+        </form>
+        
+    </MudText>
+   <br/>
+    <MudText Align="Align.Center">
+        Questions regarding billing, support, and services should be sent to <MudLink Href="mailto:support@blazam.org">support@blazam.org</MudLink>
+    </MudText>
+ *@
+
 </MudContainer>
+
+
 
 @code {
 

@@ -4,13 +4,22 @@
 {
 
 
-    <MudStack Spacing=0 Row=true Class="mud-width-full">
+    <MudStack Spacing=0
+              Row=true
+              Class="mud-width-full">
         <MudText Typo="Typo.h5">@_item.Title</MudText>
         <MudSpacer />
 
         <MudStack Spacing=0>
-            <MudSwitch T=bool UnCheckedColor=Color.Error Color=Color.Success Label="Published" @bind-Value=_item.Published />
-            <MudSwitch T=bool Color=Color.Warning Label="Debug" @bind-Value=_item.DevOnly />
+            <MudSwitch T=bool
+                       UnCheckedColor=Color.Error
+                       Color=Color.Success
+                       Label="Published"
+                       @bind-Value=_item.Published />
+            <MudSwitch T=bool
+                       Color=Color.Warning
+                       Label="Debug"
+                       @bind-Value=_item.DevOnly />
         </MudStack>
     </MudStack>
     <MudStack Spacing=0>
@@ -32,12 +41,21 @@
                 </MudFileUpload>
             </MudStack>
 
-            <MudTextField Label="Title" Immediate=true Required=true T="string" @bind-Text=@_item.Title />
+            <MudTextField Label="Title"
+                          Immediate=true
+                          Required=true
+                          T="string"
+                          @bind-Text=@_item.Title />
 
         </MudStack>
-        <MudTextField Label="Link" T="string" @bind-Text=@_item.Link />
+        <MudTextField Label="Link"
+                      T="string"
+                      @bind-Text=@_item.Link />
 
-        <MudTextField AutoGrow=true Label="Body" Immediate=true @bind-Value=@_item.Body />
+        <MudTextField AutoGrow=true
+                      Label="Body"
+                      Immediate=true
+                      @bind-Value=@_item.Body />
         <MudCard>
             <MudCardHeader>
                 Preview
@@ -46,14 +64,23 @@
                 @((MarkupString)_item.Body)
             </MudCardContent>
         </MudCard>
-        <MudDatePicker Label="Start Date" @bind-Date=@_item.ScheduledAt />
-        <MudDatePicker Label="End Date" MinDate="@_item.ScheduledAt" @bind-Date=@_item.ExpiresAt />
+        <MudDatePicker Label="Start Date"
+                       @bind-Date=@_item.ScheduledAt />
+        <MudDatePicker Label="End Date"
+                       MinDate="@_item.ScheduledAt"
+                       @bind-Date=@_item.ExpiresAt />
 
     </MudStack>
 
     <MudStack Class="mud-width-full">
         <MudStack Class="mud-width-full" Row=true>
             <MudSpacer />
+            <MudButton Color=Color.Warning
+                       Variant=Variant.Filled
+                       StartIcon="@Icons.Material.Outlined.Redo"
+                       OnClick="@(()=>{Republish();})">
+                Re-Publish
+            </MudButton>
             <MudButton Color=Color.Error
                        Variant=Variant.Filled
                        StartIcon="@Icons.Material.Outlined.Delete"
@@ -121,9 +148,14 @@
         _item.DeletedAt = DateTime.Now;
         SaveItem();
     }
-    private async Task SaveItem()
+    private async Task Republish()
     {
         _item.UpdatedAt = DateTime.Now;
+        await SaveItem();
+    }
+    private async Task SaveItem()
+    {
+        //_item.UpdatedAt = DateTime.Now;
 
         if (await Context.SaveChangesAsync() > 0)
         {

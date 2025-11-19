@@ -4,30 +4,30 @@
 @attribute [Authorize]
 @if (Context != null)
 {
-    <MudDataGrid Items="@NewsItems">
+    <MudDataGrid RowClassFunc=GetRowColor Items="@NewsItems">
         <Columns>
-            <PropertyColumn Property="@(x=>x.Title)"/>
-            <PropertyColumn Property="@(x=>x.ScheduledAt)"/>
-            <PropertyColumn Property="@(x=>x.ExpiresAt)"/>
+            <PropertyColumn Property="@(x => x.Title)" />
+            <PropertyColumn Property="@(x => x.ScheduledAt)" />
+            <PropertyColumn Property="@(x => x.ExpiresAt)" />
             <TemplateColumn CellClass="d-flex justify-end">
                 <CellTemplate>
-                    <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Outlined.Edit" OnClick="@(() => {EditItem(context.Item);})" />
+                    <MudIconButton Size="@Size.Small" Icon="@Icons.Material.Outlined.Edit" OnClick="@(() => { EditItem(context.Item); })" />
                 </CellTemplate>
             </TemplateColumn>
         </Columns>
     </MudDataGrid>
-    <MudDialog @ref=_editModal Options="new(){CloseButton=true, MaxWidth=MaxWidth.Medium, FullWidth=true}">
+    <MudDialog @ref=_editModal Options="new() { CloseButton = true, MaxWidth = MaxWidth.Medium, FullWidth = true }">
         <DialogContent>
             <NewsItemCard Item=_selectedItem ItemChanged="RefreshItems" />
 
         </DialogContent>
     </MudDialog>
 
-    <MudFab OnClick=@(()=>{ShowNewItemDialog();}) StartIcon="@Icons.Material.Filled.Add" />
- 
+    <MudFab OnClick=@(() => { ShowNewItemDialog(); }) StartIcon="@Icons.Material.Filled.Add" />
+
     @if (DeletedCount > 0)
     {
-        <MudFab OnClick=@(()=>{ShowRestoreItemsDialog();}) StartIcon="@Icons.Material.Filled.RestoreFromTrash" />
+        <MudFab OnClick=@(() => { ShowRestoreItemsDialog(); }) StartIcon="@Icons.Material.Filled.RestoreFromTrash" />
     }
 }
 
@@ -69,12 +69,12 @@
     private async void ShowNewItemDialog()
     {
         var options = new DialogOptions { CloseButton = true, BackdropClick = false };
-        var dialog = await DialogService.ShowAsync<CreateItemDialog>("Create New News Item",options);
-        if(dialog.Dialog is CreateItemDialog ciDialog)
+        var dialog = await DialogService.ShowAsync<CreateItemDialog>("Create New News Item", options);
+        if (dialog.Dialog is CreateItemDialog ciDialog)
         {
             ciDialog.OnItemCreated += RefreshItems;
         }
-    } 
+    }
     private async void ShowRestoreItemsDialog()
     {
         var options = new DialogOptions { CloseButton = true, BackdropClick = false };
@@ -85,7 +85,21 @@
         }
     }
 
- 
+    private string GetRowColor(NewsItem newsItem,int order)
+    {
+        if (newsItem.ScheduledAt > DateTime.UtcNow)
+        {
+            return "mud-theme-info";
+        }
+        if(newsItem.ExpiresAt < DateTime.UtcNow)
+        {
+            return "mud-theme-warning";
+        }
+        
+        return "mud-theme-success";   
+    }
+    
+
 
 }
 

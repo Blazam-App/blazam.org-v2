@@ -27,16 +27,16 @@
 
   <ItemGroup>
     <Reference Include="BLAZAMGlobal">
-      <HintPath>..\..\BLAZAM\BLAZAM\bin\Debug\net8.0\BLAZAMGlobal.dll</HintPath>
+      <HintPath>C:\source\repos\Blazam-App\BLAZAM\BLAZAM\bin\Release\net8.0\BLAZAMGlobal.dll</HintPath>
     </Reference>
     <Reference Include="BLAZAMGui">
-      <HintPath>..\..\BLAZAM\BLAZAM\bin\Debug\net8.0\BLAZAMGui.dll</HintPath>
+      <HintPath>C:\source\repos\Blazam-App\BLAZAM\BLAZAM\bin\Release\net8.0\BLAZAMGui.dll</HintPath>
     </Reference>
     <Reference Include="BLAZAMNotifications">
-      <HintPath>..\..\BLAZAM\BLAZAM\bin\Debug\net8.0\BLAZAMNotifications.dll</HintPath>
+      <HintPath>C:\source\repos\Blazam-App\BLAZAM\BLAZAM\bin\Release\net8.0\BLAZAMNotifications.dll</HintPath>
     </Reference>
     <Reference Include="BLAZAMPlugins">
-      <HintPath>..\..\BLAZAM\BLAZAM\bin\Debug\net8.0\BLAZAMPlugins.dll</HintPath>
+      <HintPath>C:\source\repos\Blazam-App\BLAZAM\BLAZAM\bin\Release\net8.0\BLAZAMPlugins.dll</HintPath>
     </Reference>
   </ItemGroup>
 

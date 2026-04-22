@@ -45,8 +45,8 @@
     {
         if (firstRender)
         {
-            _isDarkMode = await _mudThemeProvider?.GetSystemPreference() == true;
-            await _mudThemeProvider.WatchSystemPreference(OnSystemPreferenceChanged);
+            _isDarkMode = await _mudThemeProvider?.GetSystemDarkModeAsync() == true;
+            await _mudThemeProvider.WatchSystemDarkModeAsync(OnSystemPreferenceChanged);
             StateHasChanged();
         }
     }

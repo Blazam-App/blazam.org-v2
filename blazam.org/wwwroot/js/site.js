@@ -36,6 +36,21 @@ window.zipDownloaded = async () => {
     });
     gtag('event', 'conversion', { 'send_to': 'AW-16531657046/fzqrCNrlia4aENai9Mo9' });
 }
+window.shDownloaded = async () => {
+    gtag('event', 'add_to_cart', {
+        'currency': 'USD',  // Replace with your currency code
+        'value': 0,  // Replace with the product price variable
+        'items': [
+            {
+                'item_id': 'bwi',  // Replace with your product identifier
+                'item_name': 'Blazam Linux Web Installer',  // Replace with the product name
+                'item_category': 'Blazam',  // Replace with the product category (optional)
+                'quantity': 1  // Quantity added (defaults to 1)
+            }
+        ]
+    });
+    gtag('event', 'conversion', { 'send_to': 'AW-16531657046/fzqrCNrlia4aENai9Mo9' });
+}
 window.googleAdsConversion = async() =>{
 
   gtag('event', 'conversion', {

@@ -55,7 +55,7 @@ namespace blazam.org.Pages
         {
             var client = new GitHubClient(new ProductHeaderValue("BLAZAM-APP"));
             var releases = await client.Repository.Release.GetAll("Blazam-App", "Blazam");
-            var branchReleases = releases.Where(r => r.TagName.Contains("BetaDev1", StringComparison.OrdinalIgnoreCase));
+            var branchReleases = releases.Where(r => r.TagName.Contains("Dev1", StringComparison.OrdinalIgnoreCase));
             var latestRelese = branchReleases.FirstOrDefault()?.Assets.FirstOrDefault();
             if (latestRelese != null)
             {
@@ -71,7 +71,7 @@ namespace blazam.org.Pages
             [HttpGet("linux_install.sh")]
         public IActionResult GetLinuxScript()
         {
-            return Redirect("https://raw.githubusercontent.com/Blazam-App/BLAZAM/refs/heads/v1-Dev-Beta/linux_install.sh");
+            return Redirect("https://raw.githubusercontent.com/Blazam-App/BLAZAM/refs/heads/v1-Dev/linux_install.sh");
         }
     }
 }

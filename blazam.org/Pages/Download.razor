@@ -36,15 +36,19 @@
                     <MudButton OnClick=@(async()=>{
                        await _jsRuntime.InvokeVoidAsync("webInstallerDownloaded", null);
                        await _jsRuntime.InvokeVoidAsync("googleAdsConversion", null);
-                       }) Variant="Variant.Filled" Color="Color.Primary">Download Web Installer</MudButton>
+                       }) Variant="Variant.Filled" Color="Color.Primary">Download Windows Web Installer</MudButton>
 
                 </MudLink>
                 
-                <MudLink Class="mx-auto d-table mt-4" Disabled Href="/download/linux_insall.sh" Target=Target.Blank>
-                    <MudButton Disabled OnClick=@(async()=>{
+                <MudLink Class="mx-auto d-table mt-4" Href="/download/linux_install.sh" Target=Target.Blank>
+                    <MudButton OnClick=@(async()=>{
+                        try{
                                await _jsRuntime.InvokeVoidAsync("googleAdsConversion", null);
                                await _jsRuntime.InvokeVoidAsync("shDownloaded", null);
-                               }) Variant="Variant.Filled" Color="Color.Primary">(Coming Soon) Download Linux Beta Installer</MudButton>
+                               } catch (Exception ex) {
+                                   Console.WriteLine(ex.Message);
+                               }
+                               }) Variant="Variant.Filled" Color="Color.Primary">Download Linux Web Installer</MudButton>
                 </MudLink>
                 <MudText Align=Align.Center Class="mt-5 mud-width-full d-block" Typo="Typo.caption">MD5: 85a5260cdb599772fc66d5ee4d29f83f</MudText>
                 <MudText Align=Align.Center Class="mt-5 mud-width-full d-block" Typo="Typo.caption">SHA256: sha256:5f6d23c1eb5bc0b9f3917d44929d9bd464eba7394298ffcf6bb1b0df081bebd1</MudText>
@@ -77,14 +81,8 @@
                     <MudButton OnClick=@(async()=>{
                        await _jsRuntime.InvokeVoidAsync("googleAdsConversion", null);
                        await _jsRuntime.InvokeVoidAsync("zipDownloaded", null);
-                       }) Variant="Variant.Filled" Color="Color.Primary">Download Zip</MudButton>
+                       }) Variant="Variant.Filled" Color="Color.Primary">Download Universal Windows/Linux Zip</MudButton>
 
-                </MudLink>
-                <MudLink Class="mx-auto d-table mt-4" Href="/download/beta" Target=Target.Blank>
-                    <MudButton OnClick=@(async()=>{
-                               await _jsRuntime.InvokeVoidAsync("googleAdsConversion", null);
-                               await _jsRuntime.InvokeVoidAsync("zipDownloaded", null);
-                               }) Variant="Variant.Filled" Color="Color.Primary">Download Linux Beta Zip</MudButton>
                 </MudLink>
 
             

@@ -17,7 +17,7 @@ namespace blazam.org.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.20")
+                .HasAnnotation("ProductVersion", "9.0.22")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -156,7 +156,8 @@ namespace blazam.org.Migrations
 
                     b.Property<string>("Discriminator")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(21)
+                        .HasColumnType("nvarchar(21)");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -179,20 +180,9 @@ namespace blazam.org.Migrations
 
                     b.ToTable("Users");
 
-                    b.HasDiscriminator<string>("Discriminator").HasValue("PluginUser");
+                    b.HasDiscriminator().HasValue("PluginUser");
 
                     b.UseTphMappingStrategy();
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CreatedAt = new DateTime(2025, 8, 18, 18, 31, 27, 316, DateTimeKind.Utc).AddTicks(3058),
-                            Email = "support@blazam.org",
-                            IsVerified = true,
-                            PasswordHash = "C9A61E2F844812FC0E3C3F8444E62E06",
-                            Username = "Blazam"
-                        });
                 });
 
             modelBuilder.Entity("blazam.org.Data.Plugins.Models.PluginVerification", b =>

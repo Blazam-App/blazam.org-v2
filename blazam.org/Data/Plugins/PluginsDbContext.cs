@@ -30,10 +30,6 @@ namespace blazam.org.Data.Plugins
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<PluginUser>().
-                HasData([
-                    new PluginUser(){  Email="support@blazam.org", Id=1, IsVerified=true, Username="Blazam",PasswordHash = RandomNumberGenerator.GetHexString(32)}
-                    ]);
             // Configure Plugin
             modelBuilder.Entity<BlazamPlugin>()
                 .HasOne(p => p.Uploader)

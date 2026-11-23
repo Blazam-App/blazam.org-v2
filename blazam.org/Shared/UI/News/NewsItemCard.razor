@@ -52,7 +52,8 @@
                       T="string"
                       @bind-Text=@_item.Link />
 
-        <MudTextField AutoGrow=true
+        <MudTextField Lines="5"
+                      MaxLines="50"
                       Label="Body"
                       Immediate=true
                       @bind-Value=@_item.Body />
